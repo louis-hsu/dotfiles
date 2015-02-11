@@ -1,2 +1,2 @@
 # dotfiles
-My dotfiles for shell and other configuration
+My dotfiles for shell and application configuration

@@ -501,3 +501,6 @@ cnoremap sudow w !sudo tee % >/dev/null
 
 " CtrlP configuration
 let g:ctrlp_show_hidden=1
+
+" Set diffopt
+set diffopt=filler,vertical

@@ -504,3 +504,7 @@ let g:ctrlp_show_hidden=1
 
 " Set diffopt
 set diffopt=filler,vertical
+
+" Set vim-expand-region -- 0528 2015
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)

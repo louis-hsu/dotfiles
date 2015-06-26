@@ -492,7 +492,7 @@ if &term =~ '^screen'
 endif
 
 " File template setup 
-let g:email="louis_hsu@htc.com"
+let g:email="louis.shiu@gmail.com"
 let g:username='Louis Hsu'
 
 " Useful aliases
@@ -501,10 +501,22 @@ cnoremap sudow w !sudo tee % >/dev/null
 
 " CtrlP configuration
 let g:ctrlp_show_hidden=1
+"let g:ctrlp_clear_cache_on_exit = 0 
+let g:ctrlp_max_files = 0 
+let g:ctrlp_max_depth=40
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm|gradle|idea)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc|class)$',
+    \ }
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
 
 " Set diffopt
 set diffopt=filler,vertical
 
-" Set vim-expand-region -- 0528 2015
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
+" NERDTree configuration - 0625 2015
+let NERDTreeShowHidden=1

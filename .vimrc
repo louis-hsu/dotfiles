@@ -450,7 +450,9 @@ endif
 
 set ic
 set scs
-set nu
+"set nu
+"Double tap C-N to show/hide line number
+:nmap <C-N><C-N> :set invnumber<CR>
 set t_Co=256
 
 filetype plugin indent on
@@ -496,8 +498,8 @@ let g:email="louis.shiu@gmail.com"
 let g:username='Louis Hsu'
 
 " Useful aliases
-" While forgetting to edit a file with sudo permission, run sudow to save
-cnoremap sudow w !sudo tee % >/dev/null 
+" While forgetting to edit a file with sudo permission, run sudosave to save
+cnoremap sudosave w !sudo tee % >/dev/null 
 
 " CtrlP configuration
 let g:ctrlp_show_hidden=1
@@ -520,3 +522,8 @@ set diffopt=filler,vertical
 
 " NERDTree configuration - 0625 2015
 let NERDTreeShowHidden=1
+
+" Change curor shape in different mode
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"

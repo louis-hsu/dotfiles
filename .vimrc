@@ -471,7 +471,8 @@ hi Search cterm=NONE ctermbg=yellow ctermfg=black
 set cursorline cursorcolumn
 
 "Powerline Setup
-let g:airline_theme='powerlineish'
+"let g:airline_theme='powerlineish'
+let g:airline_theme='wombat'
 let g:Powerline_symbols='fancy'
 let g:airline_powerline_fonts=1
 set noshowmode

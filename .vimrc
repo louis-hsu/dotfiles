@@ -485,13 +485,21 @@ let g:acp_completeOption='.,w,b,u,t,i,k'
 set foldmethod=indent
 set foldlevel=99
 
-"Fix VI Ctrl+KEY binding in tmux
+"Fix VI Ctrl+KEY binding in tmux and VI cursor mode
+"-- Louis 2017/0208
 if &term =~ '^screen'
     " tmux will send xterm-style keys when its xterm-keys option is only
     execute "set <xUp>=\e[1;*A"
     execute "set <xDown>=\e[1;*B"
     execute "set <xRight>=\e[1;*C"
     execute "set <xLeft>=\e[1;*D"
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
 " File template setup 
@@ -523,8 +531,3 @@ set diffopt=filler,vertical
 
 " NERDTree configuration - 0625 2015
 let NERDTreeShowHidden=1
-
-" Change curor shape in different mode
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"

@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/Users/nshiu/Development/HTCScripts/archermind.git'
+let g:netrw_dirhist_2='/Users/nshiu/Development/HTCScripts/archermind.git/sandbox'
+let g:netrw_dirhist_3='/Users/nshiu/Development/HTCScripts/archermind.git'
+let g:netrw_dirhist_4='/Users/nshiu'
+let g:netrw_dirhist_5='/Users/nshiu/.AndroidStudio1.2'
+let g:netrw_dirhist_6='/Users/nshiu/.AndroidStudio1.2/restart'
+let g:netrw_dirhist_7='/Users/nshiu/.dotfiles'
+let g:netrw_dirhist_8='/Users/nshiu/.dotfiles/.git'
+let g:netrw_dirhist_9='/Users/nshiu'

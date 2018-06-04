@@ -10,7 +10,7 @@ endif
 " --------------------- plugins starts
 call plug#begin('~/.vim/plugged')
 
-Plug 'https://github.com/nanotech/jellybeans.vim.git' " color scheme
+Plug 'nanotech/jellybeans.vim' " color scheme
 Plug 'vim-airline/vim-airline' " better status line
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive' " git operation in vim

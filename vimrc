@@ -21,6 +21,7 @@ Plug 'scrooloose/nerdtree' " tree structure file browser
 "Plug 'morhetz/gruvbox' "color scheme
 Plug 'ntpeters/vim-better-whitespace' "show/cleanup unnecessary whitespace
 Plug 'qpkorr/vim-bufkill' " delete buffer without destroying windows
+Plug 'aperezdc/vim-template' " template for various filetypes
 call plug#end()
 
 " --------------------- vim alias/configuration
@@ -78,3 +79,5 @@ let g:gitgutter_sign_removed = '✖'
 let g:gitgutter_sign_modified_removed = '✖'
 
 let g:strip_whitespace_on_save = 1
+
+let g:tmpl_author_email = 'louis.shiu@gmail.com'

@@ -80,4 +80,6 @@ let g:gitgutter_sign_modified_removed = '✖'
 
 let g:strip_whitespace_on_save = 1
 
-let g:tmpl_author_email = 'louis.shiu@gmail.com'
+" configure template info
+let g:username = 'Louis Hsu'
+let g:email = 'louis.shiu@gmail.com'

@@ -25,6 +25,7 @@ Plug 'aperezdc/vim-template' " template for various filetypes
 call plug#end()
 
 " --------------------- vim alias/configuration
+set nocompatible
 filetype plugin indent on
 syntax enable
 
@@ -40,6 +41,12 @@ set cursorline cursorcolumn " show a marker on the current line/column
 set hlsearch " highlight search-match string
 set backspace=indent,eol,start " enable delete key
 
+set diffopt=filler,vertical " setup diff option
+nnoremap <C-N><C-N> :set invnumber<CR> " double C-N to turn on/off linenumber
+set fileencoding=utf8
+set encoding=utf8
+set tenc=utf8
+
 " something about split
 set splitbelow splitright " split window to below/right first
 nnoremap <C-w><BAR> <C-w>v
@@ -50,6 +57,8 @@ nnoremap <PageUp>   :bnext<CR>
 nnoremap <PageDown> :bprev<CR>
 nnoremap <C-n>      :enew<CR>
 
+set formatoptions=cro " config behavior of comment leader
+
 " --------------------- jellybeans color fine-tune
 colorscheme jellybeans
 hi Normal ctermbg=NONE guibg=#000000
@@ -59,7 +68,8 @@ hi CursorLineNr cterm=NONE ctermbg=208 guifg=#FD971F gui=NONE
 hi Search cterm=NONE ctermbg=yellow ctermfg=black
 
 " --------------------- plugin setup
-let g:airline_theme='powerlineish'
+"let g:airline_theme='powerlineish'
+let g:airline_theme='wombat'
 let g:Powerline_symbols='fancy'
 let g:airline_powerline_fonts=1
 
@@ -83,3 +93,21 @@ let g:strip_whitespace_on_save = 1
 " configure template info
 let g:username = 'Louis Hsu'
 let g:email = 'louis.shiu@gmail.com'
+
+" CtrlP configuration
+let g:ctrlp_show_hidden=1
+"let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_max_files = 0
+let g:ctrlp_max_depth=40
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm|gradle|idea)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc|class|swp)$',
+    \ }
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+
+let NERDTreeShowHidden=1 " show hidden file

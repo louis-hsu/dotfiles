@@ -8,10 +8,15 @@
 #
 # Version: 1.1.0
 # Release date: 2015/0311
-# 1. Update script to accept .(directory), such as .vim
+# 1. Update script to accept .(directory), such as .vima
+#
+# Version: 1.2.0
+# Release date: 2018/0608
+# 1. Only select non-dot initial files
+# 2. Change ln mechanism
 
-DOTFILES_LOCATION=$HOME'/.dotfiles'
-LISTFILE="fileListTamp"
+DOTFILES_LOCATION=$HOME/.dotfiles
+LISTFILE='.fileListTamp'
 
 createSoftLink ()
 {
@@ -19,17 +24,14 @@ createSoftLink ()
 }
 
 cd $DOTFILES_LOCATION
-\ls -al --ignore='.update*' $DOTFILE_LOCATION | awk '$9 ~ /^\./ && $9 !~ /\.$/ && $9 !~ /git/ {print $9}' > $LISTFILE
+#\ls -al --ignore='.update*' $DOTFILE_LOCATION | awk '$9 ~ /^\./ && $9 !~ /\.$/ && $9 !~ /git/ {print $9}' > $LISTFILE
+\ls -Al --color=no --ignore='update*' --ignore='.*' --ignore='*md' $DOTFILE_LOCATION | awk '{if ($9) print $9}' > $LISTFILE
 
 while read -r line
 do
-    if [ ! -h "$HOME/$line" ] ; then
-        if [ -e "$HOME/$line" ] ; then
-            rm -rf "$HOME/$line"
-        fi
-        createSoftLink $line
-    fi
-done < "$LISTFILE"
+    rm -rf $HOME/.$line
+    ln -s $DOTFILES_LOCATION/$line $HOME/.$line
+done < $LISTFILE
 
 rm -rf $LISTFILE
 

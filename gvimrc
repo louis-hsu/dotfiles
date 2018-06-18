@@ -8,6 +8,7 @@ set columns=110
 set nu
 "set syntax=on
 "set noantialias
+set shell=/bin/bash
 
 set transparency=10
 

@@ -31,3 +31,9 @@ data.location=~/.task
 include ~/.task/nshiu-dark-256.theme
 
 regex=yes
+
+# calendar setup
+include ~/.task/holidays.en-TW.rc
+calendar.holidays=sparse
+
+search.case.sensitive=no

@@ -14,7 +14,8 @@ Plug 'nanotech/jellybeans.vim' " color scheme
 Plug 'vim-airline/vim-airline' " better status line
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive' " git operation in vim
-Plug 'airblade/vim-gitgutter' " +/- mark for git change
+"Plug 'airblade/vim-gitgutter' " +/- mark for git change
+Plug 'mhinz/vim-signify' " replace airblade/vim-gitgutter
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy file search
 Plug 'Yggdroot/indentLine' " indent line
 Plug 'scrooloose/nerdtree' " tree structure file browser
@@ -22,6 +23,8 @@ Plug 'scrooloose/nerdtree' " tree structure file browser
 Plug 'ntpeters/vim-better-whitespace' "show/cleanup unnecessary whitespace
 Plug 'qpkorr/vim-bufkill' " delete buffer without destroying windows
 Plug 'aperezdc/vim-template' " template for various filetypes
+Plug 'kh3phr3n/python-syntax' " rich python syntax highlighting
+Plug 'valloric/youcompleteme' " code language autocompletion framework
 call plug#end()
 
 " --------------------- vim alias/configuration
@@ -78,15 +81,14 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
-" accelerate gitgutter performance
-let g:gitgutter_realtime = 1
-let g:gitgutter_eager = 0
-
-let g:gitgutter_sign_added = '✚'
-"let g:gitgutter_sign_modified = '☰'
-let g:gitgutter_sign_modified = '✱'
-let g:gitgutter_sign_removed = '✖'
-let g:gitgutter_sign_modified_removed = '✖'
+" configure vim-signify
+let g:signify_vcs_list = ['git']
+let g:signify_realtime = 1
+let g:signify_line_highlight = 0
+let g:signify_show_count = 1
+highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
+highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
+highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 
 let g:strip_whitespace_on_save = 1
 
@@ -111,3 +113,23 @@ let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
 
 let NERDTreeShowHidden=1 " show hidden file
+
+" configure YCM
+" point YCM to virtualenv path
+let pipenv_venv_path = system('pipenv --venv')
+if shell_error == 0
+    let venv_path =substitute(pipenv_venv_path, '\n', '', '')
+    let g:ycm_python_binary_path =venv_path . '/bin/python'
+else
+    let g:ycm_python_binary_path = 'python'
+endif
+
+" --------------------- disabled
+" configure and accelerate gitgutter performance
+"let g:gitgutter_realtime = 1
+"let g:gitgutter_eager = 0
+"let g:gitgutter_sign_added = '✚'
+"let g:gitgutter_sign_modified = '☰'
+"let g:gitgutter_sign_modified = '✱'
+"let g:gitgutter_sign_removed = '✖'
+"let g:gitgutter_sign_modified_removed = '✖'

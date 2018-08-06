@@ -25,6 +25,10 @@ Plug 'qpkorr/vim-bufkill' " delete buffer without destroying windows
 Plug 'aperezdc/vim-template' " template for various filetypes
 Plug 'kh3phr3n/python-syntax' " rich python syntax highlighting
 Plug 'valloric/youcompleteme' " code language autocompletion framework
+Plug 'SirVer/ultisnips' "smart snippets completion engine
+Plug 'honza/vim-snippets' "snippets collection
+Plug 'ervandew/supertab' "define tab behavior smarter
+
 call plug#end()
 
 " --------------------- vim alias/configuration
@@ -123,6 +127,19 @@ if shell_error == 0
 else
     let g:ycm_python_binary_path = 'python'
 endif
+" set preview window behavior
+"let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" configure ultisnips
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " --------------------- disabled
 " configure and accelerate gitgutter performance

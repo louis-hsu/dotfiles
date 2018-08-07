@@ -27,7 +27,7 @@ Plug 'kh3phr3n/python-syntax' " rich python syntax highlighting
 Plug 'valloric/youcompleteme' " code language autocompletion framework
 Plug 'SirVer/ultisnips' "smart snippets completion engine
 Plug 'honza/vim-snippets' "snippets collection
-Plug 'ervandew/supertab' "define tab behavior smarter
+"Plug 'ervandew/supertab' "define tab behavior smarter
 
 call plug#end()
 
@@ -130,16 +130,27 @@ endif
 " set preview window behavior
 "let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:ycm_key_list_select_completion = ['<tab>']
+let g:ycm_key_list_previous_completion = ['<s-tab>']
+"let g:SuperTabDefaultCompletionType = '<C-n>'
 
 " configure ultisnips
 " better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+" take <cr><enter> as the hotkey to expand trigger
+" https://github.com/SirVer/ultisnips/issues/376
+let g:UltiSnipsExpandTrigger="<nop>"
+let g:ulti_expand_or_jump_res = 0
+function! <SID>ExpandSnippetOrReturn()
+    let snippet = UltiSnips#ExpandSnippetOrJump()
+    if g:ulti_expand_or_jump_res > 0
+        return snippet
+    else
+        return "\<CR>"
+    endif
+endfunction
+inoremap <expr> <CR> pumvisible() ? "<C-R>=<SID>ExpandSnippetOrReturn()<CR>" : "\<CR>"
 
 " --------------------- disabled
 " configure and accelerate gitgutter performance

@@ -1,0 +1,28 @@
+# ------------------------ Alias
+alias less='less -I'
+alias ls='ls --color -CF --group-directories-first'
+alias ll='ls -ahl'
+alias grep='grep --color'
+alias xterm='xterm &'
+alias ssh='ssh -Y'
+alias top='top -ocpu -R -F -s 2 -n30'
+alias htop='sudo htop'
+export LESS=-SMRFX
+alias tree='tree -AC'
+alias du='du -ch -d 1'
+alias tag='/usr/local/bin/ctags'
+alias ag='ag --pager=less'
+alias jq='jq -C'
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    alias updatedb='sudo /usr/libexec/locate.updatedb'
+    alias monitor='monitor &'
+    #alias diff='icdiff -N --no-bold'
+    #alias ydiff='ydiff -s -w 0 --wrap'
+    export YDIFF_OPTIONS='-s -w 0 --wrap'
+    alias rtime='gtime -f "\n%E elapsed,\n%U user,\n%S system,\n%M memory\n%x status"'
+    # For Wistron working directory -- Louis 2017/1103
+    alias wistron='cd ~/Documents/Wistron'
+else
+    alias diff='colordiff -yW "`tput cols`" --suppress-common-lines'
+fi

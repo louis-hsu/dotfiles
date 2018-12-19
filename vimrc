@@ -41,6 +41,15 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+" setup backup dir to ~/.tmp for swp files --Louis 2018/1219
+set backupdir-=.
+set backupdir^=~/.tmp,/tmp
+set backup
+
+" set k/j works on disply line while in wrap mode -- Louis 2018/1219
+nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
+
 set nu " set line number
 set lbr " wrap long lines at a character in 'breakat' (local to window)
 set ic " set search case-insensitive

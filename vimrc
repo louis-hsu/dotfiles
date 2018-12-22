@@ -24,8 +24,8 @@ Plug 'ntpeters/vim-better-whitespace' "show/cleanup unnecessary whitespace
 Plug 'qpkorr/vim-bufkill' " delete buffer without destroying windows
 Plug 'aperezdc/vim-template' " template for various filetypes
 Plug 'kh3phr3n/python-syntax' " rich python syntax highlighting
-Plug 'valloric/youcompleteme' " code language autocompletion framework
-Plug 'SirVer/ultisnips' "smart snippets completion engine
+"Plug 'valloric/youcompleteme' " code language autocompletion framework
+"Plug 'SirVer/ultisnips' "smart snippets completion engine
 Plug 'honza/vim-snippets' "snippets collection
 "Plug 'ervandew/supertab' "define tab behavior smarter
 

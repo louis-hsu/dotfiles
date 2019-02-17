@@ -8,7 +8,7 @@
 #
 # Version: 1.1.0
 # Release date: 2015/0311
-# 1. Update script to accept .(directory), such as .vima
+# 1. Update script to accept .(directory), such as .task
 #
 # Version: 1.2.0
 # Release date: 2018/0608

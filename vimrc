@@ -97,6 +97,8 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 " configure vim-signify
 let g:signify_vcs_list = ['git']
 let g:signify_realtime = 1
+"let g:signify_cursorhold_normal = 0  " aggressive show sign and save buffer
+"let g:signify_cursorhold_insert = 0  " aggressive show sign and save buffer
 let g:signify_line_highlight = 0
 let g:signify_show_count = 1
 highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
@@ -104,6 +106,7 @@ highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 
 let g:strip_whitespace_on_save = 1
+let g:strip_whitespace_confirm = 0
 
 " configure template info
 let g:username = 'Louis Hsu'

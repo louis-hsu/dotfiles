@@ -1,70 +1,65 @@
-# TW holiday 2018
-# Revise from HK holiday
-# -- Louis 20180618
-#
-# Revise for 2019
-# -- Louis 20190217
+# TW holiday 2020
+# Revise from HK holiday -- Louis 20180618
+# Revise for 2019 -- Louis 20190217
+# Revise for 2020 -- Louis 20190902
 
 holiday.en-TW1.name=New Year's Day
-holiday.en-TW1.date=20180101
+holiday.en-TW1.date=20190101
 holiday.en-TW2.name=Chinese New Year
-holiday.en-TW2.date=20180215
+holiday.en-TW2.date=20190204
 holiday.en-TW3.name=Chinese New Year
-holiday.en-TW3.date=20180216
+holiday.en-TW3.date=20190205
 holiday.en-TW4.name=Chinese New Year
-holiday.en-TW4.date=20180217
+holiday.en-TW4.date=20190206
 holiday.en-TW5.name=Chinese New Year
-holiday.en-TW5.date=20180218
+holiday.en-TW5.date=20190207
 holiday.en-TW6.name=Chinese New Year
-holiday.en-TW6.date=20180219
-holiday.en-TW7.name=Chinese New Year
-holiday.en-TW7.date=20180220
+holiday.en-TW6.date=20190208
+holiday.en-TW7.name=228 Peace Memorial Day
+holiday.en-TW7.date=20190228
 holiday.en-TW8.name=228 Peace Memorial Day
-holiday.en-TW8.date=20180228
+holiday.en-TW8.date=20190301
 holiday.en-TW9.name=Children's Day
-holiday.en-TW9.date=20180404
+holiday.en-TW9.date=20190404
 holiday.en-TW10.name=Qing Ming Festival
-holiday.en-TW10.date=20180405
-holiday.en-TW11.name=Qing Ming Festival
-holiday.en-TW11.date=20180406
-holiday.en-TW12.name=Labour Day
-holiday.en-TW12.date=20180501
-holiday.en-TW13.name=Dragon Boat Festival
-holiday.en-TW13.date=20180618
-holiday.en-TW14.name=Mid-Autumn Festival
-holiday.en-TW14.date=20180924
+holiday.en-TW10.date=20190405
+holiday.en-TW11.name=Labour Day
+holiday.en-TW11.date=20190501
+holiday.en-TW12.name=Dragon Boat Festival
+holiday.en-TW12.date=20190607
+holiday.en-TW13.name=Mid-Autumn Festival
+holiday.en-TW13.date=20190913
+holiday.en-TW14.name=ROC National Day
+holiday.en-TW14.date=20191010
 holiday.en-TW15.name=ROC National Day
-holiday.en-TW15.date=20181010
-holiday.en-TW16.name=Republic Day
-holiday.en-TW16.date=20181231
-holiday.en-TW17.name=New Year's Day
-holiday.en-TW17.date=20190101
+holiday.en-TW15.date=20101011
+holiday.en-TW16.name=New Year's Day
+holiday.en-TW16.date=20200101
+holiday.en-TW17.name=Chinese New Year
+holiday.en-TW17.date=20200123
 holiday.en-TW18.name=Chinese New Year
-holiday.en-TW18.date=20190204
+holiday.en-TW18.date=20200124
 holiday.en-TW19.name=Chinese New Year
-holiday.en-TW19.date=20190205
+holiday.en-TW19.date=20200127
 holiday.en-TW20.name=Chinese New Year
-holiday.en-TW20.date=20190206
+holiday.en-TW20.date=20200128
 holiday.en-TW21.name=Chinese New Year
-holiday.en-TW21.date=20190207
-holiday.en-TW22.name=Chinese New Year
-holiday.en-TW22.date=20190208
-holiday.en-TW23.name=228 Peace Memorial Day
-holiday.en-TW23.date=20190228
-holiday.en-TW24.name=228 Peace Memorial Day
-holiday.en-TW24.date=20190301
-holiday.en-TW25.name=Children's Day
-holiday.en-TW25.date=20190404
-holiday.en-TW26.name=Qing Ming Festival
-holiday.en-TW26.date=20190405
-holiday.en-TW27.name=Labour Day
-holiday.en-TW27.date=20190501
-holiday.en-TW28.name=Dragon Boat Festival
-holiday.en-TW28.date=20190607
+holiday.en-TW21.date=20200129
+holiday.en-TW22.name=228 Peace Memorial Day
+holiday.en-TW22.date=20200228
+holiday.en-TW23.name=Children's Day
+holiday.en-TW23.date=20200402
+holiday.en-TW24.name=Qing Ming Festival
+holiday.en-TW24.date=20200403
+holiday.en-TW25.name=Labour Day
+holiday.en-TW25.date=20200501
+holiday.en-TW26.name=Dragon Boat Festival
+holiday.en-TW26.date=20200625
+holiday.en-TW27.name=Dragon Boat Festival
+holiday.en-TW27.date=20200626
+holiday.en-TW28.name=Mid-Autumn Festival
+holiday.en-TW28.date=20201001
 holiday.en-TW29.name=Mid-Autumn Festival
-holiday.en-TW29.date=20190913
+holiday.en-TW29.date=20201002
 holiday.en-TW30.name=ROC National Day
-holiday.en-TW30.date=20191010
-holiday.en-TW31.name=ROC National Day
-holiday.en-TW31.date=20191011
-
+holiday.en-TW30.date=20201009

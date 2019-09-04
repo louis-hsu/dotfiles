@@ -50,9 +50,11 @@ color.blocking=black on color15
 color.project.none=
 
 # Priority
-color.uda.priority.H=color255
+#color.uda.priority.H=color255
+color.uda.priority.H=red
 color.uda.priority.L=color245
-color.uda.priority.M=color250
+#color.uda.priority.M=color250
+color.uda.priority.M=yellow
 
 # Tags
 color.tag.next=rgb440
@@ -79,10 +81,10 @@ color.summary.background=white on color0
 color.summary.bar=black on rgb141
 
 # Command: calendar
-color.calendar.due.today=color15 on color1
-color.calendar.due=color0 on color1
-color.calendar.holiday=color0 on color11
-color.calendar.overdue=color0 on color5
+color.calendar.due.today=color15 on rgb200
+color.calendar.due=color15 on color1
+color.calendar.holiday=color1 on color238
+color.calendar.overdue=color238 on color5
 color.calendar.today=color15 on rgb013
 color.calendar.weekend=on color238
 color.calendar.weeknumber=rgb013

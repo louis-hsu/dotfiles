@@ -35,5 +35,22 @@ regex=yes
 # calendar setup
 include ~/.task/holidays.en-TW.rc
 calendar.holidays=sparse
+calendar.details=full
 
 search.case.sensitive=no
+uda.priority.values=H,M,L,
+
+# Sync with Freecinc -- Louis 2019 1015
+#taskd.server=freecinc.com:53589
+#taskd.key=\/Users\/nshiu\/.task\/freecinc_91d14d71.key.pem
+#taskd.certificate=\/Users\/nshiu\/.task\/freecinc_91d14d71.cert.pem
+#taskd.ca=\/Users\/nshiu\/.task\/freecinc_91d14d71.ca.pem
+#taskd.credentials=FreeCinc\/freecinc_91d14d71\/cb726799-7d15-436e-88d8-97d13f2148d6
+
+# Sync with Inthe.AM -- Louis 2019 1015
+taskd.server=taskwarrior.inthe.am:53589
+taskd.key=\/Users\/nshiu\/.task\/private.key.pem
+taskd.certificate=\/Users\/nshiu\/.task\/private.certificate.pem
+taskd.ca=\/Users\/nshiu\/.task\/ca.cert.pem
+taskd.credentials=inthe_am\/louis.shiu\/ed96e182-46fe-45b0-a6d9-0da742990317
+taskd.trust=ignore hostname

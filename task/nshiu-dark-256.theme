@@ -40,31 +40,36 @@ color.debug=color4
 color.completed=
 color.deleted=
 color.active=rgb555 on rgb410
-color.recurring=rgb013
+#color.recurring=rgb013
+color.recurring=color2
 color.scheduled=on rgb001
 color.until=
-color.blocked=white on color8
-color.blocking=black on color15
+#color.blocked=white on color8
+#color.blocking=black on color15
+color.blocked=color14 on grey5
+color.blocking=color11 on grey7
 
 # Project
 color.project.none=
 
 # Priority
 #color.uda.priority.H=color255
-color.uda.priority.H=red
-color.uda.priority.L=color245
 #color.uda.priority.M=color250
-color.uda.priority.M=yellow
+#color.uda.priority.L=color245
+#color.uda.priority.none=color243
+color.uda.priority.none=color250
 
 # Tags
 color.tag.next=rgb440
 color.tag.none=
-color.tagged=rgb031
+#color.tagged=rgb031
+color.tagged=
 
 # Due
-color.due.today=rgb400
+#color.due.today=rgb400
+color.due.today=color15 on color9
 color.due=color1
-color.overdue=color9
+color.overdue=color13
 
 # Report: burndown
 color.burndown.done=on rgb010
@@ -83,11 +88,11 @@ color.summary.bar=black on rgb141
 # Command: calendar
 color.calendar.due.today=color15 on rgb200
 color.calendar.due=color15 on color1
-color.calendar.holiday=color1 on color238
-color.calendar.overdue=color238 on color5
+color.calendar.holiday=rgb530 on color238
+color.calendar.overdue=grey1 on color5
 color.calendar.today=color15 on rgb013
 color.calendar.weekend=on color238
-color.calendar.weeknumber=rgb013
+color.calendar.weeknumber=color4
 
 # Command: sync
 color.sync.added=rgb010

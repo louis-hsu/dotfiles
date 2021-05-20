@@ -10,6 +10,7 @@
 	name = Louis Hsu
 	email = louis.shiu@gmail.com
 [commit]
-	template = /Users/nshiu/.stCommitMsg
+#	template = /Users/nshiu/.stCommitMsg
+	template = ~/.stCommitMsg
 [color]
 	ui = auto

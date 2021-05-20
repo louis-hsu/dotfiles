@@ -25,7 +25,7 @@ createSoftLink ()
 
 cd $DOTFILES_LOCATION
 #\ls -al --ignore='.update*' $DOTFILE_LOCATION | awk '$9 ~ /^\./ && $9 !~ /\.$/ && $9 !~ /git/ {print $9}' > $LISTFILE
-\ls -Al --color=no --ignore='update*' --ignore='.*' --ignore='*md' $DOTFILE_LOCATION | awk '{if ($9) print $9}' > $LISTFILE
+\ls -Al --color=no --ignore='update*' --ignore='.*' --ignore='*md' --ignore='*old' $DOTFILE_LOCATION | awk '{if ($9) print $9}' > $LISTFILE
 
 while read -r line
 do

@@ -113,6 +113,12 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
+" vim-better-whitespace
+" Enable auto strip on saving -- Louis 2021/0507
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
+let g:strip_whitespace_confirm=0
+
 "" Change to tab movement --Louis 20190520
 "" move between tab
 "nnoremap <PageUp>   :tabnext<CR>

@@ -11,23 +11,28 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'arcticicestudio/nord-vim' " Nordic style theme
-"Plug 'nanotech/jellybeans.vim' " color scheme
 Plug 'vim-airline/vim-airline' " better status line
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive' " git operation in vim
-"Plug 'airblade/vim-gitgutter' " +/- mark for git change
 Plug 'mhinz/vim-signify' " replace airblade/vim-gitgutter
-Plug 'ctrlpvim/ctrlp.vim' " fuzzy file search
+Plug 'moll/vim-bbye' " optional dependency
+Plug 'aymericbeaumet/vim-symlink' " fix fugitive-and-symbolic link issue
+"Plug 'ctrlpvim/ctrlp.vim' " fuzzy file search
 Plug 'Yggdroot/indentLine' " indent line
 Plug 'scrooloose/nerdtree' " tree structure file browser
-"Plug 'morhetz/gruvbox' "color scheme
 Plug 'ntpeters/vim-better-whitespace' "show/cleanup unnecessary whitespace
 Plug 'qpkorr/vim-bufkill' " delete buffer without destroying windows
-Plug 'aperezdc/vim-template' " template for various filetypes
-Plug 'kh3phr3n/python-syntax' " rich python syntax highlighting
+
+"Plug 'aperezdc/vim-template' " template for various filetypes
+"Plug 'kh3phr3n/python-syntax' " rich python syntax highlighting
+"Plug 'honza/vim-snippets' "snippets collection
+
+" Move commented out plugin together -- Louis 2021/0521
 "Plug 'valloric/youcompleteme' " code language autocompletion framework
 "Plug 'SirVer/ultisnips' "smart snippets completion engine
-Plug 'honza/vim-snippets' "snippets collection
+"Plug 'morhetz/gruvbox' "color scheme
+"Plug 'airblade/vim-gitgutter' " +/- mark for git change
+"Plug 'nanotech/jellybeans.vim' " color scheme
 "Plug 'ervandew/supertab' "define tab behavior smarter
 
 call plug#end()
@@ -95,18 +100,28 @@ set backspace=indent,eol,start " enable delete key
 colorscheme nord
 hi Normal       ctermbg=NONE    guibg=#000000
 hi CursorLine   cterm=NONE  ctermbg=NONE
-"hi CursorColumn cterm=NONE  ctermbg=234
+hi CursorColumn cterm=NONE  ctermbg=234
 hi CursorLineNr cterm=bold  ctermfg=222
 hi Search       cterm=NONE  ctermfg=232
-let g:nord_cursor_line_number_bacground=1
+"let g:nord_cursor_line_number_bacground=1
 let g:nord_bold_vertical_split_line=1
 let g:nord_uniform_diff_background=1
 
 " --------------------- plugin setup
 "let g:airline_theme='powerlineish'
 let g:airline_theme='wombat'
-let g:Powerline_symbols='fancy'
+"let g:Powerline_symbols='fancy'
+
+" Fix error code of symbol 'g:airline_symbols.colnr' -- Louis 2021/0521
+if !exists('g:airline_symbols')
+    let g:airline_symbols={}
+endif
+
 let g:airline_powerline_fonts=1
+let g:airline_symbols.colnr='㏇'
+let g:airline_symbols.linenr='㏑'
+let g:airline_section_z=airline#section#create_right(['%p%% %#__accent_bold#%{g:airline_symbols.linenr}:%l/%L %{g:airline_symbols.colnr}:%v%#__restore__#'])
+
 
 " enable buffers and numbers in the tab bar
 let g:airline#extensions#tabline#enabled = 1
@@ -118,6 +133,33 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=1
 let g:strip_whitespace_confirm=0
+
+
+" vim-fugitive
+" Set up branch mark -- Louis 2021/0521
+let g:airline#extensions#branch#enabled=1
+let g:airline#extensions#branch#empty_message=''
+
+" Yggdroot/indentLine
+" Set command to turn indentline on/off -- Louis 2021/0521
+nnoremap <C-I><C-I> :IndentLinesToggle<CR> " double C-I to turn on/off indentline
+
+" vim-bufkill
+" Set command to trigger buffer kill -- Louis 2021/0521
+map <C-c> :BD<cr>
+
+" NerdTree setup -- Louis 2021/0521
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTreeFind<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+" Exit Vim if NERDTree is the only window left.
+ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+let NERDTreeShowHidden=1 " show hidden file
 
 "" Change to tab movement --Louis 20190520
 "" move between tab
@@ -159,9 +201,8 @@ let g:strip_whitespace_confirm=0
 "let g:ctrlp_match_window_reversed=0
 "let g:ctrlp_mruf_max=500
 "let g:ctrlp_follow_symlinks=1
-"
-"let NERDTreeShowHidden=1 " show hidden file
-"
+
+
 "" configure YCM
 "" point YCM to virtualenv path
 ""let pipenv_venv_path = system('pipenv --venv')

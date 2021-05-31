@@ -97,12 +97,22 @@ set backspace=indent,eol,start " enable delete key
 "hi Search       cterm=NONE  ctermbg=214 ctermfg=232
 
 " --------------------- nord color fine-tune
+augroup nord-overrides
+    autocmd!
+    autocmd ColorScheme nord highlight Comment ctermfg=102
+    autocmd ColorScheme nord highlight Normal ctermbg=NONE guibg=#000000
+    autocmd ColorScheme nord highlight CursorLine cterm=NONE ctermbg=NONE
+    autocmd ColorScheme nord highlight CursorColumn cterm=NONE ctermbg=234
+    autocmd ColorScheme nord highlight CursorLineNr cterm=bold ctermfg=222
+    autocmd ColorScheme nord highlight Search cterm=NONE ctermfg=232
+augroup END
+
 colorscheme nord
-hi Normal       ctermbg=NONE    guibg=#000000
-hi CursorLine   cterm=NONE  ctermbg=NONE
-hi CursorColumn cterm=NONE  ctermbg=234
-hi CursorLineNr cterm=bold  ctermfg=222
-hi Search       cterm=NONE  ctermfg=232
+"hi Normal       ctermbg=NONE    guibg=#000000
+"hi CursorLine   cterm=NONE  ctermbg=NONE
+"hi CursorColumn cterm=NONE  ctermbg=234
+"hi CursorLineNr cterm=bold  ctermfg=222
+"hi Search       cterm=NONE  ctermfg=232
 "let g:nord_cursor_line_number_bacground=1
 let g:nord_bold_vertical_split_line=1
 let g:nord_uniform_diff_background=1

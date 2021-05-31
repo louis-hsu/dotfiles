@@ -14,6 +14,10 @@
 # Release date: 2018/0608
 # 1. Only select non-dot initial files
 # 2. Change ln mechanism
+#
+# Version: 2.0.0
+# Release date: 2021/0601
+# Generate/copy softlink based on OS and if it's zsh dotfile
 
 DOTFILES_LOCATION=$HOME/.dotfiles
 LISTFILE='.fileListTamp'
@@ -33,22 +37,31 @@ reformFileName () {
 
 cd $DOTFILES_LOCATION
 #\ls -al --ignore='.update*' $DOTFILE_LOCATION | awk '$9 ~ /^\./ && $9 !~ /\.$/ && $9 !~ /git/ {print $9}' > $LISTFILE
+\ls -Al --color=no --ignore='update*' --ignore='.*' --ignore='*md' --ignore='*old' $DOTFILE_LOCATION | awk '{if ($9) print $9}' > $LISTFILE
 
 # Separate dotfiles for macOS (darwin) and Ubuntu (linux) -- Louis 2021/0530
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    \ls -Al --color=no --ignore='update*' --ignore='.*' --ignore='*md' --ignore='*old' --ignore='*linux' $DOTFILE_LOCATION | awk '{if ($9) print $9}' > $LISTFILE
     POSTFIX='darwin'
 else
-    \ls -Al --color=no --ignore='update*' --ignore='.*' --ignore='*md' --ignore='*old' --ignore='*darwin' $DOTFILE_LOCATION | awk '{if ($9) print $9}' > $LISTFILE
+#    \ls -Al --color=no --ignore='update*' --ignore='.*' --ignore='*md' --ignore='*old' --ignore='*darwin' $DOTFILE_LOCATION | awk '{if ($9) print $9}' > $LISTFILE
     POSTFIX='linux'
 fi
 
 while read -r line
 do
-    newLine=`echo "$line" | sed -e "s/\.${POSTFIX}//g"`
-#    echo $newLine
-    rm -rf $HOME/.$newLine
-    ln -s $DOTFILES_LOCATION/$line $HOME/.$newLine
+    newLine=`echo "$line" | sed -e "s/\.linux//g"`
+    rm -rf $HOME/.$newLine # Fix ln directory issue (.task)
+    if [[ ${POSTFIX} == "darwin" ]]; then
+        if [[ $newLine =~ ^z.* ]]; then
+            ln -s -f ~/.zprezto/runcoms/${newLine} ~/.${newLine}
+        else
+            ln -s -f  ${DOTFILES_LOCATION}/${line} ${HOME}/.${newLine}
+        fi
+     else
+        ln -s -f  ${DOTFILES_LOCATION}/${line} ${HOME}/.${newLine}
+    fi
+
+#    ln -s $DOTFILES_LOCATION/$line $HOME/.$newLine
 done < $LISTFILE
 
 rm -rf $LISTFILE

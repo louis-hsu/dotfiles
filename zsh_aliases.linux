@@ -1,0 +1,130 @@
+# ------------------------ Alias
+#alias less='less -I'
+alias ls="clear;\ls --color -CF --group-directories-first --ignore=$'Icon\r'"
+#alias ll='ls -ahl | less'
+#alias ll='ls -ahl'
+
+# Another better look 'ls' alternative: exa -- Louis 2021/0523
+export EXA_OPTIONS="-laF -g --git --header --group-directories-first --time-style long-iso --color-scale --ignore-glob=Icon$'\r'"
+alias ll="clear; exa -a $EXA_OPTIONS"
+alias lt="clear; exa $EXA_OPTIONS -T -L 2"
+
+# Configure grep color -- Louis 2021/0119
+#export GREP_COLORS='ms=38;5;232;48;2;136;192;208:ln=01;38;5;222'
+alias grep='grep -n -C 2 --color'
+
+#alias xterm='xterm &'
+alias ssh='ssh -Y'
+alias top='top -ocpu -R -F -s 2 -n30'
+#export LESS=-SMRFX
+alias tree='tree -AC'
+alias du='du -ch -d 1 | sort -hr' # Add sorting from largest size -- Louis 2020/0424
+alias tag='/usr/local/bin/ctags'
+
+# Configure ag color following grep -- Louis 2021/0120
+alias ag='ag -n -C 2 --color-match "38;5;232;48;2;136;192;208" --color-line-number "01;38;5;222" --pager=less --number'
+
+alias jq='jq -C'
+alias gotop='gotop -p -s'
+alias task='clear; task'
+
+# Quick alias for taskwarrior -- Louis 2021/0316
+alias tasktoday='task scheduled.before:today status.is:pending or due.before:today+1w'
+
+# "fd" file finder, modern replacement for GNU find -- Louis 2021/0523
+alias fd='fdfind --hidden --follow --exclude .git'
+
+# 'bat' to 'batcat' -- Louis 2021/0530
+alias bat='batcat'
+
+export YDIFF_OPTIONS='-s -w 0 --wrap'
+#alias diff='colordiff -yW "`tput cols`" --suppress-common-lines'
+
+alias rtime='time -f "\n%E elapsed,\n%U user,\n%S system,\n%M memory\n%x status"'
+
+# ------------------------ Functions
+# Useful adb commands
+getIMEI() { # Get IMEI with parameter to identify IMEI 1 or 2
+    if [ -z "$1" ]; then
+        set "1"
+    fi
+    cstring="service call iphonesubinfo 3 i32 $1 | grep -oE \"[0-9a-f]{8} \" | while read hex; do echo -ne \"\\u\${hex:4:4}\\u\${hex:0:4}\"; done; echo"
+    IMEI=$(adb shell $cstring)
+    echo IMEI_$1: $IMEI
+}
+
+# Add extract() function to facilitate extract action -- Louis 2015/0311
+# Modify script to unzip to specified direectory -- Louis 2020/0712
+extract() {
+    if [ -f $1 ]; then
+        dName="$1_dir"
+        if [ ! -d "$dName" ]; then
+            echo "Create directory $dName"
+            mkdir -p $dName
+        fi
+
+        mv $1 ./$dName
+        cd ./$dName
+
+        case $1 in
+            *.tar.bz2)  tar xjf $1      ;;
+            *.tar.gz)   tar xzf $1      ;;
+            *.bz2)      bunzip2 $1      ;;
+            *.rar)      unrar e $1      ;;
+            *.gz)       gunzip $1       ;;
+            *.tar)      tar xf $1       ;;
+            *.tbz2)     tar xjf $1      ;;
+            *.tgz)      tar xzf $1      ;;
+            *.zip)      unzip $1        ;;
+            *.Z)        uncompress $1   ;;
+            *)          echo "'$1' cannot be extracted via extract()"
+                        mv $1 ../
+                        cd ..
+                        rm -rf ./$dName
+                        ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+# Add smartresize() function to resize image file(s) by utilizing ImageMagick -- Louis 2015/0629
+# Add usage -- Louis 2020/0712
+smartresize() {
+    if [ "$#" -ne 3 ]; then
+        echo "Usage: smartresize \$INPUT_FILE \$EXPECTED_WIDTH \$OUTPUT_PATH"
+    else
+        mogrify -path $3 -filter Triangle -define filter:support=2 -thumbnail $2 -unsharp 0.25x0.08+8.3+0.045 -dither None -posterize 136 -quality 82 -define jpeg:fancy-upsampling=off -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -interlace none -colorspace sRGB $1
+    fi
+}
+
+# Replace default diff by piping to ydiff for better result rendering
+# -- Louis 2018/0830
+function diff(){
+    args=()
+    for i in $@; do
+        args+=$i
+    done
+    /usr/bin/diff -ur "${args[@]}" | ydiff
+}
+
+# ---------------------- Obsolete
+# Replace vim with this function to force vim opens 'real' files instead of symbolic link
+# -- Louis 2018/0731
+# Make function more generic to different OS platform -- Louis 2018/0813
+# Comment out for now cuz it seems git symbol also shows while editing file alias -- Louis 2018/1219
+#VIM_PATH=`which vim`
+#
+#function vim(){
+#    args=()
+#    for i in $@; do
+#        if [[ -h $1 ]]; then
+#            args+=`readlink $i`
+#        else
+#            args+=$i
+#        fi
+#    done
+#    /usr/local/bin/vim -p "${args[@]}"
+#    $VIM_PATH -p "${args[@]}"
+#}
+

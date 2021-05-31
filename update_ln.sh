@@ -17,20 +17,38 @@
 
 DOTFILES_LOCATION=$HOME/.dotfiles
 LISTFILE='.fileListTamp'
+POSTFIX=''
 
-createSoftLink ()
-{
+createSoftLink () {
     ln -s $DOTFILES_LOCATION/$1 $HOME/$1
+}
+
+reformFileName () {
+    if [[ $1 =~ .*\.${POSTFIX} ]]; then
+        echo "$1" | sed -e "s/\.${POSTFIX}//g"
+    else
+        echo $1
+    fi
 }
 
 cd $DOTFILES_LOCATION
 #\ls -al --ignore='.update*' $DOTFILE_LOCATION | awk '$9 ~ /^\./ && $9 !~ /\.$/ && $9 !~ /git/ {print $9}' > $LISTFILE
-\ls -Al --color=no --ignore='update*' --ignore='.*' --ignore='*md' --ignore='*old' $DOTFILE_LOCATION | awk '{if ($9) print $9}' > $LISTFILE
+
+# Separate dotfiles for macOS (darwin) and Ubuntu (linux) -- Louis 2021/0530
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    \ls -Al --color=no --ignore='update*' --ignore='.*' --ignore='*md' --ignore='*old' --ignore='*linux' $DOTFILE_LOCATION | awk '{if ($9) print $9}' > $LISTFILE
+    POSTFIX='darwin'
+else
+    \ls -Al --color=no --ignore='update*' --ignore='.*' --ignore='*md' --ignore='*old' --ignore='*darwin' $DOTFILE_LOCATION | awk '{if ($9) print $9}' > $LISTFILE
+    POSTFIX='linux'
+fi
 
 while read -r line
 do
-    rm -rf $HOME/.$line
-    ln -s $DOTFILES_LOCATION/$line $HOME/.$line
+    newLine=`echo "$line" | sed -e "s/\.${POSTFIX}//g"`
+#    echo $newLine
+    rm -rf $HOME/.$newLine
+    ln -s $DOTFILES_LOCATION/$line $HOME/.$newLine
 done < $LISTFILE
 
 rm -rf $LISTFILE

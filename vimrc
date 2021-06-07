@@ -22,8 +22,8 @@ Plug 'Yggdroot/indentLine' " indent line
 Plug 'scrooloose/nerdtree' " tree structure file browser
 Plug 'ntpeters/vim-better-whitespace' "show/cleanup unnecessary whitespace
 Plug 'qpkorr/vim-bufkill' " delete buffer without destroying windows
+Plug 'aperezdc/vim-template' " template for various filetypes
 
-"Plug 'aperezdc/vim-template' " template for various filetypes
 "Plug 'kh3phr3n/python-syntax' " rich python syntax highlighting
 "Plug 'honza/vim-snippets' "snippets collection
 
@@ -192,10 +192,10 @@ let NERDTreeShowHidden=1 " show hidden file
 "let g:strip_whitespace_on_save = 1
 "let g:strip_whitespace_confirm = 0
 "
-"" configure template info
-"let g:username = 'Louis Hsu'
-"let g:email = 'louis.shiu@gmail.com'
-"
+" configure template info
+let g:username = 'Louis Hsu'
+let g:email = 'louis.shiu@gmail.com'
+
 "" CtrlP configuration
 "let g:ctrlp_show_hidden=1
 ""let g:ctrlp_clear_cache_on_exit = 0

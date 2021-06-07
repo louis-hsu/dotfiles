@@ -33,6 +33,10 @@ precmd() {print ""}
 # fzf integration -- Louis 2021/0523
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Somehow .zshenv not working. Source .zprofile here -- Louis 2021/0601
+# TODO: Fix .zshenv
+source ~/.zprofile
+
 # ---------------------- Obsolete
 # append to the history file, don't overwrite it
 #shopt -s histappend

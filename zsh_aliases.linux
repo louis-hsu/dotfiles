@@ -42,6 +42,8 @@ export YDIFF_OPTIONS='-s -w 0 --wrap'
 
 alias rtime='time -f "\n%E elapsed,\n%U user,\n%S system,\n%M memory\n%x status"'
 
+alias mux='tmuxinator'
+
 # ------------------------ Functions
 # Useful adb commands
 getIMEI() { # Get IMEI with parameter to identify IMEI 1 or 2

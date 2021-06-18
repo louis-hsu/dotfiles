@@ -1,8 +1,9 @@
 " Initial .gvimrc for MacVim
 
 "set guifont=Monaco:h10
-"set macligatures
+
 set guifont=Fira\ Code:h12
+set macligatures
 "set guifont=Monaco\ for\ Powerline:h12
 "set guifont=Source\ Code\ Pro\ for\ Powerline:h12
 

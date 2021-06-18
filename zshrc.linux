@@ -25,13 +25,21 @@ if which pipenv > /dev/null; then eval "$(pipenv --completion)" > /dev/null; fi
 # ---------------------- Alias/Function
 # Move alias definitions to separted file (.zsh_aliases) -- Louis 2018/0830
 if [ -f ~/.zsh_aliases ]; then
-    . ~/.zsh_aliases
+    source ~/.zsh_aliases
 fi
 
 precmd() {print ""}
 
 # fzf integration -- Louis 2021/0523
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Update the setting to cover no .fzf.zsh in Linux -- Louis 2021/0618
+#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#
+if [ -f ~/.fzf.zsh ]; then
+    source ~/.fzf.zsh
+else
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+    source /usr/share/doc/fzf/examples/completion.zsh
+fi
 
 # Somehow .zshenv not working. Source .zprofile here -- Louis 2021/0601
 # TODO: Fix .zshenv

@@ -7,37 +7,37 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" --------------------- plugins starts
+" --------------------- Plugins starts
 call plug#begin('~/.vim/plugged')
 
 Plug 'arcticicestudio/nord-vim' " Nordic style theme
-Plug 'vim-airline/vim-airline' " better status line
+Plug 'vim-airline/vim-airline' " Better status line
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive' " git operation in vim
-Plug 'mhinz/vim-signify' " replace airblade/vim-gitgutter
-Plug 'moll/vim-bbye' " optional dependency
-Plug 'aymericbeaumet/vim-symlink' " fix fugitive-and-symbolic link issue
-"Plug 'ctrlpvim/ctrlp.vim' " fuzzy file search
-Plug 'Yggdroot/indentLine' " indent line
-Plug 'scrooloose/nerdtree' " tree structure file browser
-Plug 'ntpeters/vim-better-whitespace' "show/cleanup unnecessary whitespace
-Plug 'qpkorr/vim-bufkill' " delete buffer without destroying windows
-Plug 'aperezdc/vim-template' " template for various filetypes
+Plug 'tpope/vim-fugitive' " Git operation in vim
+Plug 'mhinz/vim-signify' " Replace airblade/vim-gitgutter
+Plug 'aymericbeaumet/vim-symlink' " Fix fugitive-and-symbolic link issue
+Plug 'Yggdroot/indentLine' " Indent line
+Plug 'scrooloose/nerdtree' " Tree structure file browser
+Plug 'ntpeters/vim-better-whitespace' " Show/cleanup unnecessary whitespace
+Plug 'qpkorr/vim-bufkill' " Delete buffer without destroying windows
+Plug 'aperezdc/vim-template' " Template for various filetypes
 
+"Plug 'ctrlpvim/ctrlp.vim' " Fuzzy file search
 "Plug 'kh3phr3n/python-syntax' " rich python syntax highlighting
 "Plug 'honza/vim-snippets' "snippets collection
 
 " Move commented out plugin together -- Louis 2021/0521
 "Plug 'valloric/youcompleteme' " code language autocompletion framework
-"Plug 'SirVer/ultisnips' "smart snippets completion engine
-"Plug 'morhetz/gruvbox' "color scheme
+"Plug 'SirVer/ultisnips' " smart snippets completion engine
+"Plug 'morhetz/gruvbox' " color scheme
 "Plug 'airblade/vim-gitgutter' " +/- mark for git change
 "Plug 'nanotech/jellybeans.vim' " color scheme
-"Plug 'ervandew/supertab' "define tab behavior smarter
+"Plug 'ervandew/supertab' " define tab behavior smarter
+"Plug 'moll/vim-bbye' " optional dependency
 
 call plug#end()
 
-" --------------------- vim alias/configuration
+" --------------------- Vim alias/configuration
 set nocompatible
 filetype plugin indent on
 syntax enable
@@ -61,16 +61,18 @@ nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 
 set nu " set line number
-nnoremap <C-N><C-N> :set invnumber<CR> " double C-N to turn on/off linenumber
+nnoremap <C-n><C-n> :set invnumber<CR> " double C-N to turn on/off linenumber
 set lbr " wrap long lines at a character in 'breakat' (local to window)
 set ic " set search case-insensitive
 set cursorline cursorcolumn " show a marker on the current line/column
 set hlsearch " highlight search-match string
 set backspace=indent,eol,start " enable delete key
 
+" Correct the last mis-spell word when spell is enabled -- Louis 2021/0803
+imap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
 "autocmd BufNewFile,BufRead *.txt set ft=text
 
-"
 "set diffopt=filler,vertical " setup diff option
 "set fileencoding=utf8
 "set encoding=utf8
@@ -90,13 +92,13 @@ set backspace=indent,eol,start " enable delete key
 "set formatoptions=cro " config behavior of comment leader
 ""set autowrite " auto save when switching buffer"
 "
-" --------------------- jellybeans color fine-tune
+" --------------------- Jellybeans color fine-tune
 "colorscheme jellybeans
 "hi Cursor       cterm=NONE  ctermbg=9
 "hi CursorLineNr cterm=bold  ctermbg=21  ctermfg=226
 "hi Search       cterm=NONE  ctermbg=214 ctermfg=232
 
-" --------------------- nord color fine-tune
+" --------------------- Nord color fine-tune
 augroup nord-overrides
     autocmd!
     autocmd ColorScheme nord highlight Comment ctermfg=102
@@ -117,7 +119,7 @@ colorscheme nord
 let g:nord_bold_vertical_split_line=1
 let g:nord_uniform_diff_background=1
 
-" --------------------- plugin setup
+" --------------------- Plugin setup
 "let g:airline_theme='powerlineish'
 let g:airline_theme='wombat'
 "let g:Powerline_symbols='fancy'
@@ -247,7 +249,7 @@ let g:email = 'louis.shiu@gmail.com'
 "endfunction
 "inoremap <expr> <CR> pumvisible() ? "<C-R>=<SID>ExpandSnippetOrReturn()<CR>" : "\<CR>"
 "
-"" --------------------- disabled
+"" --------------------- Disabled
 "" configure and accelerate gitgutter performance
 ""let g:gitgutter_realtime = 1
 ""let g:gitgutter_eager = 0

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Version: 1.0.0
 # Release date: 2015/0211
 # Author: Louis Hsu
@@ -66,3 +66,16 @@ done < $LISTFILE
 
 rm -rf $LISTFILE
 
+cd ~/.zprezto
+git submodule update --init --recursive # re-sync submodules in prezto project
+cd ~
+
+# TODO
+# Install missing packages
+# Configure the system as much as possible
+# 1. Install/upgrade python3 and pip install packages
+# 2. Manual install exa (https://the.exa.website/install/linux#manual)
+# 3. Install fzf (https://github.com/junegunn/fzf) with apt
+# 4. Install tpm (https://github.com/tmux-plugins/tpm)
+# 5. Install tmuxinator via apt and configure tmux layout
+# 6. Install ydiff https://github.com/ymattw/ydiff (change python to python3)

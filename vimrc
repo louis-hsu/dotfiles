@@ -67,6 +67,7 @@ set ic " set search case-insensitive
 set cursorline cursorcolumn " show a marker on the current line/column
 set hlsearch " highlight search-match string
 set backspace=indent,eol,start " enable delete key
+set showcmd
 
 " Correct the last mis-spell word when spell is enabled -- Louis 2021/0803
 imap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
@@ -83,11 +84,11 @@ imap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 "nnoremap <C-w><BAR> <C-w>v
 "nnoremap <C-w>_ <C-w>s
 "
-"" Change to tab usage --Louis 20190520
-"" move between buffers
-"" nnoremap <PageUp>   :bnext<CR>
-"" nnoremap <PageDown> :bprev<CR>
-"" nnoremap <C-n>      :enew<CR>
+" Change to tab usage --Louis 20190520
+" move between buffers
+nnoremap <leader>l  :bnext!<CR>
+nnoremap <leader>h  :bprev!<CR>
+nnoremap <leader>b  :enew!<CR>
 "
 "set formatoptions=cro " config behavior of comment leader
 ""set autowrite " auto save when switching buffer"
@@ -161,9 +162,9 @@ nnoremap <C-I><C-I> :IndentLinesToggle<CR> " double C-I to turn on/off indentlin
 map <C-c> :BD<cr>
 
 " NerdTree setup -- Louis 2021/0521
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTreeFind<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <leader>no     :NERDTreeFocus<CR>
+nnoremap <leader>nf     :NERDTreeFind<CR>
+nnoremap <leader>nt     :NERDTreeToggle<CR>
 " Exit Vim if NERDTree is the only window left.
  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 

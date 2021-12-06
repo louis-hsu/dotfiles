@@ -35,12 +35,6 @@ rationalize-path () {
     '
 }
 
-# ---- Browser ----
-
-#if [[ "$OSTYPE" == darwin* ]]; then
-#    export BROWSER='open'
-#fi
-
 # ---- Editors ----
 
 export EDITOR='vim'
@@ -63,13 +57,12 @@ path=(
     /usr/local/{bin,sbin}
     $path
 )
-export PATH
 
 manpath=(
-    /usr/local/opt/fzf/share/man
+    /usr/share/man
+    /usr/local/share/man
     $manpath
 )
-export MANPATH
 
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path manpath
@@ -80,6 +73,8 @@ typeset -gU cdpath fpath mailpath path manpath
 rationalize-path path
 rationalize-path manpath
 
+export PATH
+export MANPATH
 # Set the list of directories that cd searches.
 # cdpath=(
 #   $cdpath
@@ -104,9 +99,7 @@ export GREP_COLORS='ms=38;5;232;48;2;136;192;208:ln=01;38;5;222'
 # Set the default Less options.
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
 # Remove -X and -F (exit if the content fits on one screen) to enable it.
-#export LESS='-F -g -i -M -R -S -w -X -z-4'
-# export LESS='-F -g -i -M -R -w -X -z-4'
-export LESS="-MR+Gg"
+export LESS='-F -i -J -M -R -W -x4 -X -z-4 -g'
 
 # Set the Less input preprocessor.
 # Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
@@ -124,7 +117,7 @@ export PROJECT_HOME=$HOME/PythonDev
 
 # Remove jenv setup since I might not really need multiple Java version
 # Instead set JAVA_HOME directly, keep jenv binary though -- Louis 2021/0416
-export JAVA_HOME=/usr/lib/jvm/java-16-openjdk-amd64
+#export JAVA_HOME=/usr/lib/jvm/java-16-openjdk-amd64
 
 # Add local PERL module directory to @INC
 export PERL5LIB=~/.perl5lib/lib/perl5
@@ -139,7 +132,7 @@ export HISTCONTROL=ignorespace:ignoredups
 export FD_OPTIONS="--hidden --follow --exclude .git"
 
 # Configure "sharkdp/bat", cat analogue with syntax highlighting -- Louis 2021/0523
-export BAT_PAGER="less -R"
+export BAT_PAGER="less -RF"
 export BAT_STYLE="changes,numbers"
 export BAT_THEME="Nord"
 
@@ -154,7 +147,6 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 export FZF_DEFAULT_COMMAND="git ls-files --cached --others --exclude-standard 2>/dev/null || fd $FD_OPTIONS"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
-export MANPATH="/usr/local/share/fzf/man:$MANPATH"
 
 # Setup GEM_HOME and gem binary path -- Louis 2018/1220
 export GEM_HOME=~/.gem

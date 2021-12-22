@@ -127,7 +127,7 @@ cd_with_fzf() {
 
 # vim the file selected from fzf -- Louis 2021/1125
 vim_with_fzf() {
-    vim_file="$(fd -t f -H -I | fzf --preview="bat -f {}" --bind="space:toggle-preview" --preview-window=:hidden)"
+    vim_file="$(fd -t f -H -I | fzf --preview="batcat --color always {}" --bind="space:toggle-preview" --preview-window=:hidden)"
     [[ ! -z "$vim_file" ]] && vim "$vim_file"
 }
 

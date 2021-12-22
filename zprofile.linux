@@ -134,7 +134,7 @@ export FD_OPTIONS="--hidden --follow --exclude .git"
 # Configure "sharkdp/bat", cat analogue with syntax highlighting -- Louis 2021/0523
 export BAT_PAGER="less -RF"
 export BAT_STYLE="changes,numbers"
-export BAT_THEME="Nord"
+export BAT_THEME="Monokai Extended"
 
 # 'junegunn/fzf', command line fuzzy finder
 # Do do preview fisrt, need to think about it -- Louis 2021/0523

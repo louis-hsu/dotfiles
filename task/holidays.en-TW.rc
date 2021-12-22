@@ -3,6 +3,7 @@
 # Revise for 2019 -- Louis 20190217
 # Revise for 2020 -- Louis 20190902
 # Revise for 2021 -- Louis 20210115
+# Revise for 2022 -- Louis 20211222
 
 holiday.en-TW1.name=New Year's Day
 holiday.en-TW1.date=20200101
@@ -34,6 +35,7 @@ holiday.en-TW14.name=Mid-Autumn Festival
 holiday.en-TW14.date=20201002
 holiday.en-TW15.name=ROC National Day
 holiday.en-TW15.date=20201009
+
 holiday.en-TW16.name=New Year's Day
 holiday.en-TW16.date=20210101
 holiday.en-TW17.name=Chinese New Year
@@ -63,4 +65,29 @@ holiday.en-TW28.date=20210921
 holiday.en-TW29.name=ROC National Day
 holiday.en-TW29.date=20211011
 holiday.en-TW30.name=New Year's Day
-holiday.en-TW29.date=20211231
+holiday.en-TW30.date=20211231
+
+holiday.en-TW31.name=Chinese New Year's Eve
+holiday.en-TW31.date=20220131
+holiday.en-TW32.name=Chinese New Year
+holiday.en-TW32.date=20220201
+holiday.en-TW33.name=Chinese New Year
+holiday.en-TW33.date=20220202
+holiday.en-TW34.name=Chinese New Year
+holiday.en-TW34.date=20220203
+holiday.en-TW35.name=Chinese New Year
+holiday.en-TW35.date=20220204
+holiday.en-TW36.name=228 Peace Memorial Day
+holiday.en-TW36.date=20220228
+holiday.en-TW37.name=Children's Day
+holiday.en-TW37.date=20220404
+holiday.en-TW38.name=Qing Ming Festival
+holiday.en-TW38.date=20220405
+holiday.en-TW39.name=Labour Day
+holiday.en-TW39.date=20220502
+holiday.en-TW40.name=Dragon Boat Festival
+holiday.en-TW40.date=20220603
+holiday.en-TW41.name=Mid-Autumn Festival
+holiday.en-TW41.date=20220909
+holiday.en-TW42.name=ROC National Day
+holiday.en-TW42.date=20221010

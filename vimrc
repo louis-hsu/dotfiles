@@ -86,9 +86,9 @@ imap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 "
 " Change to tab usage --Louis 20190520
 " move between buffers
-nnoremap <leader>l  :bnext!<CR>
-nnoremap <leader>h  :bprev!<CR>
-nnoremap <leader>b  :enew!<CR>
+nnoremap <leader>bn  :bnext!<CR>
+nnoremap <leader>bp  :bprev!<CR>
+nnoremap <leader>be  :enew!<CR>
 "
 "set formatoptions=cro " config behavior of comment leader
 ""set autowrite " auto save when switching buffer"

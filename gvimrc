@@ -23,6 +23,7 @@ hi CursorLine   guibg=#1c1c1c
 hi CursorColumn guibg=#1c1c1c
 hi Search       guifg=#080808
 hi CursorLineNr gui=bold    guifg=#ffd787
+hi Comment      guifg=#878787
 
 " Fix color mode support in terminal mode -- Louis 2021/0628
 set guioptions+=!

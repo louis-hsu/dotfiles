@@ -91,7 +91,7 @@ nnoremap <leader>bp  :bprev!<CR>
 nnoremap <leader>be  :enew!<CR>
 "
 "set formatoptions=cro " config behavior of comment leader
-""set autowrite " auto save when switching buffer"
+"set autowrite " auto save when switching buffer
 "
 " --------------------- Jellybeans color fine-tune
 "colorscheme jellybeans
@@ -159,7 +159,8 @@ nnoremap <C-I><C-I> :IndentLinesToggle<CR> " double C-I to turn on/off indentlin
 
 " vim-bufkill
 " Set command to trigger buffer kill -- Louis 2021/0521
-map <C-c> :BD<cr>
+" map <C-c> :BD<cr>
+nnoremap <leader>bd  :BD<CR>
 
 " NerdTree setup -- Louis 2021/0521
 nnoremap <leader>no     :NERDTreeFocus<CR>

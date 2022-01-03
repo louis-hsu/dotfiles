@@ -24,7 +24,8 @@
 #
 ###############################################################################
 
-rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,scheduled,due.today,due,blocked,blocking,recurring,tagged,uda.
+#rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,scheduled,due.today,due,blocked,blocking,recurring,tagged,uda.
+rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,due.today,overdue,due,scheduled,blocked,blocking,recurring,tagged,uda.
 
 # General decoration
 color.label=
@@ -42,7 +43,8 @@ color.deleted=
 color.active=rgb555 on rgb410
 #color.recurring=rgb013
 color.recurring=color2
-color.scheduled=on rgb001
+#color.scheduled=black on blue
+color.scheduled=yellow
 color.until=
 #color.blocked=white on color8
 #color.blocking=black on color15
@@ -66,10 +68,11 @@ color.tag.none=
 color.tagged=
 
 # Due
-#color.due.today=rgb400
-color.due.today=color15 on color9
-color.due=color1
-color.overdue=color13
+color.due.today=color7 on rgb100
+#color.due.today=color15 on color9
+#color.due.today=black on color9
+color.due=color9
+color.overdue=color1 on grey5
 
 # Report: burndown
 color.burndown.done=on rgb010
@@ -93,6 +96,7 @@ color.calendar.overdue=grey1 on color5
 color.calendar.today=color15 on rgb013
 color.calendar.weekend=on color238
 color.calendar.weeknumber=color4
+color.calendar.scheduled=rgb001 on yellow
 
 # Command: sync
 color.sync.added=rgb010

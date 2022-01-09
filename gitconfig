@@ -4,9 +4,10 @@
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
-[mergetool "sourcetree"]
+# Commit out in Ubuntu environment -- Louis 2022/0109
+#[mergetool "sourcetree"]
 	cmd = /Applications/Third_Party/Development/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+#	trustExitCode = true
 [user]
 	name = Louis Hsu
 	email = louis.shiu@gmail.com

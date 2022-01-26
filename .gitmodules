@@ -1,9 +1,6 @@
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm.git
-[submodule "tmux/plugins/nord-tmux"]
-	path = tmux/plugins/nord-tmux
-	url = git@github.com:louis-hsu/nord-tmux.git
 [submodule "task/taskopen"]
 	path = task/taskopen
 	url = git@github.com:jschlatow/taskopen.git

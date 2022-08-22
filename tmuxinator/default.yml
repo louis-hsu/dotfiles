@@ -32,23 +32,23 @@ startup_pane: 1
 # post: tmux -CC attach -t default
 
 windows:
-    - environment:
-      #layout: cd1b,204x53,0,0[204x26,0,0,3,204x26,0,27{102x26,0,27,5,101x26,103,27,6}]
-        layout: 3852,238x63,0,0{119x63,0,0,27,118x63,120,0[118x31,120,0,28,118x31,120,32,29]}
-        # Synchronize all panes of this window, can be enabled before or after the pane commands run.
-        # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'
-        # synchronize: after
-        panes:
-#            - cd "<%= @args[0] %>" && ls
-#            - cd "<%= @args[0] %>" # general
-            - cd "<%= @args[0] %>"
-            -
-            -
-    - working:
-        layout: 8136,238x64,0,0{119x64,0,0,0,118x64,120,0,1}
-        panes:
-            #cd "<%= @args[0] %>" && vim -c ":vsplit"
-            -
-            -
+  - environment:
+      layout: 3852,238x63,0,0{119x63,0,0,27,118x63,120,0[118x31,120,0,28,118x31,120,32,29]}
+      # Synchronize all panes of this window, can be enabled before or after the pane commands run.
+      # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'
+    # synchronize: after
+      panes:
+        #- cd "<%= @args[0] %>" && ls
+        #- cd "<%= @args[0] %>" # general
+        #- cd "<%= @args[0] %>"
+        -
+        -
+        - cht.sh --shell
+  - working:
+      layout: 8136,238x64,0,0{119x64,0,0,0,118x64,120,0,1}
+      panes:
+        #cd "<%= @args[0] %>" && vim -c ":vsplit"
+        -
+        -
 #  - server: bundle exec rails s
 #  - logs: tail -f log/development.log

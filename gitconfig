@@ -1,19 +1,21 @@
 [core]
 #	excludesfile = /Users/nshiu/.gitignore_global
-	excludesfile = ~/.gitignore_global
+  excludesfile = ~/.gitignore_global
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/Third_Party/Development/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/Third_Party/Development/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [user]
-	name = Louis Hsu
-	email = louis.shiu@gmail.com
+  name = Louis Hsu
+  email = louis.shiu@gmail.com
 [commit]
 #	template = /Users/nshiu/.stCommitMsg
-	template = ~/.stCommitMsg
+  template = ~/.stCommitMsg
 [color]
-	ui = auto
+  ui = auto
 [advice]
-    addIgnoreFile = false
+  addIgnoreFile = false
+[push]
+  default = current

@@ -1,6 +1,6 @@
 
 #BROWSER='xdg-open'
-EDITOR='vim'
+EDITOR='nvim'
 TASKBIN='task'
 
 # If you sync tasks NOTES_FOLDER should be a location that syncs and is available to

@@ -38,7 +38,7 @@ calendar.holidays=sparse
 calendar.details=full
 
 search.case.sensitive=no
-uda.priority.values=H,M,L,
+uda.priority.values=H,M, ,L,
 
 # Sync with Freecinc -- Louis 2019 1015
 taskd.server=freecinc.com:53589
@@ -57,14 +57,14 @@ taskd.trust=ignore hostname
 
 report.next.columns=id,start.age,depends,priority,project,tags,recur,scheduled,due,until.relative,description,urgency
 report.next.labels=ID,Active,Deps,P,Project,Tag,Recur,Start,Due,Until,Description,Urg
-report.next.sort=project+/,due+,scheduled+,urgency-
+report.next.sort=project+/,due+,priority-/,scheduled+,urgency-
 report.next.filter=status:pending
 
 report.ready.columns=id,start.age,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled,due,until.remaining,description,urgency
 report.ready.labels=ID,Active,Age,Deps,P,Project,Tags,Recur,Start,Due,Until,Description,Urg
-report.ready.sort=due+,scheduled+,urgency-
+report.ready.sort=project+/,due+,priority-/,scheduled+,urgency-
 
 report.all.columns=id,status.short,uuid.short,start.active,end.age,depends.indicator,priority,project.parent,tags.count,recur.indicator,wait.remaining,scheduled,due,until.remaining,description
 report.all.labels=ID,St,UUID,A,Done,D,P,Project,Tags,R,Wait,Start,Due,Until,Description
-report.all.sort=project+/,due+,scheduled+,urgency-
+report.all.sort=project+/,due+,priority-/,scheduled+,urgency-
 news.version=2.6.0

@@ -1,0 +1,9 @@
+\.git
+\.gitignore
+\.gitmodules
+
+^/README.*
+
+^/.*\.sh
+^/task.*
+\.obsolete

@@ -4,6 +4,7 @@
 
 ^/README.*
 
+\.bin
 ^/.*\.sh
 ^/task.*
 \.obsolete

@@ -11,11 +11,13 @@ BLUE='\033[1;34m'
 RED='\033[1;30m'
 NC='\033[0m'
 
+# Handle dot-files with 'stow' -- Louis
+
 # Navigate to the directory of this script (generally ~/.dotfiles/.bin)
 # I put it in .dotfiles directly and ingore .sh file in stow-local-ignore
 # -- Louis 2022/0823
 cd $(dirname $(readlink -f $0))
-#cd ..
+cd ..
 
 echo "${BLUE}Stashing existing changes...${NC}"
 stash_result=$(git stash push -m "sync-dotfiles: Before syncing dotfiles")

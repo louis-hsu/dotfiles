@@ -4,3 +4,7 @@
 contrib
 dot-vim/plugged/
 dot-tmux/plugins/
+dot-zprezto/
+
+# Avoid mafrosis-dotfiles temporarily
+mafrosis-dotfiles.git/

@@ -1,0 +1,59 @@
+#! /bin/bash -e
+#
+# Modified from https://github.com/mafrosis/dotfiles.git
+# 1. Install basic packages first (nala/git/homebrew)
+# 2. Update packages
+# 3. Then install each tools
+# -- Louis 2022/0824
+
+GREEN='\033[1;32m'
+BLUE='\033[1;34m'
+RED='\033[1;31m'
+NC='\033[0m'
+PLATFORM=$(uname)
+
+function macOSPreparation {
+    if ! command -v brew >/dev/null 2>&1; then
+        echo -e "${BLUE}Install Homebrew first and update/upgrade pkgs...${NC}"
+        bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+
+    brew update
+    brew upgrade
+
+    # Install git/stow
+    echo -e "${BLUE}Install git/stow if not there...${NC}"
+    brew install git
+    brew install stow
+}
+
+function linuxPreparation {
+    if [ ! command -v nala >/dev/null 2>&1 ]; then
+        echo -e "${BLUE}Install nala (better pkg mgmt) and update/upgrade pkgs ... ${NC}"
+        sudo apt install -y nala
+        sudo nala update
+        sudo nala upgrade -y
+    fi
+
+    # Install git/stow
+    echo -e "${BLUE}Install git/stow if not there...${NC}"
+    sudo nala install -y git
+    sudo nala install -y stow
+}
+
+if [[ ${PLATFORM} == 'Darwin' ]]; then
+    macOSPreparation
+else
+    linuxPreparation
+fi
+
+# Go through each tool folder and run install.sh if existing
+for d in $(ls -d */ | cut -f1 -d'/'); do
+    if [ ! -f ./$d/installtest.sh ]; then
+        echo -e "${RED}$d${NC} has no installtest.sh, passed..."
+    else
+        echo -e "${GREEN}Proceed $d installation${NC}..."
+        bash "./$d/installtest.sh"
+    fi
+done
+

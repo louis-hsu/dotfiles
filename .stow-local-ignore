@@ -8,3 +8,6 @@
 ^/.*\.sh
 ^/task.*
 \.obsolete
+
+# Avoid stow mafrosis-dotfiles temporarily
+^/.*\.git

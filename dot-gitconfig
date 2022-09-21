@@ -18,3 +18,5 @@
 	ui = auto
 [advice]
     addIgnoreFile = false
+[alias]
+	summary = !which onefetch && onefetch

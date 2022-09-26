@@ -1,6 +1,6 @@
 # ~/.tmuxinator/default.yml
 
-name: default
+name: Judith
 #root: ~/Development/
 startup_pane: 1
 

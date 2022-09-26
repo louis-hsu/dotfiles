@@ -42,9 +42,9 @@ set nocompatible
 filetype plugin indent on
 syntax enable
 
-" set tab to 4 spaces
-set tabstop=4
-set shiftwidth=4
+" set tab to 2 spaces
+set tabstop=2
+set shiftwidth=2
 set expandtab
 
 " setup backup dir to ~/.tmp for swp files --Louis 2018/1219

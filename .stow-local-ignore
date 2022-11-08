@@ -1,0 +1,10 @@
+\.git
+\.gitignore
+\.gitmodules
+^/.*\.git
+
+^/README.*
+
+\.bin
+^/.*\.sh
+\.obsolete

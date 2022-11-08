@@ -1,0 +1,86 @@
+help
+cd adb
+adb install
+adb shell pm
+cd python
+append file
+exit
+help
+exit
+help
+list
+/:help
+\:list
+exit
+clear
+help
+cd shell
+cd tar
+help
+tar
+tar unzip
+clear
+help
+exit
+adb
+tr
+zip
+hhlxxxiC-lllw
+ar
+chown
+python
+python3:print
+python
+shell python
+clear
+cd python
+print
+cd ..
+cd go
+join a list
+exit
+cd go
+join a list
+exit
+cd go
+join a list
+exit
+cd go
+join a list
+exit
+cd go
+join a list
+exit
+cd go
+join a list
+ls
+cd go
+join a list
+exit
+cd go
+join a list
+exit
+help
+find
+exit
+help
+update
+version
+clear
+/:help
+:vim
+:styles
+:help
+exit
+help
+cd 
+cd
+cd bash
+ls
+$@
+exit
+help
+cd bash
+$@
+version
+exit

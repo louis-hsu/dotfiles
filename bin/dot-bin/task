@@ -1,0 +1,26 @@
+#! /bin/bash
+# Replace taskwarrior 'task' by convert tags to uppercase
+# Not sure if that is useful, let's see
+# -- Louis 2022/1025
+
+GREEN='\033[1;32m'
+NC='\033[0m'
+pre="^\+"
+mre="^\-"
+
+unset tArray
+unset tString
+
+# Handle other parameters by converting to uppercase and array
+#tArray=($(echo $@ | tr '[a-z]' '[A-Z]' | tr ' ' "\n"))
+tArray=($(echo $@ | tr ' ' "\n"))
+
+# if parameter = 'ALL', list all projects 
+# Otherwise, compose tag array
+for tag in ${tArray[@]}; do
+  if [[ $tag =~ $pre || $tag =~ $mre ]]; then tag=`echo ${tag} | tr '[a-z]' '[A-Z]'`; fi 
+  tString="${tString} ${tag}"
+done
+#tString=`echo $tString | tr -cd "[:print:]"`
+
+/opt/homebrew/bin/task $tString

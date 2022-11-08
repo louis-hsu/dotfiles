@@ -1,5 +1,0 @@
-#!/bin/sh
-#
-# Sleepwatcher action for into sleep mode
-#/usr/sbin/diskutil list | grep -e 'disk[1-9]s.*' | sed 's/.*\(disk[0-9].*\)/\1/' | xargs -I{} /usr/sbin/diskutil unmount {}
-/usr/sbin/diskutil unmountDisk Van\ Gogh

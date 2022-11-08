@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# Sleepwatcher action for wakeup
+#/usr/sbin/diskutil list | grep -e ' +[0-9]+: +[^ ]+ [^ ]+' | sed 's/.(disk[0-9].)/\1/' | xargs -I{} /usr/sbin/diskutil mount {}
+/usr/sbin/diskutil mountDisk Van\ Gogh

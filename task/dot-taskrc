@@ -1,0 +1,74 @@
+# [Created by task 2.5.1 2/21/2017 17:48:57]
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-color',
+# 'man task-sync' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
+
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/.task
+
+# Color theme (uncomment one to use)
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-16.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-16.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-red-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-green-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-blue-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-violets-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-yellow-green.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-gray-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-gray-blue-256.theme
+#include /usr/local/Cellar/task/2.5.3/share/doc/task/rc/solarized-dark-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/solarized-light-256.theme
+#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/no-color.theme
+include ~/.task/nshiu-dark-256.theme
+
+regex=yes
+
+# calendar setup
+include ~/.task/holidays.en-TW.rc
+calendar.holidays=sparse
+calendar.details=full
+
+search.case.sensitive=no
+uda.priority.values=H,M, ,L,
+
+# Sync with Freecinc -- Louis 2019 1015
+taskd.server=freecinc.com:53589
+taskd.key=\/Users\/nshiu\/.task\/freecinc_91d14d71.key.pem
+taskd.certificate=\/Users\/nshiu\/.task\/freecinc_91d14d71.cert.pem
+taskd.ca=\/Users\/nshiu\/.task\/freecinc_91d14d71.ca.pem
+taskd.credentials=FreeCinc\/freecinc_91d14d71\/cb726799-7d15-436e-88d8-97d13f2148d6
+
+# Sync with Inthe.AM -- Louis 2019 1015
+#taskd.server=inthe.am:53589
+#taskd.key=\/Users\/nshiu\/.task\/private.key.pem
+#taskd.certificate=\/Users\/nshiu\/.task\/private.certificate.pem
+#taskd.ca=\/Users\/nshiu\/.task\/ca.cert.pem
+#taskd.credentials=inthe_am\/louis.shiu\/ed96e182-46fe-45b0-a6d9-0da742990317
+taskd.trust=ignore hostname
+
+report.next.columns=id,start.age,depends,priority,project,tags,recur,scheduled,due,until.relative,description,urgency
+report.next.labels=ID,Active,Deps,P,Project,Tags,Recur,Start,Due,Until,Description,Urg
+report.next.sort=project+/,due+,priority-/,scheduled+,urgency-
+report.next.filter=status:pending
+
+report.ready.columns=id,start.age,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled,due,until.remaining,description,urgency
+report.ready.labels=ID,Active,Age,Deps,P,Project,Tags,Recur,Start,Due,Until,Description,Urg
+report.ready.sort=project+/,due+,priority-/,scheduled+,urgency-
+
+report.all.columns=id,status.short,uuid.short,start.active,end.age,depends.indicator,priority,project.parent,tags.count,recur.indicator,wait.remaining,scheduled,due,until.remaining,description
+report.all.labels=ID,St,UUID,A,Done,D,P,Project,Tags,R,Wait,Start,Due,Until,Description
+report.all.sort=project+/,due+,priority-/,scheduled+,urgency-
+news.version=2.6.0
+
+# Control the verbosity of feedback
+# Remove sync from verbose -- Louis 2022/1025
+#verbose=blank,header,footnote,label,new-id,affected,edit,special,project,unwait,recur

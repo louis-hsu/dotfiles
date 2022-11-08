@@ -1,0 +1,50 @@
+#! /bin/bash
+# 
+# Create projectinfo command to search HMD projects with task commands:
+# 1. List all on-going/history projects (keyword: all)
+# 2. If other parameter(s) provided:
+#    a. if 'all' then list all projects and ignore other parameters
+#    b. otherwise, treat them as tags and query
+#    c. if only one, show note attached (taskopen)
+#    d. if more than one, show return list
+# 2. taskopen specific project (project abbr.)
+# 3. List projects for specific tag (ODM, A12, etc)
+# -- Louis 2022/0829
+
+GREEN='\033[1;32m'
+NC='\033[0m'
+re="^\+"
+
+unset pArray
+unset pString
+
+if [[ $# -eq 0 ]]; then
+  clear
+  task project:1Page priority != L
+  exit 0
+fi
+
+# Handle other parameters by converting to uppercase and array
+pArray=($(echo $@ | tr '[a-z]' '[A-Z]' | tr ' ' "\n"))
+
+# if parameter = 'ALL', list all projects 
+# Otherwise, compose tag array
+for tag in ${pArray[@]}; do
+  if [[ ! ($tag =~ $re) ]]; then tag="+$tag"; fi 
+  if [[ $tag = "+ALL" ]]; then
+    clear
+    task project:1Page
+    exit 0
+  else
+    pString="${pString} ${tag}"
+  fi  
+done
+
+# Check how many tasks are returned from the last line
+if [[ `task rc.verbose=affected project:1Page $pString | tail -n 1 | \ag -o '[0-9].'` -eq 1 ]]; then
+  #task project:1Page $pString | awk '{$1=$1};1' | sed -n '4 p' | cut -d " " -f 1 | xargs -o taskopen
+  task rc.verbose=affected project:1Page $pString | awk '{$1=$1};1' | head -n 1 | cut -d " " -f 1 | xargs -o taskopen
+else
+  clear
+  task project:1Page $pString 
+fi 

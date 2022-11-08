@@ -1,0 +1,15 @@
+/\.git*/
+/images/
+/tmp/
+*.sql
+*.tags*
+*.gemtags*
+*.csv
+*.tsv
+*.tmp*
+*.js
+*.css
+*.scss
+*.old
+*.plist
+*.pdf

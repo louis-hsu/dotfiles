@@ -35,16 +35,17 @@ windows:
     - status: btop
     - environment:
       #layout: cd1b,204x53,0,0[204x26,0,0,3,204x26,0,27{102x26,0,27,5,101x26,103,27,6}]
-        layout: 3852,238x63,0,0{119x63,0,0,27,118x63,120,0[118x31,120,0,28,118x31,120,32,29]}
+      #layout: 3852,238x63,0,0{119x63,0,0,27,118x63,120,0[118x31,120,0,28,118x31,120,32,29]}
+        layout: 40df,214x59,0,0[214x29,0,0,7,214x29,0,30{107x29,0,30,12,106x29,108,30,13}]
         # Synchronize all panes of this window, can be enabled before or after the pane commands run.
         # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'
         # synchronize: after
         panes:
 #            - cd "<%= @args[0] %>" && ls
 #            - cd "<%= @args[0] %>" # general
-            -
-            -
-            -
+            - dry -m
+            - duf -hide-fs nfs4
+            - sudo iptraf
     - working:
         layout: 8136,238x64,0,0{119x64,0,0,0,118x64,120,0,1}
         panes:

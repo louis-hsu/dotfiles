@@ -1,5 +1,6 @@
 # Dotfiles
 My shell (zsh) and applications configuration dotfiles managed by shell scripts and stow
+
 Github URL: https://github.com/louis-hsu/dotfiles
 
 ## Update History

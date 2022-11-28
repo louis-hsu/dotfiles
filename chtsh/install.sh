@@ -26,7 +26,10 @@ if ! command -v cht.sh >/dev/null 2>&1; then
       sudo nala install -y rlwrap 
     fi
   fi
-  curl -s https://cht.sh/:cht.sh | sudo tee /usr/local/bin/cht.sh && sudo chmod +x /usr/local/bin/cht.sh
+  # Change to install in ~/.bin folder to avoid sudo permission
+  # -- Louis 11/25/2022
+  # curl -s https://cht.sh/:cht.sh | sudo tee /usr/local/bin/cht.sh && sudo chmod +x /usr/local/bin/cht.sh
+  curl -s https://cht.sh/:cht.sh | tee ~/.bin/cht.sh && chmod +x ~/.bin/cht.sh
 fi
 
 # Remove existing files/directories in .dotfiles and home directory 

@@ -14,21 +14,14 @@ NC='\033[0m'
 DOTFILES_PATH=$HOME/.dotfiles
 
 echo -e "${BLUEB}-------- .git* start${NC}"
-# Install git package if not there
-if ! command -v git >/dev/null 2>&1; then
-  echo -e "${RED}Package ${REDB}git ${RED}is not there, install the package first...${NC}"
-  if [[ $(uname) = 'Darwin' ]]; then
-    brew install git
-  else
-    sudo nala install -y git
-  fi 
-fi
-
 # 1. Install Homebrew git for macOS if not there
 # 2. Git is native in Ubuntu, but still check
 if [[ $(uname) = 'Darwin' ]]; then 
-  if [[ ! -f /opt/homebrew/bin/git ]]; then brew install git; fi
+  if [[ ! -f /opt/homebrew/bin/git ]]; then 
+  echo -e "${RED}Package ${REDB}git ${RED}is not there, install the package first...${NC}"
+  brew install git
 elif ! command -v git >/dev/null 2>&1; then
+  echo -e "${RED}Package ${REDB}git ${RED}is not there, install the package first...${NC}"
   sudo nala install -y git
 fi 
 

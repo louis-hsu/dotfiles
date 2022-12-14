@@ -98,9 +98,9 @@ printf "\nLooking up IP in the installed GeoIP database..\n"
 #file_country="/usr/share/GeoIP/GeoLite2-Country.mmdb"
 #file_city="/usr/share/GeoIP/GeoLite2-City.mmdb"
 #file_asn="/usr/share/GeoIP/GeoLite2-ASN.mmdb"
-file_country="/var/lib/GeoIP/GeoLite2-Country.mmdb"
-file_city="/var/lib/GeoIP/GeoLite2-City.mmdb"
-file_asn="/var/lib/GeoIP/GeoLite2-ASN.mmdb"
+file_country="/opt/homebrew/var/GeoIP/GeoLite2-Country.mmdb"
+file_city="/opt/homebrew/var/GeoIP/GeoLite2-City.mmdb"
+file_asn="/opt/homebrew/var/GeoIP/GeoLite2-ASN.mmdb"
 
 city_string=`mmdblookup                 --file ${file_city}    --ip "$cip" city names en 2>/dev/null`
 subdivision_string=`mmdblookup          --file ${file_city}    --ip "$cip" subdivisions 0 names en 2>/dev/null`

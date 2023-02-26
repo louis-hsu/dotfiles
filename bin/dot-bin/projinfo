@@ -10,6 +10,8 @@
 # 2. taskopen specific project (project abbr.)
 # 3. List projects for specific tag (ODM, A12, etc)
 # -- Louis 2022/0829
+#
+# Update script since leaving HMD - Louis 01/23/2023
 
 GREEN='\033[1;32m'
 NC='\033[0m'
@@ -33,7 +35,7 @@ for tag in ${pArray[@]}; do
   if [[ ! ($tag =~ $re) ]]; then tag="+$tag"; fi 
   if [[ $tag = "+ALL" ]]; then
     clear
-    task project:1Page
+    task project:HMD
     exit 0
   else
     pString="${pString} ${tag}"
@@ -46,5 +48,5 @@ if [[ `task rc.verbose=affected project:1Page $pString | tail -n 1 | \ag -o '[0-
   task rc.verbose=affected project:1Page $pString | awk '{$1=$1};1' | head -n 1 | cut -d " " -f 1 | xargs -o taskopen
 else
   clear
-  task project:1Page $pString 
+  task project:HMD $pString 
 fi 

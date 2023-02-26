@@ -41,7 +41,7 @@ windows:
         #- cd "<%= @args[0] %>" && ls
         #- cd "<%= @args[0] %>" # general
         #- cd "<%= @args[0] %>"
-        -
+        - neofetch
         -
         - cht.sh --shell
   - working:
@@ -50,11 +50,12 @@ windows:
         #cd "<%= @args[0] %>" && vim -c ":vsplit"
         -
         -
-  - HMD:
-      layout: even-horizontal
-      panes:
-        - project_info:
-          - projinfo
-        - 
+# Remove 'HMD' window since going to leave -- Louis 2023/0110
+#  - HMD:
+#      layout: even-horizontal
+#      panes:
+#        - project_info:
+#          - projinfo
+#        - 
 #  - server: bundle exec rails s
 #  - logs: tail -f log/development.log

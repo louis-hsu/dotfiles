@@ -22,7 +22,8 @@ unset pString
 
 if [[ $# -eq 0 ]]; then
   clear
-  task project:1Page priority != L
+  #task project:1Page priority != L
+  task project:HMD priority != L
   exit 0
 fi
 
@@ -43,9 +44,11 @@ for tag in ${pArray[@]}; do
 done
 
 # Check how many tasks are returned from the last line
-if [[ `task rc.verbose=affected project:1Page $pString | tail -n 1 | \ag -o '[0-9].'` -eq 1 ]]; then
+#if [[ `task rc.verbose=affected project:1Page $pString | tail -n 1 | \ag -o '[0-9].'` -eq 1 ]]; then
+if [[ `task rc.verbose=affected project:HMD $pString | tail -n 1 | \ag -o '[0-9].'` -eq 1 ]]; then
   #task project:1Page $pString | awk '{$1=$1};1' | sed -n '4 p' | cut -d " " -f 1 | xargs -o taskopen
-  task rc.verbose=affected project:1Page $pString | awk '{$1=$1};1' | head -n 1 | cut -d " " -f 1 | xargs -o taskopen
+  #task rc.verbose=affected project:1Page $pString | awk '{$1=$1};1' | head -n 1 | cut -d " " -f 1 | xargs -o taskopen
+  task rc.verbose=affected project:HMD $pString | awk '{$1=$1};1' | head -n 1 | cut -d " " -f 1 | xargs -o taskopen
 else
   clear
   task project:HMD $pString 

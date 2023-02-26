@@ -1,0 +1,10 @@
+#! /bin/bash -e
+# Command 'mv' with progress status
+# https://www.baeldung.com/linux/moving-files-showing-progress#3-a-better-way
+# -- Louis 2022/1011
+
+# Safety check
+[ "$#" -eq 0 ] && echo -e "No input files" && exit 1
+
+rsync -ahP --no-o --no-g --no-perms --remove-source-files "$@" && rm -rf "${@:1:$#-1}"
+

@@ -5,7 +5,7 @@ Github URL: https://github.com/louis-hsu/dotfiles
 
 ## Update History
 
-#### Nov 09, 200
+#### Nov 09, 2022
 Change the whole structure of dotfiles management
 1. Introduce 'stow' with corresponding shell scripts 
 2. Focus on macOS first
@@ -30,10 +30,10 @@ Use stow to manage dotfiles management and symlink
 1. Reinstall MacVim via Homebrew to get more active version update, and updae .zshrc accordingly
 2. Move unused Vim plugin to new folder "unbundle" 
 3. Update .vimrc:
-  * Change email configuration for vim-template
-  * Update configuration of vim-ctrlp
-  * Remove vim-expand-region
-  * Update configuration of vim-NERDTree
+   * Change email configuration for vim-template
+   * Update configuration of vim-ctrlp
+   * Remove vim-expand-region
+   * Update configuration of vim-NERDTree
 
 Next step is to clean .vimrc and update vimscript
 

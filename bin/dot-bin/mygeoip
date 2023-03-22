@@ -36,6 +36,11 @@
 # Customization:
 # * Find current public IP then identify geolocation
 # -- Louis 2022/1208
+#
+# Or can use following command to get geo info if something wrong about 
+# MaxMind geo db/API
+# curl ipinfo.io/$(curl checkip.amazonaws.com) | jq 
+# -- Louis 2023-03-22 09:13
 
 #####################################################################
 # Functions

@@ -1,23 +1,49 @@
+# Switch from 'less' to 'delta' -- Louis 2023-03-28
 [core]
-#	excludesfile = /Users/nshiu/.gitignore_global
-	excludesfile = /Users/nshiu/.gitignore_global
-	pager = less -RF
+  excludesfile = /Users/nshiu/.gitignore_global
+  pager = delta
+
+# Setup for delta theme and customization -- Louis 2023-03-28 17:51
+[include]
+  path = ~/.config/detla/themes.gitconfig 
+
+# Specify to theme 'nshiu_nordbase' for better configuration -- Louis 2023-05-12 16:55
+[delta]
+  features = nshiu_nordbase
+
+[interactive]
+  diffFilter = delta --color-only
+
+[merge]
+  conflictstyle = diff3
+
+[diff]
+  colorMoved = default
+
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
+
 [mergetool "sourcetree"]
-	cmd = /Applications/Third_Party/Development/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/Third_Party/Development/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
+
 [user]
-	name = Louis Hsu
-	email = louis.shiu@gmail.com
+  name = Louis Hsu
+  email = louis.shiu@gmail.com
+
 [commit]
-	template = ~/.stCommitMsg
+  template = ~/.stCommitMsg
+
 [color]
   ui = auto
+
 [advice]
   addIgnoreFile = false
+
 [push]
   default = current
+
 [alias]
-	summary = !which onefetch && onefetch
+  summary = !which onefetch && onefetch
+  sbs = !git -c delta.side-by-side=true

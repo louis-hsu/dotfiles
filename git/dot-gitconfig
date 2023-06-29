@@ -10,6 +10,7 @@
 # Specify to theme 'nshiu_nordbase' for better configuration -- Louis 2023-05-12 16:55
 [delta]
   features = nshiu_nordbase
+  side-by-side = false
 
 [interactive]
   diffFilter = delta --color-only
@@ -25,8 +26,8 @@
 	path = 
 
 [mergetool "sourcetree"]
-  cmd = /Applications/Third_Party/Development/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
+	cmd = /Applications/Third_Party/Development/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
 
 [user]
   name = Louis Hsu
@@ -45,5 +46,5 @@
   default = current
 
 [alias]
-  summary = !which onefetch && onefetch
-  sbs = !git -c delta.side-by-side=true
+  summary = !/opt/homebrew/bin/onefetch
+  sdiff = -c delta.side-by-side=true diff

@@ -4,3 +4,4 @@
 contrib
 vim/plugged/
 tmux/plugins
+.obsolete

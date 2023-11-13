@@ -8,8 +8,8 @@
 *.tsv
 *.tmp*
 *.js
-*.css
-*.scss
+#*.css
+#*.scss
 *.old
-*.plist
+#*.plist
 *.pdf

@@ -1,8 +1,7 @@
 # ~/.tmuxinator/default.yml
 
 name: Judith
-#root: ~/Development/
-startup_pane: 1
+root: ~/
 
 # Optional tmux socket
 # socket_name: foo
@@ -23,7 +22,7 @@ startup_pane: 1
 # startup_window: editor
 
 # Specitifes (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
-# startup_pane: 1
+startup_pane: 1
 
 # Controls whether the tmux session should be attached to automatically. Defaults to true.
 # attach: false
@@ -44,12 +43,18 @@ windows:
         - neofetch
         -
         - cht.sh --shell
+  - task_mgmt:
+      layout: de85,214x56,0,0{137x56,0,0,1,76x56,138,0,5}
+      panes:
+        - taskwarrior-tui
+        -
   - working:
       layout: 8136,238x64,0,0{119x64,0,0,0,118x64,120,0,1}
       panes:
         #cd "<%= @args[0] %>" && vim -c ":vsplit"
         -
         -
+  - nvim_ide:
 # Remove 'HMD' window since going to leave -- Louis 2023/0110
 #  - HMD:
 #      layout: even-horizontal

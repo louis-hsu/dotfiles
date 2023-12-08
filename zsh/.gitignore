@@ -3,3 +3,6 @@
 .DS_Store
 contrib
 dot-z*
+
+# Do not ignore dot-zfunc -- Louis 2023/1208
+!dot-zfunc

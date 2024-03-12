@@ -19,7 +19,7 @@ if [[ $searchResult =~ "attached" ]]; then # $session is attached, destory it
 
 else
   if [[ $searchResult == "" ]]; then # No $session, create it
-    tmux new-session -d -s $session
+    tmux new-session -d -c "#{pane_current_path}" -s $session
   fi 
 
   tmux send-keys -t $session:1 "$*" Enter

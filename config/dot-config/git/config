@@ -1,6 +1,23 @@
 # Switch from 'less' to 'delta' -- Louis 2023-03-28
+# Reference:
+# https://gist.github.com/pksunkara/988716
+# -- Louis 2024/0312
+#
+# TODO:
+# git-config doesn't accept $XDG_CONFIG_HOME varialbe but has to be 
+# explicit path. Need to find a way to replace explicit path by 
+# envirionment variable for more flexibility
+# -- Louis 2024/0312
+[user]
+  name = Louis Hsu
+  email = louis.shiu@gmail.com
+
+[init]
+  defaultBranch = master
+
 [core]
-  excludesfile = /Users/nshiu/.gitignore_global
+  editor = nvim
+  whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   pager = delta
 
 # Setup for delta theme and customization -- Louis 2023-03-28 17:51
@@ -29,12 +46,8 @@
 	cmd = /Applications/Third_Party/Development/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 
-[user]
-  name = Louis Hsu
-  email = louis.shiu@gmail.com
-
 [commit]
-  template = ~/.stCommitMsg
+  template = ~/.config/git/stCommitMsg
 
 [color]
   ui = auto

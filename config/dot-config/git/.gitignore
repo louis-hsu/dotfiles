@@ -2,4 +2,4 @@
 *.swp
 .DS_Store
 contrib
-dot-tmux
+*obsolete

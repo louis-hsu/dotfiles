@@ -12,7 +12,7 @@
 # -- Louis 2024/0311
 
 session="floating"
-searchResult=$(tmux list-sessions | \ag $session)
+searchResult=$(tmux list-sessions | \rg $session)
 
 if [[ $searchResult =~ "attached" ]]; then # $session is attached, destory it
   tmux kill-session -t $session
@@ -22,7 +22,7 @@ else
     tmux new-session -d -c "#{pane_current_path}" -s $session
   fi 
 
-  tmux send-keys -t $session:1 "$*" Enter
+  tmux send-keys -t $session:1 "clear; $*" Enter
   # Create popup display and attach it
   tmux popup -d "#{pane_current_path}" -h 80% -w 80%  -e LESS='-i -M -R -W -X -z-4 -g -j4' -e BAT_PAGER='less -R' -E "tmux attach-session -t $session" &
 fi

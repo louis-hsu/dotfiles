@@ -271,10 +271,14 @@
     plus-emph-style = syntax bold green
     whitespace-error-style = purple bold
 
+# Customized minus/plus style to get better background
+# -- Louis 2024/0315
 [delta "zebra-dark"]
-    minus-style = syntax "#330f0f"
+    #minus-style = syntax "#330f0f"
+    minus-style = syntax "#382f32"
     minus-emph-style = syntax "#4f1917"
-    plus-style = syntax "#0e2f19"
+    #plus-style = syntax "#0e2f19"
+    plus-style = syntax "#333b2f"
     plus-emph-style = syntax "#174525"
     map-styles = \
        bold purple => syntax "#330f29", \
@@ -442,19 +446,19 @@
     line-numbers-left-style = "#4C566A"
     line-numbers-right-format = " {np:>3} │"
     line-numbers-right-style = "#4C566A"
-    line-numbers-minus-style = "#BF616A" italic bold
-    line-numbers-plus-style = "#A3BE8C" italic bold
+    line-numbers-minus-style = "#BF616A" italic
+    line-numbers-plus-style = "#A3BE8C" italic
     line-numbers-zero-style = "#4C566A"
     line-numbers = true
     keep-plus-minus-markers = false
 
     # Diff contents
     inline-hint-style = syntax
-    minus-emph-style = syntax bold "#780000"
-    minus-style = syntax "#400000"
+    minus-emph-style = syntax bold
+    minus-style = syntax
     minus-non-emph-style = syntax auto
-    plus-emph-style = syntax bold "#007800"
-    plus-style = syntax "#004000"
+    plus-emph-style = syntax bold 
+    plus-style = syntax
     plus-non-emph-style = syntax auto
     zero-style = syntax
     whitespace-error-style = "#B48EAD" reverse

@@ -1,0 +1,33 @@
+
+# According man page and experiement, the precedence of ignroe files are
+# 1. Local > parent
+# 2. .rgignore > .ignore > .gitignore > files from `--ignore-file`
+# However, decide to set '--ignore-file' as global configuration instead of ~/.rgignore:
+# 1. Somehow rg doesn't honor rules for dot-prefix folders (.git, e.g.)
+# 2. Doesn't like too many dot-prefix files in home directory
+# -- Louis 2024/0324
+
+# Directory
+\.git*/
+*obsolete/
+images*/
+tmp/
+temp/
+log/
+
+# File type
+*.sql
+*.tags*
+*.gemtags*
+*.csv
+*.tsv
+*.tmp*
+#*.js
+#*.css
+#*.scss
+*.old
+*.swp
+#*.plist
+*.pdf
+*history
+

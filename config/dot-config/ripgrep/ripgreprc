@@ -1,0 +1,46 @@
+# Referred example:
+# https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+# -- Louis 2024/0323
+
+# Don't let ripgrep vomit really long lines to my terminal, and show a preview.
+#--max-columns=150
+--max-columns-preview
+
+# Add my 'web' type.
+--type-add
+web:*.{html,css,js}*
+
+# Search hidden files / directories (e.g. dotfiles) by default
+--hidden
+
+# Follow symbolic link
+--follow
+
+# Print prettier
+-p 
+
+# Using glob patterns to include/exclude files or folders
+#--glob=!.git/*
+
+# Set the colors.
+# Not working when output as JSON
+# -- Louis 2024/0324
+#--colors=line:none
+#--colors=line:style:bold
+
+# Because who cares about case!?
+--smart-case
+
+# Show line before/after match
+-C=2
+
+# Specify the ignore file 
+# According man page and experiement, the precedence of ignroe files are
+# 1. Local > parent
+# 2. .rgignore > .ignore > .gitignore > files from `--ignore-file`
+# However, decide to set '--ignore-file' as global configuration instead of ~/.rgignore:
+# 1. Somehow rg doesn't honor rules for dot-prefix folders (.git, e.g.)
+# 2. Doesn't like too many dot-prefix files in home directory
+# -- Louis 2024/0324
+--ignore-file
+/Users/nshiu/.config/ripgrep/rgignore

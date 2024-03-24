@@ -1,0 +1,3 @@
+# Don't sync .pem file for security issue
+# -- Louis 2024/0324
+*.pem

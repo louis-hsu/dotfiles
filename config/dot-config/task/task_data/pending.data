@@ -1,0 +1,4 @@
+[annotation_1574214433:"Notes" description:"Solve Vim\/Nvim configuration issue" entry:"1552901716" modified:"1711082599" project:"Home" status:"pending" tags:"vim" tags_vim:"x" uuid:"b9b2abc0-989c-425f-9415-9af4bd670195"]
+[description:"Create taskd docker on server 'guinevere'" entry:"1711082491" modified:"1711083389" project:"Home" status:"pending" tags:"taskwarrior" tags_taskwarrior:"x" uuid:"949e7662-d7a8-45b9-8506-b4220cf20f47"]
+[description:"Figure out how to use new 'taskopen' function" entry:"1711083280" modified:"1711083475" project:"Home" status:"pending" tags:"taskwarrior" tags_taskwarrior:"x" uuid:"f18ce0d1-4f59-4237-8de6-1c82ef38c633"]
+[description:"Figure out how to use taskwarrior-tui" entry:"1711083367" modified:"1711083459" project:"Home" status:"pending" tags:"taskwarrior" tags_taskwarrior:"x" uuid:"169e055d-917d-4098-a465-4abce45336ea"]

@@ -1,0 +1,9 @@
+# Ignore what inside directory  
+# 1. $XDG_DATA_HOME
+# 2. $XDG_STATE_HOME
+# 3. $XDG_CACHE_HOME
+# since these files are temp and change all the time
+# -- Louis 2024/0323
+cache/*
+local/share/*
+local/state/*

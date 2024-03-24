@@ -1,5 +1,2 @@
-*.data
-*.swp
-.DS_Store
-contrib
-*obsolete
+# Update .gitignore files to remove duplicated configuraitons
+# -- Louis 2024/0318

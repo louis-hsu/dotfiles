@@ -2,3 +2,9 @@
 *.bak
 .repo
 
+# vim related cached files
+cache
+*.swp
+
+# macOS related
+.DS_Store

@@ -1,7 +1,7 @@
 # ~/.tmuxinator/default.yml
 
 name: Judith
-root: ~/
+root: ~/<%= @args[0] %>
 
 # Optional tmux socket
 # socket_name: foo
@@ -41,13 +41,13 @@ windows:
         #- cd "<%= @args[0] %>" # general
         #- cd "<%= @args[0] %>"
         - neofetch
-        -
+        - typewriter
         - cht.sh --shell
   - task_mgmt:
-      layout: de85,214x56,0,0{137x56,0,0,1,76x56,138,0,5}
+      layout: 1f5e,214x56,0,0{130x56,0,0,1,83x56,131,0,6}
       panes:
         - taskwarrior-tui
-        -
+        - clear; task calendar
   - working:
       layout: 8136,238x64,0,0{119x64,0,0,0,118x64,120,0,1}
       panes:

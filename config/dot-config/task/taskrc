@@ -13,6 +13,16 @@
 # Files
 data.location=~/.config/task/task_data
 
+# Sync configuration
+# Since the man page 'task-sync' is not clear about how to setup/configure 
+# taskchampion-sync-server (how to apply client ID, e.g.), this is an accommondating way
+# to:
+# 1. Sync to local server/disk/folder as man page describes
+# 2. But local server/disk/folder is the symbolic link to Dropbox
+# Let's see how it goes
+# -- Louis 2024/0327
+sync.local.server_dir=~/Dropbox/task_data
+
 # Color theme (uncomment one to use)
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-16.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-256.theme

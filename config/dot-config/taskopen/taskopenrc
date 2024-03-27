@@ -7,7 +7,7 @@ TASKBIN='task'
 # other computers, i.e. /users/dropbox/tasknotes
 # NOTES_FOLDER to store notes in, must already exist!
 # Remmber to symbolic link .tasknotes to $DROPBOX/tasknotes 
-NOTES_FOLDER="~/.tasknotes/"
+NOTES_FOLDER="~/Dropbox/task_data/tasknotes/"
 
 # Preferred extension for tasknotes
 NOTES_EXT=".txt"

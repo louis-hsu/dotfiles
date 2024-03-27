@@ -1,6 +1,4 @@
-*.data
-*.swp
-.DS_Store
-contrib
-plugins
+# Ignore plugins installed via TPM but handle these gits individually
+# -- Louis 2024/0326
+plugins/
 *obsolete

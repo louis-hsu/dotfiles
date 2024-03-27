@@ -1,5 +1,5 @@
 #! /bin/bash +x
-# The script iTerm executes when lauching default profile
+# The script iTerm executes when launching default profile
 # 1. Check if default tmux session is created
 # 2. If not, create and attach
 # 3. If created, check if session is attached
@@ -9,19 +9,21 @@
 GREEN='\033[1;32m'
 NC='\033[0m'
 
-session="default"
-searchresult=$(tmux list-sessions | \ag $session)
+profile="judith_mux"
+session="Judith"
+searchresult=$(tmux list-sessions -F "#{session_name}: #{session_attached}" | \grep -i "${session}")
 
-if [[ $searchresult =~ "${session}" ]]; then
-  # $session is created 
-  if [[ ! $searchresult =~ "attached" ]]; then
-    # $session is not attached, attach it
-    tmux attach -t $session
-  else
-    echo -e "Session ${GREEN}$session${NC} is created a attached somewhere...\nSimply open a terminal"
-  fi 
-else 
+#echo $searchresult
+
+if [[ $searchresult =~ "${session}: 1" ]]; then
+  # $session is created and attached somewhere, just spawn the new terminal
+  echo -e "Session ${GREEN}$session${NC} is created and attached somewhere...\nSimply open a terminal"
+
+elif [[ $searchresult =~ "${session}: 0" ]]; then
+  # $session is created but not attached, attach it
+  tmux attach -t $session
+else
   # $session is not existing, create it 
-  tmuxinator default
+  tmuxinator $profile
 fi 
 

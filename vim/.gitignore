@@ -1,6 +1,0 @@
-*.data
-*.swp
-.DS_Store
-contrib
-dot-vim/*
-!dot-vim/after

@@ -1,7 +1,10 @@
 # Handle zprezto individually -- Louis 2024/0312
-.zprezto
+#.zprezto
 
 # Ignore cache and history files since they keep changing -- Louis 2024/0323
-.zcompcache
-.zcompdump
-.zsh_history
+#.zcompcache
+#.zcompdump
+#.zsh_history
+
+\.z*
+!.zfunc

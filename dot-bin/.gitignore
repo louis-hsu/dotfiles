@@ -1,6 +1,2 @@
-*.data
-*.swp
-.DS_Store
-contrib
 # Always re-install cht.sh from Github -- Louis 11/28/2022
 cht.sh 

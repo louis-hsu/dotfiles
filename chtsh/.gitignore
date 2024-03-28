@@ -1,6 +1,0 @@
-*.data
-*.swp
-*.tmp
-.DS_Store
-contrib
-history*

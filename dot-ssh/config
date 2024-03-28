@@ -1,0 +1,36 @@
+Host louis0658
+  Hostname louis0658.synology.me
+  HostKeyAlias louis0658
+  CheckHostIP no
+  Port 15236
+  User nshiu
+
+Host lancelot
+  Hostname modern254-1.kddns.info
+  HostKeyAlias lancelot
+  CheckHostIP no
+  Port 15236
+  User nshiu
+
+Host guinevere
+  HostKeyAlias guinevere
+  CheckHostIP no
+  User nshiu
+  RequestTTY yes
+  RemoteCommand tmuxinator guinevere_mux
+
+Host mordred
+  HostKeyAlias mordred
+  CheckHostIP no
+  User sshd
+
+Host atreides
+  HostKeyAlias atreides
+  CheckHostIP no
+  User louishsu
+
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+  IdentitiesOnly yes

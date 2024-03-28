@@ -1,3 +1,0 @@
-[submodule "task/taskopen.git"]
-	path = task/taskopen.git
-	url = git@github.com:jschlatow/taskopen.git

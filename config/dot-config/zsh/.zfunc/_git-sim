@@ -1,7 +1,0 @@
-#compdef git-sim
-
-_git_sim_completion() {
-  eval $(env _TYPER_COMPLETE_ARGS="${words[1,$CURRENT]}" _GIT_SIM_COMPLETE=complete_zsh git-sim)
-}
-
-compdef _git_sim_completion git-sim

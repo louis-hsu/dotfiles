@@ -7,3 +7,6 @@
 cache/*
 local/share/*
 local/state/*
+
+# Ignore nvim* gits which would be handled separately
+nvim*

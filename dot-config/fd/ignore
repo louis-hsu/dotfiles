@@ -6,5 +6,19 @@
 cache
 *.swp
 
-# macOS related
+# Parallels
+Parallels
+
+# macOS/system related
 .DS_Store
+Public
+Library
+Music
+Movies
+Pictures
+Applications
+fonts
+.localized
+.local
+tmp
+

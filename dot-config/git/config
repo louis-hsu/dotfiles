@@ -30,6 +30,7 @@
   features = nshiu_nordbase zebra-dark
   side-by-side = false
   true-color = always
+  default-language = sh
 
 [interactive]
   diffFilter = delta --color-only

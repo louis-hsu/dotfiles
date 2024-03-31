@@ -17,7 +17,7 @@ web:*.{html,css,js}*
 --follow
 
 # Print prettier
--p 
+#-p 
 
 # Using glob patterns to include/exclude files or folders
 #--glob=!.git/*

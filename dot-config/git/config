@@ -4,10 +4,11 @@
 # -- Louis 2024/0312
 #
 # TODO:
-# git-config doesn't accept $XDG_CONFIG_HOME varialbe but has to be 
-# explicit path. Need to find a way to replace explicit path by 
-# envirionment variable for more flexibility
-# -- Louis 2024/0312
+# 1. git-config doesn't accept $XDG_CONFIG_HOME varialbe but has to be explicit path
+# 2. Take a look of this:
+#    - https://github.com/banga/git-split-diffs?tab=readme-ov-file
+#    - https://github.com/shikijs/shiki 
+#    for a 'possible' better git diff
 [user]
 	name = Louis Hsu
 	email = louis.shiu@gmail.com

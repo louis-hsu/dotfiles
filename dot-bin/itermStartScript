@@ -23,7 +23,9 @@ elif [[ $searchresult =~ "${session}: 0" ]]; then
   # $session is created but not attached, attach it
   tmux attach -t $session
 else
-  # $session is not existing, create it 
+  # $session is not existing, create it
+  tmux kill-server > /dev/null 2>&1
+  sleep 3
   tmuxinator $profile
 fi 
 

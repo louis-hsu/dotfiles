@@ -1,4 +1,6 @@
 # Ignore plugins installed via TPM but handle these gits individually
 # -- Louis 2024/0326
-plugins/
+# Put 'plugins' repos. into 'dotfiles' git as submodules for easy finding/editing
+# -- Louis 2024/0410
+#plugins/
 *obsolete

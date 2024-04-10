@@ -7,3 +7,12 @@
 [submodule "dot-config/nvim-lazyvim"]
 	path = dot-config/nvim-lazyvim
 	url = git@github.com:louis-hsu/LazyVim_starter.git
+[submodule "dot-config/tmux/plugins/tpm"]
+	path = dot-config/tmux/plugins/tpm
+	url = git@github.com:tmux-plugins/tpm.git
+[submodule "dot-config/tmux/plugins/nord-tmux"]
+	path = dot-config/tmux/plugins/nord-tmux
+	url = git@github.com:louis-hsu/nord-tmux.git
+[submodule "dot-config/tmux/plugins/tmux-prefix-highlight"]
+	path = dot-config/tmux/plugins/tmux-prefix-highlight
+	url = git@github.com:tmux-plugins/tmux-prefix-highlight.git

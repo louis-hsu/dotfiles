@@ -9,6 +9,6 @@ local/share/*
 local/state/*
 
 # Ignore nvim* gits which would be handled separately
-# 
-# After 2nd thought, utilize .gitmodules to faciltate search in the future
-#nvim*
+# Add 'nvim-*' as submodules by utilizing .gitmodules to faciltate search in the future
+# Except 'nvim-scrach', which would change/test content often
+nvim-scratch

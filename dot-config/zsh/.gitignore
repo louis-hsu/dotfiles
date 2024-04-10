@@ -1,10 +1,9 @@
-# Handle zprezto individually -- Louis 2024/0312
-#.zprezto
-
 # Ignore cache and history files since they keep changing -- Louis 2024/0323
 #.zcompcache
 #.zcompdump
 #.zsh_history
+# Add '.zprezto' into 'dotfiles' git as submodule
 
 \.z*
 !.zfunc
+!.zprezto/

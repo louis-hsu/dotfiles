@@ -1,0 +1,9 @@
+[submodule "dot-config/nvim-scratch"]
+	path = dot-config/nvim-scratch
+	url = git@github.com:louis-hsu/Neovim-from-scratch.git
+[submodule "dot-config/nvim-kickstart"]
+	path = dot-config/nvim-kickstart
+	url = git@github.com:louis-hsu/kickstart.nvim.git
+[submodule "dot-config/nvim-lazyvim"]
+	path = dot-config/nvim-lazyvim
+	url = git@github.com:louis-hsu/LazyVim_starter.git

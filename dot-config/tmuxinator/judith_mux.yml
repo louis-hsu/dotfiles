@@ -46,7 +46,11 @@ windows:
   - task_mgmt:
       layout: 1f5e,214x56,0,0{130x56,0,0,1,83x56,131,0,6}
       panes:
-        - taskwarrior-tui
+        # Remove 'taskwarrior-tui' temporarily
+        # Reference: https://github.com/kdheepak/taskwarrior-tui/issues/545
+        # -- Louis 2024/0501
+        #- taskwarrior-tui
+        - 
         - clear; task calendar
   - working:
       layout: 8136,238x64,0,0{119x64,0,0,0,118x64,120,0,1}

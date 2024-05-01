@@ -6,26 +6,40 @@
 # 4. If not attached, attach the session. If yes, no tmux command executed
 # -- Louis 2022/0919
 
+clear
+
 GREEN='\033[1;32m'
 NC='\033[0m'
 
 profile="judith_mux"
 session="Judith"
-searchresult=$(tmux list-sessions -F "#{session_name}: #{session_attached}" | \grep -i "${session}")
 
-#echo $searchresult
+if [ -f /tmp/_tmuxStarts_lock ];then 
+  return 1
+else
+  touch /tmp/_tmuxStarts_lock
+fi 
 
-if [[ $searchresult =~ "${session}: 1" ]]; then
+searchresult=$(tmux list-sessions -F "#{session_name}: #{session_attached}" | command grep -i "${session}" | sed -n 's/.'*"$session"': \([0-9]\).*/\1/p')
+
+#echo -e "this is ${searchresult}"
+
+if [[ $searchresult == 1 ]]; then
   # $session is created and attached somewhere, just spawn the new terminal
   echo -e "Session ${GREEN}$session${NC} is created and attached somewhere...\nSimply open a terminal"
 
-elif [[ $searchresult =~ "${session}: 0" ]]; then
+elif [[ $searchresult == 0 ]]; then
   # $session is created but not attached, attach it
+  # echo -e "Session is not attached"
   tmux attach -t $session
+
 else
   # $session is not existing, create it
-  tmux kill-server > /dev/null 2>&1
-  sleep 3
+  #tmux kill-server > /dev/null 2>&1
   tmuxinator $profile
+
 fi 
 
+sleep 1
+
+rm -rf /tmp/_tmuxStarts_lock

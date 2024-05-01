@@ -19,7 +19,19 @@
 [core]
   editor = nvim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-  pager = delta
+  # Make 'delta' side-by-side automatically
+  # Reference: https://github.com/wfxr/forgit/issues/121#issuecomment-725811214
+  # -- Louis 2024/0501
+  pager = "{                                                         \
+    COLUMNS=$(tput cols);                                            \
+    if [ $COLUMNS -ge 110 ] && [ -z $FZF_PREVIEW_COLUMNS ]; then     \
+        delta --side-by-side -w $COLUMNS;                            \
+    elif [ $COLUMNS -ge 160 ] && [ ! -z $FZF_PREVIEW_COLUMNS ]; then \
+        delta --side-by-side -w $FZF_PREVIEW_COLUMNS;                \
+    else                                                             \
+        delta;                                                       \
+    fi                                                               \
+  }"
 	excludesfile = /Users/nshiu/.dotfiles/dot-config/git/ignore
 
 # Setup for delta theme and customization -- Louis 2023-03-28 17:51
@@ -64,4 +76,4 @@
 
 [alias]
   summary = !/opt/homebrew/bin/onefetch
-  sdiff = -c delta.side-by-side=true diff
+  #sdiff = -c delta.side-by-side=true diff

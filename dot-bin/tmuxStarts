@@ -15,7 +15,8 @@ profile="judith_mux"
 session="Judith"
 
 if [ -f /tmp/_tmuxStarts_lock ];then 
-  return 1
+  echo -e "Session ${GREEN}$session${NC} is created and attached somewhere...\nSimply open a terminal"
+  exit 1
 else
   touch /tmp/_tmuxStarts_lock
 fi 
@@ -39,7 +40,5 @@ else
   tmuxinator $profile
 
 fi 
-
-sleep 1
 
 rm -rf /tmp/_tmuxStarts_lock

@@ -1,0 +1,37 @@
+#! /bin/bash
+#
+# Utilize 'tmux popup' to show the result of 'git diff'
+# -- Louis 2024/0505
+#
+
+# Check if in a tmux session, if not falback to normal
+if [ -z "$TMUX" ]; then
+    git diff $@
+
+else
+  _WIDTH=$(tmux display-message -p '#{window_width}')
+
+  if [ $_WIDTH -ge 200 ]; then
+    # Weird way to round the result...
+    _TPWIDTH=$(echo "scale=0; ($_WIDTH * 0.85 + 0.5)/1" | bc)
+
+    # Round to the nearest even integer
+    # And shrink '$_TPWIDTH' a bit to prevent unnecessary line-wrap in 'delta'
+    if [ $((_TPWIDTH % 2)) -ne 0 ]; then
+      _TPWIDTH=$((_TPWIDTH - 3))
+
+    else
+      _TPWIDTH=$((_TPWIDTH - 4))
+
+    fi
+
+    #echo $_TPWIDTH
+    tmux popup -d "#{pane_current_path}" -h 80% -w 85% \
+      -e BAT_PAGER='less -R' "git diff --color=always $@ | delta --side-by-side -w $_TPWIDTH"
+
+  else
+    tmux popup -d "#{pane_current_path}" -h 80% -w 85% \
+      -e BAT_PAGER='less -R' "git diff --color=always $@ | delta"
+
+  fi
+fi

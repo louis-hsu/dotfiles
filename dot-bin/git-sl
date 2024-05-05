@@ -1,0 +1,48 @@
+#!/bin/bash -e
+
+# Fuzzy search over Git commits
+# Enter will view the commit
+# Ctrl-o will checkout the selected commit
+# Ctrl-y will yank commit short-hash value
+# Reference:
+# https://levelup.gitconnected.com/search-git-branches-and-commits-using-fzf-33df960fcc9c
+# -- Louis 2024/0423
+
+# Define color codes
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+if git rev-parse --git-dir > /dev/null 2>&1; then
+  commit=$(git log --graph --color=always \
+    --format="%C(auto)%h%d %s %C(black)%C()%cr" | \
+    fzf-tmux -p -w 80% -h 90% --ansi --no-sort \
+    --no-multi \
+    --print0 \
+    --header "Enter to view, C-y to copy the hash, C-o to checkout" \
+    --preview-window=down,70% \
+    --preview='f() { set -- $(echo -- "$@" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always $1 | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
+    --bind "ctrl-y:execute-silent( echo -n {} | \grep -o '[a-f0-9]\{7\}' | tr -d '\n' | pbcopy)" \
+    --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
+    --bind "ctrl-f:page-down,ctrl-b:page-up" \
+    --expect="ctrl-o")
+
+  commitHash=$(set -- $(echo -- "$commit" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || echo "$1" ; )
+  #echo "\$commit: $commit"
+  #echo "\$commitHash: $commitHash"
+
+  if [ ! -z $commitHash ]; then
+    if [[ $commit =~ "ctrl-o" ]]; then # Ctrl-o is hit
+      git checkout $commitHash
+
+    else # Enter is hit
+      git show --color=always $commitHash
+
+    fi
+  fi
+else
+  echo -e "This is$RED NOT$NC a git repository"
+
+fi

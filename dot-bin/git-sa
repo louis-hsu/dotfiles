@@ -1,0 +1,93 @@
+#!/bin/bash -e
+#
+# Inspired from 'forgit' (https://github.com/wfxr/forgit)
+# Not use it 'cause kind of too complicated
+# Design my own git utilities
+# Forcus on 'git add' scenario
+# -- Louis 2024/0430
+
+# Define color codes
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# This function reads from standard input
+function _gitstatusOutput () {
+  git status --short | while IFS= read -r line; do
+    local status=$(echo "$line" | awk '{print substr($0, 1, 2)}')   # Extract the status
+    local file_path=$(echo "$line" | awk '{$1=""; print $0}' | sed 's/^ *//g') # Extract file path and remove leading spaces
+    case "$status" in   # Apply color based on the status
+      " D")
+        color=$RED
+        echo -e "[$color$status$NC] $file_path"
+        ;;
+      " M"|" m"|" R"|" C")
+        color=$YELLOW
+        echo -e "[$color$status$NC] $file_path"
+        ;;
+      "??")
+        color=$BLUE
+        echo -e "[$color$status$NC] $file_path"
+        ;;
+      *)
+        # Not scenario for 'git add'
+        color=$NC
+        ;;
+    esac
+  done
+}
+
+# TODO:
+# If these 2 configs are setup together:
+# 1. --bind 'ctrl-t:execute-silent(f())'
+# 2. --expect=ctrl-t
+# Ctrl-t would only quit without exectuing 'f()', even though ChatGPT said it works...
+# Workaround
+# 1. Save returned value into an array
+# 2. Check if the 1st element equals to ctrl-t
+# -- Louis 2024/0504
+if git rev-parse --git-dir > /dev/null 2>&1; then
+  _gitStatus=$(_gitstatusOutput | \
+    fzf-tmux -p -w 80% -h 85% --ansi --no-sort \
+      --header "Enter to view diff, Tab to select, C-a to add" \
+      --multi \
+      --print0 \
+      --preview-window=down,70% \
+      --preview='f() { set -- $(echo -- "$@" | sed "s/.*\] //"); [ $# -eq 0 ] || git diff --color=always $1 | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
+      --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
+      --bind "ctrl-f:page-down,ctrl-b:page-up" \
+      --expect="ctrl-a")
+
+  # Check if $gitStatus has anything, if yes
+  # Cleansing the lines for 'git add'
+  # TODO:
+  # It's weird that the 'sed' function doesn't work correct when
+  # putting it into '_gitStatus'
+  _temp=$(echo -e "$_gitStatus" | sed -E 's/\[[^]]+\] /;/g')
+
+  _gitFiles=()
+  IFS=';' read -r -a _gitFiles <<< "$_temp"
+
+  if [[ ${_gitFiles[0]} =~ "ctrl-a" ]]; then
+    unset '_gitFiles[0]'
+
+    git add ${_gitFiles[@]}
+
+    echo -e "File(s)$YELLOW:"
+    for _p in "${_gitFiles[@]}"
+    do
+      echo $_p
+    done
+    echo -e "$NC""added in the git and waited for commit"
+
+  else
+    git diff ${_gitFiles[@]}
+
+  fi
+else
+  echo -e "This is$RED NOT$NC a git repository!"
+
+fi
+

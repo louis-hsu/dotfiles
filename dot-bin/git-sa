@@ -1,9 +1,12 @@
 #!/bin/bash -e
 #
 # Inspired from 'forgit' (https://github.com/wfxr/forgit)
-# Not use it 'cause kind of too complicated
-# Design my own git utilities
-# Forcus on 'git add' scenario
+#
+# Functions:
+# 1. Show and fuzzy search files waiting for 'git add'
+# 2. Multi-selection by 'tab'
+# 3. 'enter' to show 'git diff' of tracked files
+# 4. 'ctrl-a' to 'git add' selected files
 # -- Louis 2024/0430
 
 # Define color codes
@@ -49,13 +52,20 @@ function _gitstatusOutput () {
 # 2. Check if the 1st element equals to ctrl-t
 # -- Louis 2024/0504
 if git rev-parse --git-dir > /dev/null 2>&1; then
+
+  # Ensure something to track
+  if [ $(git status --short | wc -l) == 0 ]; then
+    echo -e "$GREEN""No file found for check-in...$NC"
+    exit 0 
+  fi
+
   _gitStatus=$(_gitstatusOutput | \
     fzf-tmux -p -w 80% -h 85% --ansi --no-sort \
       --header "Enter to view diff, Tab to select, C-a to add" \
       --multi \
       --print0 \
       --preview-window=down,70% \
-      --preview='f() { set -- $(echo -- "$@" | sed "s/.*\] //"); [ $# -eq 0 ] || git diff --color=always $1 | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
+      --preview='f() { local _a=$(echo -e "$@" | sed "s/.*\] //"); [ $# -eq 0 ] || git diff --color=always $_a | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
       --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
       --bind "ctrl-f:page-down,ctrl-b:page-up" \
       --expect="ctrl-a")

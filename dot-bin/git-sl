@@ -1,11 +1,13 @@
 #!/bin/bash -e
-
-# Fuzzy search over Git commits
-# Enter will view the commit
-# Ctrl-o will checkout the selected commit
-# Ctrl-y will yank commit short-hash value
-# Reference:
+#
+# Inspired from 'forgit' (https://github.com/wfxr/forgit), and
 # https://levelup.gitconnected.com/search-git-branches-and-commits-using-fzf-33df960fcc9c
+# 
+# Funtions:
+# 1. Show git log history and fuzzy search git commits
+# 2. 'enter' to view the commit
+# 3. 'ctrl-o' to checkout the selected commit
+# 4. 'ctrl-y' to yank/copy commit's short-hash value
 # -- Louis 2024/0423
 
 # Define color codes

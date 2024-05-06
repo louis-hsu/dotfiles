@@ -23,8 +23,8 @@ function _gitstashOutput () {
   local _stashN=""
 
   git stash list | while IFS= read -r -a line; do
-    _stashN=$(echo -e "$YELLOW""$line" | sed "s/: /\\$NC: \\$BLUE/1" | sed "s/: /\\$NC: /2")
-    echo -e $_stashN
+    _stashN=$(echo -e "${YELLOW}${line}" | sed "s/: /\\$NC: \\$BLUE/1" | sed "s/: /\\$NC: /2")
+    echo -e "${_stashN}"
   done
 }
 
@@ -37,7 +37,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
 
   # Ensure something stashed
   if [ $(git stash list | wc -l) == 0 ]; then
-    echo -e "$GREEN""No stashed item found...$NC"
+    echo -e "${GREEN}No stashed item found...${NC}"
     exit 0 
   fi
 
@@ -47,26 +47,26 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
       --no-multi \
       --print0 \
       --preview-window=down,70% \
-      --preview='f() { local _s=$(echo -e "$@" | sed "s/: .*//"); git stash show -p $_s | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
+      --preview='f() { local _s=$(echo -e "${@}" | sed "s/: .*//"); git stash show -p $_s | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
       --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
       --bind "ctrl-f:page-down,ctrl-b:page-up" \
       --expect="ctrl-a,ctrl-d")
-  #echo $_gitStash
+  #echo "${_gitStash}"
   
-  _tmp=$(echo -e "$_gitStash" | sed 's/: .*//g')
+  _tmp=$(echo -e "${_gitStash}" | sed 's/: .*//g')
 
   if [[ $_tmp =~ "ctrl-a" ]]; then
-    _gitStash=$(echo -e "$_tmp" | sed "s/ctrl-a//")
+    _gitStash=$(echo -e "${_tmp}" | sed "s/ctrl-a//")
     git stash apply $_gitStash
 
   elif [[ $_gitStash =~ "ctrl-d" ]]; then
-    _gitStash=$(echo -e "$_tmp" | sed "s/ctrl-d//")
+    _gitStash=$(echo -e "${_tmp}" | sed "s/ctrl-d//")
     git stash drop $_gitStash
 
   fi 
 
 else
-  echo -e "This is$RED NOT$NC a git repository!"
+  echo -e "This is${RED} NOT${NC} a git repository!"
 
 fi
 

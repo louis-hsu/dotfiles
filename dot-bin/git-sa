@@ -19,20 +19,20 @@ NC='\033[0m' # No Color
 # This function reads from standard input
 function _gitstatusOutput () {
   git status --short | while IFS= read -r line; do
-    local status=$(echo "$line" | awk '{print substr($0, 1, 2)}')   # Extract the status
-    local file_path=$(echo "$line" | awk '{$1=""; print $0}' | sed 's/^ *//g') # Extract file path and remove leading spaces
+    local status=$(echo "${line}" | awk '{print substr($0, 1, 2)}')   # Extract the status
+    local file_path=$(echo "${line}" | awk '{$1=""; print $0}' | sed 's/^ *//g') # Extract file path and remove leading spaces
     case "$status" in   # Apply color based on the status
       " D")
         color=$RED
-        echo -e "[$color$status$NC] $file_path"
+        echo -e "[${color}${status}${NC}] ${file_path}"
         ;;
       " M"|" m"|" R"|" C")
         color=$YELLOW
-        echo -e "[$color$status$NC] $file_path"
+        echo -e "[${color}${status}${NC}] ${file_path}"
         ;;
       "??")
         color=$BLUE
-        echo -e "[$color$status$NC] $file_path"
+        echo -e "[${color}${status}${NC}] ${file_path}"
         ;;
       *)
         # Not scenario for 'git add'
@@ -55,7 +55,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
 
   # Ensure something to track
   if [ $(git status --short | wc -l) == 0 ]; then
-    echo -e "$GREEN""No file found for check-in...$NC"
+    echo -e "${GREEN}No file found for check-in...${NC}"
     exit 0 
   fi
 
@@ -65,7 +65,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
       --multi \
       --print0 \
       --preview-window=down,70% \
-      --preview='f() { local _a=$(echo -e "$@" | sed "s/.*\] //"); [ $# -eq 0 ] || git diff --color=always $_a | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
+      --preview='f() { local _a=$(echo -e "${@}" | sed "s/.*\] //"); [ $# -eq 0 ] || git diff --color=always $_a | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
       --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
       --bind "ctrl-f:page-down,ctrl-b:page-up" \
       --expect="ctrl-a")
@@ -75,7 +75,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
   # TODO:
   # It's weird that the 'sed' function doesn't work correct when
   # putting it into '_gitStatus'
-  _temp=$(echo -e "$_gitStatus" | sed -E 's/\[[^]]+\] /;/g')
+  _temp=$(echo -e "${_gitStatus}" | sed -E 's/\[[^]]+\] /;/g')
 
   _gitFiles=()
   IFS=';' read -r -a _gitFiles <<< "$_temp"
@@ -85,19 +85,19 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
 
     git add ${_gitFiles[@]}
 
-    echo -e "File(s)$YELLOW:"
+    echo -e "File(s)${YELLOW}:"
     for _p in "${_gitFiles[@]}"
     do
       echo $_p
     done
-    echo -e "$NC""added in the git and waited for commit"
+    echo -e "${NC}added in the git and waited for commit"
 
   else
     git diff ${_gitFiles[@]}
 
   fi
 else
-  echo -e "This is$RED NOT$NC a git repository!"
+  echo -e "This is${RED} NOT${NC} a git repository!"
 
 fi
 

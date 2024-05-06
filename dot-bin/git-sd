@@ -17,7 +17,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
 
   # Ensure something different
   if [ $(git diff $@ | wc -l) == 0 ]; then
-    echo -e "$GREEN""No different section found...$NC"
+    echo -e "${GREEN}No different section found...${NC}"
     exit 0 
   fi
   
@@ -53,6 +53,6 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
     fi
   fi
 else
-  echo -e "This is$RED NOT$NC a git repository!"
+  echo -e "This is${RED} NOT${NC} a git repository!"
 
 fi

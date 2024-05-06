@@ -1,0 +1,72 @@
+#!/bin/bash -e
+#
+# Inspired from 'forgit' (https://github.com/wfxr/forgit)
+#
+# Functions:
+# 1. Show and fuzzy search 'git stash' items
+# 2. 'ctrl-a' to apply the selected item (potential conflict is handled by user later)
+# 3. 'ctrl-d' to drop the selected item
+#
+# The reason of no 'git stash pop' is user might wanna apply same change to different 
+# branch for testing
+# -- Louis 2024/0430
+
+# Define color codes
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# This function reads from standard input
+function _gitstashOutput () {
+  local _stashN=""
+
+  git stash list | while IFS= read -r -a line; do
+    _stashN=$(echo -e "$YELLOW""$line" | sed "s/: /\\$NC: \\$BLUE/1" | sed "s/: /\\$NC: /2")
+    echo -e $_stashN
+  done
+}
+
+#_gitstashOutput
+
+# TODO:
+# Same issue/workaround as 'git-sa'
+# -- Louis 2024/0506
+if git rev-parse --git-dir > /dev/null 2>&1; then
+
+  # Ensure something stashed
+  if [ $(git stash list | wc -l) == 0 ]; then
+    echo -e "$GREEN""No stashed item found...$NC"
+    exit 0 
+  fi
+
+  _gitStash=$(_gitstashOutput | \
+    fzf-tmux -p -w 80% -h 85% --ansi --no-sort \
+      --header "Enter to view diff, C-a to apply, C-d to drop" \
+      --no-multi \
+      --print0 \
+      --preview-window=down,70% \
+      --preview='f() { local _s=$(echo -e "$@" | sed "s/: .*//"); git stash show -p $_s | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
+      --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
+      --bind "ctrl-f:page-down,ctrl-b:page-up" \
+      --expect="ctrl-a,ctrl-d")
+  #echo $_gitStash
+  
+  _tmp=$(echo -e "$_gitStash" | sed 's/: .*//g')
+
+  if [[ $_tmp =~ "ctrl-a" ]]; then
+    _gitStash=$(echo -e "$_tmp" | sed "s/ctrl-a//")
+    git stash apply $_gitStash
+
+  elif [[ $_gitStash =~ "ctrl-d" ]]; then
+    _gitStash=$(echo -e "$_tmp" | sed "s/ctrl-d//")
+    git stash drop $_gitStash
+
+  fi 
+
+else
+  echo -e "This is$RED NOT$NC a git repository!"
+
+fi
+

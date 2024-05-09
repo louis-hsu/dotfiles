@@ -5,6 +5,18 @@ Github URL: https://github.com/louis-hsu/dotfiles
 
 ## Update History
 
+#### May 09, 2024
+Create installation script 'main_install.sh' to handle:
+1. 'zsh' shell environment transfer 
+2. 'brew' formulas installation 
+3. Other environmental setup (cht.sh, Perl module location, e.g.)
+
+#### May 06, 2024
+Considerable changes in many ways:
+1. Re-consturct '.dotfiles' directory structure to follow $XDG rules as much as possible
+2. Add apps configuration files into git tracking as much as possible
+3. Create new scripts/alias to accelerate/simplify the working flows as much as possible
+
 #### Nov 09, 2022
 Change the whole structure of dotfiles management
 1. Introduce 'stow' with corresponding shell scripts 

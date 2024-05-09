@@ -5,6 +5,5 @@
 
 ^/README.*
 
-\.bin
-^/.*\.sh
-\.obsolete
+^/.*install.sh
+^/.*obsolete

@@ -4,6 +4,13 @@
 # 2. If not, create and attach
 # 3. If created, check if session is attached
 # 4. If not attached, attach the session. If yes, no tmux command executed
+# 
+# If tmux is running, then
+#   if $_session is there and attached then exit 
+# else
+#   start tmux 
+# fi 
+# mux $_profile 
 # -- Louis 2022/0919
 
 clear
@@ -11,34 +18,24 @@ clear
 GREEN='\033[1;32m'
 NC='\033[0m'
 
-profile="judith_mux"
-session="Judith"
-
-if [ -f /tmp/_tmuxStarts_lock ];then 
-  echo -e "Session ${GREEN}$session${NC} is created and attached somewhere...\nSimply open a terminal"
+_profile=$1
+if [[ ! -f $XDG_CONFIG_HOME/tmuxinator/${_profile}.yml ]]; then 
+  echo -e "Need to provide an existing tmuxinator profile"
   exit 1
-else
-  touch /tmp/_tmuxStarts_lock
-fi 
+fi
 
-searchresult=$(tmux list-sessions -F "#{session_name}: #{session_attached}" | command grep -i "${session}" | sed -n 's/.'*"$session"': \([0-9]\).*/\1/p')
+_session=$(yq e '.name' "$XDG_CONFIG_HOME/tmuxinator/${_profile}.yml")
+_sresult=$(tmux ls -F "#{session_name}: #{session_attached}" | command grep -w ${_session} | sed -n 's/'${_session}': \([0-9]\)/\1/p')
 
-#echo -e "this is ${searchresult}"
+if [[ ${_sresult} == 1 ]]; then
+  echo -e "Session ${GREEN}${_session}${NC} is created and attached somewhere...\nSimply open a terminal"
+  exit 0
 
-if [[ $searchresult == 1 ]]; then
-  # $session is created and attached somewhere, just spawn the new terminal
-  echo -e "Session ${GREEN}$session${NC} is created and attached somewhere...\nSimply open a terminal"
+elif [[ ${_sresult} == 0 ]]; then
+  tmux attach -t ${_session}
 
-elif [[ $searchresult == 0 ]]; then
-  # $session is created but not attached, attach it
-  # echo -e "Session is not attached"
-  tmux attach -t $session
+else 
+  tmuxinator ${_profile}
 
-else
-  # $session is not existing, create it
-  #tmux kill-server > /dev/null 2>&1
-  tmuxinator $profile
+fi
 
-fi 
-
-rm -rf /tmp/_tmuxStarts_lock

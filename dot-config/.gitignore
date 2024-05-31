@@ -12,3 +12,6 @@ local/state/*
 # Add 'nvim-*' as submodules by utilizing .gitmodules to faciltate search in the future
 # Except 'nvim-scrach', which would change/test content often
 nvim-scratch
+
+# Add cache directory from Android Studio
+.android/cache/*

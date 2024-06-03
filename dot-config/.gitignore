@@ -13,5 +13,6 @@ local/state/*
 # Except 'nvim-scrach', which would change/test content often
 nvim-scratch
 
-# Add cache directory from Android Studio
+# Add cache/avd directory from Android Studio
 .android/cache/*
+.android/avd/*

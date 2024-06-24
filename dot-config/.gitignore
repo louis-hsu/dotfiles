@@ -16,3 +16,6 @@ nvim-scratch
 # Add cache/avd directory from Android Studio
 .android/cache/*
 .android/avd/*
+
+# Ignore content in 'yazi/plugins'
+yazi/plugins/*

@@ -43,6 +43,8 @@ windows:
         - neofetch
         - typewriter
         - cht.sh --shell
+  - file_mgmt:
+      - cd $HOME; yy
   - task_mgmt:
       layout: 1f5e,214x56,0,0{130x56,0,0,1,83x56,131,0,6}
       panes:

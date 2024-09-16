@@ -17,7 +17,7 @@ Host guinevere
   CheckHostIP no
   User nshiu
   RequestTTY yes
-  RemoteCommand tmuxinator guinevere_mux
+#  RemoteCommand tmuxinator guinevere_mux
 
 Host mordred
   HostKeyAlias mordred

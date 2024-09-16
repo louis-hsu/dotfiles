@@ -18,6 +18,8 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+_COLS=$(tput col)
+
 # This function reads from standard input
 function _gitstashOutput () {
   local _stashN=""
@@ -28,9 +30,7 @@ function _gitstashOutput () {
   done
 }
 
-#_gitstashOutput
-
-# TODO:
+# TODO
 # Same issue/workaround as 'git-sa'
 # -- Louis 2024/0506
 if git rev-parse --git-dir > /dev/null 2>&1; then
@@ -41,16 +41,41 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
     exit 0 
   fi
 
-  _gitStash=$(_gitstashOutput | \
-    fzf-tmux -p -w 80% -h 85% --ansi --no-sort \
-      --header "Enter to view diff, C-a to apply, C-d to drop" \
-      --no-multi \
-      --print0 \
-      --preview-window=down,70% \
-      --preview='f() { local _s=$(echo -e "${@}" | sed "s/: .*//"); git stash show -p $_s | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
-      --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
-      --bind "ctrl-f:page-down,ctrl-b:page-up" \
-      --expect="ctrl-a,ctrl-d")
+  # TODO
+  # Combine this if-else statement by using varialbes to replace fzf parameters:
+  # 1. "--tmux" or not
+  # 2. value of '--preview="
+  # It seems simply using variables doesn't work
+  if [ "${_COLS}" -ge 160 ]; then
+    # Popup tmux window and delta side by side
+    _gitStash=$(_gitstashOutput | \
+      fzf --tmux=center,80%,85% \
+        --ansi --no-sort \
+        --header "Enter to view diff, C-a to apply, C-d to drop" \
+        --no-multi \
+        --cycle \
+        --print0 \
+        --preview-window=down,70% \
+        --preview='f() { local _s=$(echo -e "${@}" | sed "s/: .*//"); git stash show -p "${_s}" | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
+        --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
+        --bind "ctrl-f:page-down,ctrl-b:page-up" \
+        --expect="ctrl-a,ctrl-d")
+  else
+    # No popup window and no delta side by side
+    _gitStash=$(_gitstashOutput | \
+      fzf \
+        --ansi --no-sort \
+        --header "Enter to view diff, C-a to apply, C-d to drop" \
+        --no-multi \
+        --cycle \
+        --wrap
+        --print0 \
+        --preview-window=down,70% \
+        --preview='f() { local _s=$(echo -e "${@}" | sed "s/: .*//"); git stash show -p "${_s}" | delta; }; f {}' \
+        --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
+        --bind "ctrl-f:page-down,ctrl-b:page-up" \
+        --expect="ctrl-a,ctrl-d")
+  fi 
   #echo "${_gitStash}"
   
   _tmp=$(echo -e "${_gitStash}" | sed 's/: .*//g')
@@ -58,15 +83,12 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
   if [[ $_tmp =~ "ctrl-a" ]]; then
     _gitStash=$(echo -e "${_tmp}" | sed "s/ctrl-a//")
     git stash apply $_gitStash
-
   elif [[ $_gitStash =~ "ctrl-d" ]]; then
     _gitStash=$(echo -e "${_tmp}" | sed "s/ctrl-d//")
     git stash drop $_gitStash
-
   fi 
 
 else
   echo -e "This is${RED} NOT${NC} a git repository!"
-
 fi
 

@@ -1,6 +1,7 @@
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
 tap "homebrew/services"
+brew "ack"
 brew "xz"
 brew "autoconf"
 brew "bat"

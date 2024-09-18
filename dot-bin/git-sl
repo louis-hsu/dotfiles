@@ -35,7 +35,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
     # Popup tmux window and delta side by side
     commit=$(git log --graph --color=always \
       --format="%C(auto)%h%d %s %C(black)%C()%cr" | \
-      fzf --tmux=center,80%,90% \
+      fzf --tmux=center,80%,85% \
         --ansi --no-sort \
         --no-multi \
         --cycle \
@@ -73,7 +73,37 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
     if [[ ${commit} =~ "ctrl-o" ]]; then # Ctrl-o is hit
       git checkout "${commitHash}"
     else # Enter is hit
+      
+      # Comment out tmux popup window since unable to copy/paste text inside
+      # tmux-popup window
+      #
+      # TODO
+      # Find a way to enable copy/paste in tmux popup window to facilitate coding
+      # -- Louis 2024/0918
+#      if [ -z "$TMUX" ]; then
+#        git show --color=always "${commitHash}"
+#      else
+#
+#        if [ "${COLS}" -ge 160 ]; then
+#          # Weird way to round the result...
+#          TPWIDTH=$(echo "scale=0; ($COLS * 0.8 + 0.5)/1" | bc)
+#          
+#          # Round to the nearest even integer
+#          # And shrink '$_TPWIDTH' a bit to prevent unnecessary line-wrap in 'delta'
+#          if [ $((TPWIDTH % 2)) -ne 0 ]; then
+#            TPWIDTH=$((TPWIDTH - 3))
+#          else
+#            TPWIDTH=$((TPWIDTH - 4))
+#          fi
+#
+#          tmux popup -d "#{pane_current_path}" -h 85% -w 80% \
+#            -e BAT_PAGER='less -R' "git show --color=always \"${commitHash}\" | delta --side-by-side -w $TPWIDTH"
+#        else
       git show --color=always "${commitHash}"
+#        fi
+#
+#      fi
+
     fi
 
   fi

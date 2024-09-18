@@ -49,9 +49,8 @@ else
   WIDTH=$(tmux display-message -p '#{window_width}')
 
   if [ $WIDTH -ge 160 ]; then
-    
     # Weird way to round the result...
-    TPWIDTH=$(echo "scale=0; ($WIDTH * 0.85 + 0.5)/1" | bc)
+    TPWIDTH=$(echo "scale=0; ($WIDTH * 0.8 + 0.5)/1" | bc)
     
     # Round to the nearest even integer
     # And shrink '$_TPWIDTH' a bit to prevent unnecessary line-wrap in 'delta'
@@ -65,12 +64,12 @@ else
     if [ "${#existingFiles[@]}" -eq 0 ]; then
 
       if [ "${origLength}" -eq 0 ]; then
-        tmux popup -d "#{pane_current_path}" -h 80% -w 85% \
+        tmux popup -d "#{pane_current_path}" -h 85% -w 80% \
           -e BAT_PAGER='less -R' "git diff --color=always | delta --side-by-side -w $TPWIDTH"
       fi
 
     else
-      tmux popup -d "#{pane_current_path}" -h 80% -w 85% \
+      tmux popup -d "#{pane_current_path}" -h 85% -w 80% \
         -e BAT_PAGER='less -R' "git diff --color=always ${existingFiles[@]} | delta --side-by-side -w $TPWIDTH"
     fi
 

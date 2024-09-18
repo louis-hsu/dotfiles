@@ -122,13 +122,13 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
   if [[ ${gitFiles[0]} =~ "ctrl-a" ]]; then
     unset 'gitFiles[0]'
     git add "${gitFiles[@]}"
-    echo -e "File(s)${YELLOW}:"
+    echo -e "\nFile(s) below added and waiting to commit:${YELLOW}"
 
     for p in "${gitFiles[@]}"; do
       echo "${p}"
     done
 
-    echo -e "${NC}added in the git and waited for commit"
+    #echo -e "${NC}"
   else
 
     # Remove non-existing files from array

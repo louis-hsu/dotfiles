@@ -18,10 +18,15 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-_COLS=$(tput col)
+# Define the width of terminal (w/ or w/o Tmux)
+if [ -z "$TMUX" ]; then
+  COLS=$(tput col)
+else
+  COLS=$(tmux display-message -p '#{window_width}')
+fi
 
 # This function reads from standard input
-function _gitstashOutput () {
+function gitstashOutput () {
   local _stashN=""
 
   git stash list | while IFS= read -r -a line; do
@@ -46,9 +51,9 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
   # 1. "--tmux" or not
   # 2. value of '--preview="
   # It seems simply using variables doesn't work
-  if [ "${_COLS}" -ge 160 ]; then
+  if [ "${COLS}" -ge 160 ]; then
     # Popup tmux window and delta side by side
-    _gitStash=$(_gitstashOutput | \
+    gitStash=$(gitstashOutput | \
       fzf --tmux=center,80%,85% \
         --ansi --no-sort \
         --header "Enter to view diff, C-a to apply, C-d to drop" \
@@ -62,7 +67,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
         --expect="ctrl-a,ctrl-d")
   else
     # No popup window and no delta side by side
-    _gitStash=$(_gitstashOutput | \
+    gitStash=$(gitstashOutput | \
       fzf \
         --ansi --no-sort \
         --header "Enter to view diff, C-a to apply, C-d to drop" \
@@ -78,14 +83,14 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
   fi 
   #echo "${_gitStash}"
   
-  _tmp=$(echo -e "${_gitStash}" | sed 's/: .*//g')
+  tmp=$(echo -e "${gitStash}" | sed 's/: .*//g')
 
-  if [[ $_tmp =~ "ctrl-a" ]]; then
-    _gitStash=$(echo -e "${_tmp}" | sed "s/ctrl-a//")
-    git stash apply $_gitStash
-  elif [[ $_gitStash =~ "ctrl-d" ]]; then
-    _gitStash=$(echo -e "${_tmp}" | sed "s/ctrl-d//")
-    git stash drop $_gitStash
+  if [[ $tmp =~ "ctrl-a" ]]; then
+    gitStash=$(echo -e "${tmp}" | sed "s/ctrl-a//")
+    git stash apply $gitStash
+  elif [[ $tmp =~ "ctrl-d" ]]; then
+    gitStash=$(echo -e "${tmp}" | sed "s/ctrl-d//")
+    git stash drop $gitStash
   fi 
 
 else

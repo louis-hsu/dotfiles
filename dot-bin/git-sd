@@ -13,46 +13,79 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-if git rev-parse --git-dir > /dev/null 2>&1; then
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+  echo -e "This is${RED} NOT${NC} a git repository!"
+  exit 0
+fi
 
-  # Ensure something different
-  if [ $(git diff $@ | wc -l) == 0 ]; then
-    echo -e "${GREEN}No different section found...${NC}"
-    exit 0 
-  fi
-  
-  # Check if in a tmux session, if not falback to normal
-  if [ -z "$TMUX" ]; then
-      git diff $@
-  
+existingFiles=("$@")
+origLength="$#"
+
+# Remove non-existing files from array
+for p in "${!existingFiles[@]}"; do
+  if [ ! -e "${existingFiles[$p]}" ]; then unset 'existingFiles[p]'; fi 
+done 
+
+existingFiles=("${existingFiles[@]}")
+
+# Ensure something different
+if [ $(git diff --name-only "${existingFiles[@]}" | wc -l) == 0 ]; then
+  echo -e "${GREEN}No different section found...${NC}"
+  exit 0 
+fi
+
+# Check if in a tmux session, if not falback to normal
+if [ -z "$TMUX" ]; then
+
+  if [ "${#existingFiles[@]}" -eq 0 ]; then
+
+    if [ "${origLength}" -eq 0 ]; then git diff; fi
+
   else
-    _WIDTH=$(tmux display-message -p '#{window_width}')
-  
-    if [ $_WIDTH -ge 200 ]; then
-      # Weird way to round the result...
-      _TPWIDTH=$(echo "scale=0; ($_WIDTH * 0.85 + 0.5)/1" | bc)
-  
-      # Round to the nearest even integer
-      # And shrink '$_TPWIDTH' a bit to prevent unnecessary line-wrap in 'delta'
-      if [ $((_TPWIDTH % 2)) -ne 0 ]; then
-        _TPWIDTH=$((_TPWIDTH - 3))
-  
-      else
-        _TPWIDTH=$((_TPWIDTH - 4))
-  
+    git diff "${existingFiles[@]}" 
+  fi
+
+else
+  WIDTH=$(tmux display-message -p '#{window_width}')
+
+  if [ $WIDTH -ge 160 ]; then
+    
+    # Weird way to round the result...
+    TPWIDTH=$(echo "scale=0; ($WIDTH * 0.85 + 0.5)/1" | bc)
+    
+    # Round to the nearest even integer
+    # And shrink '$_TPWIDTH' a bit to prevent unnecessary line-wrap in 'delta'
+    if [ $((TPWIDTH % 2)) -ne 0 ]; then
+      TPWIDTH=$((TPWIDTH - 3))
+    else
+      TPWIDTH=$((TPWIDTH - 4))
+    fi
+
+    #echo $_TPWIDTH
+    if [ "${#existingFiles[@]}" -eq 0 ]; then
+
+      if [ "${origLength}" -eq 0 ]; then
+        tmux popup -d "#{pane_current_path}" -h 80% -w 85% \
+          -e BAT_PAGER='less -R' "git diff --color=always | delta --side-by-side -w $TPWIDTH"
       fi
-  
-      #echo $_TPWIDTH
-      tmux popup -d "#{pane_current_path}" -h 80% -w 85% \
-        -e BAT_PAGER='less -R' "git diff --color=always $@ | delta --side-by-side -w $_TPWIDTH"
-  
+
     else
       tmux popup -d "#{pane_current_path}" -h 80% -w 85% \
-        -e BAT_PAGER='less -R' "git diff --color=always $@ | delta"
-  
+        -e BAT_PAGER='less -R' "git diff --color=always ${existingFiles[@]} | delta --side-by-side -w $TPWIDTH"
     fi
+
+
+  else
+
+    if [ "${#existingFiles[@]}" -eq 0 ]; then
+
+      if [ "${origLength}" -eq 0 ]; then git diff; fi
+
+    else
+      git diff "${existingFiles[@]}" 
+    fi
+
   fi
-else
-  echo -e "This is${RED} NOT${NC} a git repository!"
 
 fi
+

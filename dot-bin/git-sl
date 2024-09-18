@@ -17,7 +17,12 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-_COLS=$(tput col)
+# Define the width of terminal (w/ or w/o Tmux)
+if [ -z "$TMUX" ]; then
+  COLS=$(tput col)
+else
+  COLS=$(tmux display-message -p '#{window_width}')
+fi
 
 if git rev-parse --git-dir > /dev/null 2>&1; then
 
@@ -26,7 +31,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
   # 1. "--tmux" or not
   # 2. value of '--preview="
   # It seems simply using variables doesn't work
-  if [ "${_COLS}" -ge 160 ]; then
+  if [ "${COLS}" -ge 160 ]; then
     # Popup tmux window and delta side by side
     commit=$(git log --graph --color=always \
       --format="%C(auto)%h%d %s %C(black)%C()%cr" | \

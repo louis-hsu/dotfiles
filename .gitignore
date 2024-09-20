@@ -1,0 +1,6 @@
+# Since $ANDROID_USER_HOME doesn't work
+# 1. Create softlink ~/.config/dot-android -> ~/.android
+# 2. Ignore 'cache'/'avd'
+# -- Louis 2024/0920
+dot-android/cache/*
+dot-android/avd/*

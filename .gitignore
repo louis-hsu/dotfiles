@@ -6,7 +6,3 @@ dot-android/cache/*
 dot-android/avd/*
 dot-android/metrics/*
 
-# Move 'dot-config/local/' to '.dotfiles' since not
-# all apps honor $XDG_DATA_HOME/$XDG_STATE_HOME
-dot-local/share/*
-dot-local/state/*

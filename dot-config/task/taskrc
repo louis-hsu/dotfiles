@@ -62,7 +62,7 @@ report.ready.sort=project+/,due+,priority-/,scheduled+,urgency-
 report.all.columns=id,status.short,uuid.short,start.active,end.age,depends.indicator,priority,project.parent,tags.count,recur.indicator,wait.remaining,scheduled,due,until.remaining,description
 report.all.labels=ID,St,UUID,A,Done,D,P,Project,Tags,R,Wait,Start,Due,Until,Description
 report.all.sort=project+/,due+,priority-/,scheduled+,urgency-
-news.version=2.6.0
+news.version=3.1.0
 
 # Configuration for taskwarrior_tui
 uda.taskwarrior-tui.selection.bold=no

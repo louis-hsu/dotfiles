@@ -45,12 +45,11 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
     echo -e "${GREEN}No stashed item found...${NC}"
     exit 0 
   fi
-
+	
   # TODO
-  # Combine this if-else statement by using varialbes to replace fzf parameters:
-  # 1. "--tmux" or not
-  # 2. value of '--preview="
-  # It seems simply using variables doesn't work
+	# Find a solution to fix
+	# 1. Wrapping up parameters as a variable to feed 'fzf' doesn't work
+	# 2. 'git show -pretty=format:' setup doesn't work in the f() in fzf preview
   if [ "${COLS}" -ge 160 ]; then
     # Popup tmux window and delta side by side
     gitStash=$(gitstashOutput | \

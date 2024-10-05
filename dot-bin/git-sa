@@ -17,40 +17,40 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # This function reads from standard input
-function gitstatusOutput () {
-  local _color=""
+function gitstatusOutput() {
+	local _color=""
 
-  git status --short | while IFS= read -r line; do
-    local _status=$(echo "${line}" | awk '{print substr($0, 1, 2)}')   # Extract the status
-    local _file_path=$(echo "${line}" | awk '{$1=""; print $0}' | sed 's/^ *//g') # Extract file path and remove leading spaces
-    
-    case "${_status}" in   # Apply color based on the status
-      " D")
-        _color=$RED
-        echo -e "[${_color}${_status}${NC}] ${_file_path}"
-        ;;
-      " M"|" m"|" R"|" C")
-        _color=$YELLOW
-        echo -e "[${_color}${_status}${NC}] ${_file_path}"
-        ;;
-      "??")
-        _color=$BLUE
-        echo -e "[${_color}${_status}${NC}] ${_file_path}"
-        ;;
-      *)
-        # Not scenario for 'git add'
-        _color=$NC
-        ;;
-    esac
+	git status --short | while IFS= read -r line; do
+		local _status=$(echo "${line}" | awk '{print substr($0, 1, 2)}')              # Extract the status
+		local _file_path=$(echo "${line}" | awk '{$1=""; print $0}' | sed 's/^ *//g') # Extract file path and remove leading spaces
 
-  done
+		case "${_status}" in # Apply color based on the status
+		" D")
+			_color=$RED
+			echo -e "[${_color}${_status}${NC}] ${_file_path}"
+			;;
+		" M" | " m" | " R" | " C")
+			_color=$YELLOW
+			echo -e "[${_color}${_status}${NC}] ${_file_path}"
+			;;
+		"??")
+			_color=$BLUE
+			echo -e "[${_color}${_status}${NC}] ${_file_path}"
+			;;
+		*)
+			# Not scenario for 'git add'
+			_color=$NC
+			;;
+		esac
+
+	done
 }
 
 # Define the width of terminal (w/ or w/o Tmux)
 if [ -z "$TMUX" ]; then
-  COLS=$(tput col)
+	COLS=$(tput col)
 else
-  COLS=$(tmux display-message -p '#{window_width}')
+	COLS=$(tmux display-message -p '#{window_width}')
 fi
 
 # TODO
@@ -63,86 +63,82 @@ fi
 # 2. Check if the 1st element equals to ctrl-t
 # -- Louis 2024/0504
 
-if git rev-parse --git-dir > /dev/null 2>&1; then
+if git rev-parse --git-dir >/dev/null 2>&1; then
 
-  # Ensure something to track
-  statusLine=$(gitstatusOutput)
+	# Ensure something to track
+	statusLine=$(gitstatusOutput)
 
-  if [ $(echo -e "${statusLine}" | wc -l) == 0 ]; then
-    echo -e "${GREEN}No file found for check-in...${NC}"
-    exit 0 
-  fi
+	if [ $(echo -e "${statusLine}" | wc -l) == 0 ]; then
+		echo -e "${GREEN}No file found for check-in...${NC}"
+		exit 0
+	fi
 
-  # TODO
-  # Combine this if-else statement by using varialbes to replace fzf parameters:
-  # 1. "--tmux" or not
-  # 2. value of '--preview="
-  # It seems simply using variables doesn't work
-  if [ "${COLS}" -ge 160 ]; then
-    # Popup tmux window and delta side by side
-    gitStatus=$(echo -e "${statusLine}" | \
-      fzf --tmux=center,80%,85% \
-        --ansi --no-sort \
-        --header "Enter to view diff, Tab to select, C-a to add" \
-        --cycle \
-        --multi \
-        --print0 \
-        --preview-window=down,70% \
-        --preview='f() { local _a=$(echo -e "${@}" | sed "s/.*\] //"); [ $# -eq 0 ] || if [ -e "${_a}" ]; then git diff --color=always "${_a}" | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; fi }; f {}' \
-        --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
-        --bind "ctrl-f:page-down,ctrl-b:page-up" \
-        --expect="ctrl-a")
-  else
-    # No popup window and no delta side by side
-    gitStatus=$(echo -e "${statusLine}" | \
-      fzf \
-        --ansi --no-sort \
-        --header "Enter to view diff, Tab to select, C-a to add" \
-        --cycle \
-        --wrap \
-        --multi \
-        --print0 \
-        --preview-window=down,70% \
-        --preview='f() { local _a=$(echo -e "${@}" | sed "s/.*\] //"); [ $# -eq 0 ] || if [ -e "${_a}" ]; then git diff --color=always "${_a}" | delta; fi }; f {}' \
-        --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
-        --bind "ctrl-f:page-down,ctrl-b:page-up" \
-        --expect="ctrl-a")
-  fi
+  #	TODO
+  # Find a solution to fix
+  # 1. Wrapping up parameters as a variable to feed 'fzf' doesn't work
+  # 2. 'git show -pretty=format:' setup doesn't work in the f() in fzf preview
+	if [ "${COLS}" -ge 160 ]; then
+		# Popup tmux window and delta side by side
+		gitStatus=$(echo -e "${statusLine}" |
+			fzf --tmux=center,80%,85% \
+				--ansi --no-sort \
+				--header "Enter to view diff, Tab to select, C-a to add" \
+				--cycle \
+				--multi \
+				--print0 \
+				--preview-window=down,70% \
+				--preview='f() { local _a=$(echo -e "${@}" | sed "s/.*\] //"); [ $# -eq 0 ] || if [ -e "${_a}" ]; then git diff --color=always "${_a}" | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; fi }; f {}' \
+				--bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
+				--bind "ctrl-f:page-down,ctrl-b:page-up" \
+				--expect="ctrl-a")
+	else
+		# No popup window and no delta side by side
+		gitStatus=$(echo -e "${statusLine}" |
+			fzf \
+				--ansi --no-sort \
+				--header "Enter to view diff, Tab to select, C-a to add" \
+				--cycle \
+				--wrap \
+				--multi \
+				--print0 \
+				--preview-window=down,70% \
+				--preview='f() { local _a=$(echo -e "${@}" | sed "s/.*\] //"); [ $# -eq 0 ] || if [ -e "${_a}" ]; then git diff --color=always "${_a}" | delta; fi }; f {}' \
+				--bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
+				--bind "ctrl-f:page-down,ctrl-b:page-up" \
+				--expect="ctrl-a")
+	fi
 
-  # Check if $gitStatus has anything, if yes
-  # Cleansing the lines for 'git add'
-  # 
-  # TODO
-  # It's weird that the 'sed' function doesn't work correct when
-  # putting it into 'gitStatus'
-  temp=$(echo -e "${gitStatus}" | sed -E 's/\[[^]]+\] /;/g')
-  gitFiles=()
-  IFS=';' read -r -a gitFiles <<< "${temp}"
+	# Check if $gitStatus has anything, if yes
+	# Cleansing the lines for 'git add'
+	#
+	# It's weird that the 'sed' function doesn't work correct when
+	# putting it into 'gitStatus'
+	temp=$(echo -e "${gitStatus}" | sed -E 's/\[[^]]+\] /;/g')
+	gitFiles=()
+	IFS=';' read -r -a gitFiles <<<"${temp}"
 
-  if [[ ${gitFiles[0]} =~ "ctrl-a" ]]; then
-    unset 'gitFiles[0]'
-    git add "${gitFiles[@]}"
-    echo -e "\nFile(s) below added and waiting to commit:${YELLOW}"
+	if [[ ${gitFiles[0]} =~ "ctrl-a" ]]; then
+		unset 'gitFiles[0]'
+		git add "${gitFiles[@]}"
+		echo -e "\nFile(s) below added and waiting to commit:${YELLOW}"
 
-    for p in "${gitFiles[@]}"; do
-      echo "${p}"
-    done
+		for p in "${gitFiles[@]}"; do
+			echo "${p}"
+		done
 
-    #echo -e "${NC}"
-  else
+	else
 
-    # Remove non-existing files from array
-    for p in "${!gitFiles[@]}"; do
-      if [ ! -e "${gitFiles[$p]}" ]; then unset 'gitFiles[p]'; fi 
-    done 
+		# Remove non-existing files from array
+		for p in "${!gitFiles[@]}"; do
+			if [ ! -e "${gitFiles[$p]}" ]; then unset 'gitFiles[p]'; fi
+		done
 
-    gitFiles=("${gitFiles[@]}")
+		gitFiles=("${gitFiles[@]}")
 
-    if [ ${#gitFiles[@]} -gt 0 ]; then git diff "${gitFiles[@]}"; fi
+		if [ ${#gitFiles[@]} -gt 0 ]; then git diff "${gitFiles[@]}"; fi
 
-  fi
+	fi
 
 else
-  echo -e "This is${RED} NOT${NC} a git repository!"
+	echo -e "This is${RED} NOT${NC} a git repository!"
 fi
-

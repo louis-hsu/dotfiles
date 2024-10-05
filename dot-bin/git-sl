@@ -2,7 +2,7 @@
 #
 # Inspired from 'forgit' (https://github.com/wfxr/forgit), and
 # https://levelup.gitconnected.com/search-git-branches-and-commits-using-fzf-33df960fcc9c
-# 
+#
 # Funtions:
 # 1. Show git log history and fuzzy search git commits
 # 2. 'enter' to view the commit
@@ -19,95 +19,67 @@ NC='\033[0m' # No Color
 
 # Define the width of terminal (w/ or w/o Tmux)
 if [ -z "$TMUX" ]; then
-  COLS=$(tput col)
+	COLS=$(tput col)
 else
-  COLS=$(tmux display-message -p '#{window_width}')
+	COLS=$(tmux display-message -p '#{window_width}')
 fi
 
-if git rev-parse --git-dir > /dev/null 2>&1; then
+if git rev-parse --git-dir >/dev/null 2>&1; then
 
-  # TODO
-  # Combine this if-else statement by using varialbes to replace fzf parameters:
-  # 1. "--tmux" or not
-  # 2. value of '--preview="
-  # It seems simply using variables doesn't work
-  if [ "${COLS}" -ge 160 ]; then
-    # Popup tmux window and delta side by side
-    commit=$(git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C()%cr" | \
-      fzf --tmux=center,80%,85% \
-        --ansi --no-sort \
-        --no-multi \
-        --cycle \
-        --print0 \
-        --header "Enter to view, C-y to copy the hash, C-o to checkout" \
-        --preview-window=down,70% \
-        --preview='f() { set -- $(echo -- "${@}" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always "$1" | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
-        --bind "ctrl-y:execute-silent( echo -n {} | \grep -o '[a-f0-9]\{7\}' | tr -d '\n' | pbcopy)" \
-        --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
-        --bind "ctrl-f:page-down,ctrl-b:page-up" \
-        --expect="ctrl-o")
-  else
-    commit=$(git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C()%cr" | \
-      fzf \
-        --ansi --no-sort \
-        --no-multi \
-        --cycle \
-        --print0 \
-        --header "Enter to view, C-y to copy the hash, C-o to checkout" \
-        --preview-window=down,70% \
-        --preview='f() { set -- $(echo -- "${@}" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always "$1" | delta; }; f {}' \
-        --bind "ctrl-y:execute-silent( echo -n {} | \grep -o '[a-f0-9]\{7\}' | tr -d '\n' | pbcopy)" \
-        --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
-        --bind "ctrl-f:page-down,ctrl-b:page-up" \
-        --expect="ctrl-o")
-  fi
+	# TODO
+	# Find a solution to fix
+	# 1. Wrapping up parameters as a variable to feed 'fzf' doesn't work
+	# 2. 'git show -pretty=format:' setup doesn't work in the f() in fzf preview
+	if [ "${COLS}" -ge 160 ]; then
+		# Popup tmux window and delta side by side
+		commit=$(git log --graph --color=always \
+			--format="%C(auto)%h%d %s %C(black)%C()%cr" |
+			fzf --tmux=center,80%,85% \
+				--ansi --no-sort \
+				--no-multi \
+				--cycle \
+				--print0 \
+				--header "Enter to view, C-y to copy the hash, C-o to checkout" \
+				--preview-window=down,70% \
+				--preview='f() { set -- $(echo -- "${@}" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always "$1" | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
+				--bind "ctrl-y:execute-silent( echo -n {} | \grep -o '[a-f0-9]\{7\}' | tr -d '\n' | pbcopy)" \
+				--bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
+				--bind "ctrl-f:page-down,ctrl-b:page-up" \
+				--expect="ctrl-o")
+	else
+		commit=$(git log --graph --color=always \
+			--format="%C(auto)%h%d %s %C(black)%C()%cr" |
+			fzf \
+				--ansi --no-sort \
+				--no-multi \
+				--cycle \
+				--print0 \
+				--header "Enter to view, C-y to copy the hash, C-o to checkout" \
+				--preview-window=down,70% \
+				--preview='f() { set -- $(echo -- "${@}" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always "$1" | delta; }; f {}' \
+				--bind "ctrl-y:execute-silent( echo -n {} | \grep -o '[a-f0-9]\{7\}' | tr -d '\n' | pbcopy)" \
+				--bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
+				--bind "ctrl-f:page-down,ctrl-b:page-up" \
+				--expect="ctrl-o")
+	fi
 
-  commitHash=$(set -- $(echo -- "${commit}" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || echo "$1" ; )
-  #echo "\$commit: ${commit}"
-  #echo "\$commitHash: ${commitHash}"
+	commitHash=$(
+		set -- $(echo -- "${commit}" | grep -o "[a-f0-9]\{7\}")
+		[ $# -eq 0 ] || echo "$1"
+	)
+	#echo "\$commit: ${commit}"
+	#echo "\$commitHash: ${commitHash}"
 
-  if [ ! -z "${commitHash}" ]; then
+	if [ ! -z "${commitHash}" ]; then
 
-    if [[ ${commit} =~ "ctrl-o" ]]; then # Ctrl-o is hit
-      git checkout "${commitHash}"
-    else # Enter is hit
-      
-      # Comment out tmux popup window since unable to copy/paste text inside
-      # tmux-popup window
-      #
-      # TODO
-      # Find a way to enable copy/paste in tmux popup window to facilitate coding
-      # -- Louis 2024/0918
-#      if [ -z "$TMUX" ]; then
-#        git show --color=always "${commitHash}"
-#      else
-#
-#        if [ "${COLS}" -ge 160 ]; then
-#          # Weird way to round the result...
-#          TPWIDTH=$(echo "scale=0; ($COLS * 0.8 + 0.5)/1" | bc)
-#          
-#          # Round to the nearest even integer
-#          # And shrink '$_TPWIDTH' a bit to prevent unnecessary line-wrap in 'delta'
-#          if [ $((TPWIDTH % 2)) -ne 0 ]; then
-#            TPWIDTH=$((TPWIDTH - 3))
-#          else
-#            TPWIDTH=$((TPWIDTH - 4))
-#          fi
-#
-#          tmux popup -d "#{pane_current_path}" -h 85% -w 80% \
-#            -e BAT_PAGER='less -R' "git show --color=always \"${commitHash}\" | delta --side-by-side -w $TPWIDTH"
-#        else
-      git show --color=always "${commitHash}"
-#        fi
-#
-#      fi
+		if [[ ${commit} =~ "ctrl-o" ]]; then # Ctrl-o is hit
+			git checkout "${commitHash}"
+		else # Enter is hit
+			git show --pretty=format:"%C(bold)Commit:%C(reset) %C(yellow)%H%C(red)%d%n%C(bold)Author:%C(reset) %C(cyan)%an <%ae>%n%C(bold)Date:%C(reset)   %C(blue)%ai (%ar)%C(reset)%n%+B" "${commitHash}"
+		fi
 
-    fi
-
-  fi
+	fi
 
 else
-  echo -e "This is${RED} NOT${NC} a git repository"
+	echo -e "This is${RED} NOT${NC} a git repository"
 fi

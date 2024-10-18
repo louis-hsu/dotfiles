@@ -1,0 +1,3 @@
+-- Setup plugins table and return to lazy.lua
+return {}
+

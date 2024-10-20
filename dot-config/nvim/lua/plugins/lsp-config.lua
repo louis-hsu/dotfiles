@@ -23,7 +23,7 @@ return {
 
 			--vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
 			--vim.keymap.set("n", "<leader>ge", vim.diagnostic.open_float, { noremap = true, silent = true })
-			vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
+			vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, {})
 			vim.keymap.set({ "n" }, "<leader>ca", vim.lsp.buf.code_action, {})
 		end,
 	},

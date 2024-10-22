@@ -55,12 +55,12 @@ windows:
         - 
         - clear; task calendar
   - working:
-      layout: 8136,238x64,0,0{119x64,0,0,0,118x64,120,0,1}
-      panes:
+    #      layout: 8136,238x64,0,0{119x64,0,0,0,118x64,120,0,1}
+    #  panes:
         #cd "<%= @args[0] %>" && vim -c ":vsplit"
-        -
-        -
-  - nvim_ide:
+    #    -
+    #    -
+#  - ide:
 # Remove 'HMD' window since going to leave -- Louis 2023/0110
 #  - HMD:
 #      layout: even-horizontal

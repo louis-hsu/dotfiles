@@ -57,11 +57,27 @@ return {
 				--map('n', '<leader>hp', gitsigns.preview_hunk)
 				--map('n', '<leader>hb', function() gitsigns.blame_line{full=true} end)
 				map("n", "<leader>gb", gitsigns.toggle_current_line_blame)
-				map("n", "<leader>gd", gitsigns.diffthis)
+				--map("n", "<leader>gd", gitsigns.diffthis)
 				map("n", "<leader>gD", function()
 					gitsigns.diffthis("~")
 				end)
 				map("n", "<leader>Gd", gitsigns.toggle_deleted)
+
+				-- Define the toggle function for git diff
+				local function toggle_git_diff()
+					if vim.wo.diff then
+						-- If in diff mode, turn off diff and close the diff window on the left
+						vim.cmd("diffoff") 		-- Turn off the diff mode in all windows
+						vim.cmd("wincmd h") 	-- Move to the left window (diff window)
+						vim.cmd("bd") 				-- Close the diff window
+					else
+						-- Otherwise, show the git diff with gitsigns
+						require("gitsigns").diffthis()
+					end
+				end
+
+				-- Key mapping for toggling git diff with <leader>gd
+				vim.keymap.set("n", "<leader>gd", toggle_git_diff, { noremap = true, silent = true })
 			end,
 		})
 	end,

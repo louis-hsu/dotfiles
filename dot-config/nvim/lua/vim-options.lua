@@ -30,7 +30,8 @@ vim.opt.textwidth = 80            -- Set length to 80
 vim.opt.formatoptions:append("t") -- Enable automatic text wrapping while typing
 vim.opt.linebreak = true          -- Stop words being broken on wrap
 
---vim.opt.cursorline = true
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = 'number'
 vim.opt.cursorcolumn = true
 vim.opt.signcolumn = "yes:1" 			-- Always show signcolumns
 

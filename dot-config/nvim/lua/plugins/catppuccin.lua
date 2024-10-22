@@ -16,5 +16,6 @@ return {
       end
     })
 		vim.cmd.colorscheme("catppuccin")
+		vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#f28fad', bold = true })
 	end,
 }

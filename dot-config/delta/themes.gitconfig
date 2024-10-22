@@ -464,8 +464,8 @@
     whitespace-error-style = "#B48EAD" reverse
 
     # Commit hash
-    commit-decoration-style = "#88c0d0" box
-    commit-style = "#88c0d0"
+    commit-decoration-style = omit
+    commit-style = "#ebcb8b" bold italic
 
     # Blame
     blame-code-style = syntax

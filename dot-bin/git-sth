@@ -72,7 +72,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
         --header "Enter to view diff, C-a to apply, C-d to drop" \
         --no-multi \
         --cycle \
-        --wrap
+        --wrap \
         --print0 \
         --preview-window=down,70% \
         --preview='f() { local _s=$(echo -e "${@}" | sed "s/: .*//"); git stash show -p "${_s}" | delta; }; f {}' \
@@ -90,6 +90,8 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
   elif [[ $tmp =~ "ctrl-d" ]]; then
     gitStash=$(echo -e "${tmp}" | sed "s/ctrl-d//")
     git stash drop $gitStash
+	else
+		git stash show -p "${tmp}" | delta
   fi 
 
 else

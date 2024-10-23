@@ -37,43 +37,42 @@
 # * Find current public IP then identify geolocation
 # -- Louis 2022/1208
 #
-# Or can use following command to get geo info if something wrong about 
+# Or can use following command to get geo info if something wrong about
 # MaxMind geo db/API
-# curl ipinfo.io/$(curl checkip.amazonaws.com) | jq 
+# curl ipinfo.io/$(curl checkip.amazonaws.com) | jq
 # -- Louis 2023-03-22 09:13
 
 #####################################################################
 # Functions
 #####################################################################
 
-function process_quoted () {
-  # Process all given tokens with spaces as one func argument= $*
-  grab_quoted=`sed -E 's/.*"(.*)".*/\1/' <<< "$*"`
+function process_quoted() {
+	# Process all given tokens with spaces as one func argument= $*
+	grab_quoted=$(sed -E 's/.*"(.*)".*/\1/' <<<"$*")
 }
 
-function process_unquoted () {
-  grab_first_word=${1% *}
+function process_unquoted() {
+	grab_first_word=${1% *}
 }
 
-function valid_ip()
-{
-  local  ip=$cip
-  local  stat=1
-  if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-    OIFS=$IFS
-    IFS='.'
-    ip=($ip)
-    IFS=$OIFS
-    [[ ${ip[0]} -le 255 && ${ip[1]} -le 255 && ${ip[2]} -le 255 && ${ip[3]} -le 255 ]]
-    stat=$?
-  fi
-  return $stat
+function valid_ip() {
+	local ip=$cip
+	local stat=1
+	if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+		OIFS=$IFS
+		IFS='.'
+		ip=($ip)
+		IFS=$OIFS
+		[[ ${ip[0]} -le 255 && ${ip[1]} -le 255 && ${ip[2]} -le 255 && ${ip[3]} -le 255 ]]
+		stat=$?
+	fi
+	return $stat
 }
 
-function current_public_ip () {
-  local currentip=$(curl -s checkip.amazonaws.com)
-  echo $currentip
-  #return $currentip
+function current_public_ip() {
+	local currentip=$(curl -s checkip.amazonaws.com)
+	echo $currentip
+	#return $currentip
 }
 
 #####################################################################
@@ -83,19 +82,20 @@ function current_public_ip () {
 # No argument given?
 # Then use current public IP as the argument -- Louis 2022/1208
 if [ -z "$1" ]; then
-  cip=$(current_public_ip)
+	cip=$(current_public_ip)
 else
-  cip=$1
+	cip=$1
 fi
 # Check ip validity.
 if ! valid_ip "$cip"; then
-  printf "\nThis is not a valid IP address. Exiting.\n\n"
-  exit 1
+	printf "\nThis is not a valid IP address. Exiting.\n\n"
+	exit 1
 fi
 
 #####################################################################
 # Execute
 #####################################################################
+geoipupdate -f ~/.config/GeoIP.conf
 
 printf "\nLooking up IP in the installed GeoIP database..\n"
 
@@ -107,29 +107,29 @@ file_country="/opt/homebrew/var/GeoIP/GeoLite2-Country.mmdb"
 file_city="/opt/homebrew/var/GeoIP/GeoLite2-City.mmdb"
 file_asn="/opt/homebrew/var/GeoIP/GeoLite2-ASN.mmdb"
 
-city_string=`mmdblookup                 --file ${file_city}    --ip "$cip" city names en 2>/dev/null`
-subdivision_string=`mmdblookup          --file ${file_city}    --ip "$cip" subdivisions 0 names en 2>/dev/null`
-country_string=`mmdblookup              --file ${file_city}    --ip "$cip" country names en 2>/dev/null`
-continent_string=`mmdblookup            --file ${file_city}    --ip "$cip" continent names en 2>/dev/null`
-location_lat_string=`mmdblookup         --file ${file_city}    --ip "$cip" location latitude 2>/dev/null`
-location_lon_string=`mmdblookup         --file ${file_city}    --ip "$cip" location longitude 2>/dev/null`
-location_metrocode_string=`mmdblookup   --file ${file_city}    --ip "$cip" location metro_code 2>/dev/null`
-location_timezone_string=`mmdblookup    --file ${file_city}    --ip "$cip" location time_zone 2>/dev/null`
-postal_string=`mmdblookup               --file ${file_city}    --ip "$cip" postal code 2>/dev/null`
-asn_number_string=`mmdblookup           --file ${file_asn}     --ip "$cip" autonomous_system_number 2>/dev/null`
-asn_name_string=`mmdblookup             --file ${file_asn}     --ip "$cip" autonomous_system_organization 2>/dev/null`
+city_string=$(mmdblookup --file ${file_city} --ip "$cip" city names en 2>/dev/null)
+subdivision_string=$(mmdblookup --file ${file_city} --ip "$cip" subdivisions 0 names en 2>/dev/null)
+country_string=$(mmdblookup --file ${file_country} --ip "$cip" country names en 2>/dev/null)
+continent_string=$(mmdblookup --file ${file_country} --ip "$cip" continent names en 2>/dev/null)
+location_lat_string=$(mmdblookup --file ${file_city} --ip "$cip" location latitude 2>/dev/null)
+location_lon_string=$(mmdblookup --file ${file_city} --ip "$cip" location longitude 2>/dev/null)
+location_metrocode_string=$(mmdblookup --file ${file_city} --ip "$cip" location metro_code 2>/dev/null)
+location_timezone_string=$(mmdblookup --file ${file_city} --ip "$cip" location time_zone 2>/dev/null)
+postal_string=$(mmdblookup --file ${file_city} --ip "$cip" postal code 2>/dev/null)
+asn_number_string=$(mmdblookup --file ${file_asn} --ip "$cip" autonomous_system_number 2>/dev/null)
+asn_name_string=$(mmdblookup --file ${file_asn} --ip "$cip" autonomous_system_organization 2>/dev/null)
 
-process_quoted    $city_string                && city=${grab_quoted}
-process_quoted    $subdivision_string         && subdivisions=${grab_quoted}
-process_quoted    $country_string             && country=${grab_quoted}
-process_quoted    $continent_string           && continent=${grab_quoted}
-process_unquoted  $location_lat_string        && location_lat=${grab_first_word}
-process_unquoted  $location_lon_string        && location_lon=${grab_first_word}
-process_unquoted  $location_metrocode_string  && location_code=${grab_first_word}
-process_quoted    $location_timezone_string   && location_tz=${grab_quoted}
-process_quoted    $postal_string              && postal=${grab_quoted}
-process_unquoted  $asn_number_string          && asn_number=${grab_first_word}
-process_quoted    $asn_name_string            && asn_name=${grab_quoted}
+process_quoted $city_string && city=${grab_quoted}
+process_quoted $subdivision_string && subdivisions=${grab_quoted}
+process_quoted $country_string && country=${grab_quoted}
+process_quoted $continent_string && continent=${grab_quoted}
+process_unquoted $location_lat_string && location_lat=${grab_first_word}
+process_unquoted $location_lon_string && location_lon=${grab_first_word}
+process_unquoted $location_metrocode_string && location_code=${grab_first_word}
+process_quoted $location_timezone_string && location_tz=${grab_quoted}
+process_quoted $postal_string && postal=${grab_quoted}
+process_unquoted $asn_number_string && asn_number=${grab_first_word}
+process_quoted $asn_name_string && asn_name=${grab_quoted}
 
 printf "
   Public IP:              $cip

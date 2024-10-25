@@ -39,13 +39,13 @@ prepend_previewers = [
 	{ mime = "application/x-rar",           run = "ouch" },
 	{ mime = "application/x-xz",            run = "ouch" },
 	{ name = "*/", run = "eza-preview" },
-	{ name = "*.csv", run = "rich-preview"}, 	# for csv files
-    	{ name = "*.md", run = "rich-preview" }, 	# for markdown (.md) files
-    	{ name = "*.ipynb", run = "rich-preview"}, 	# for jupyter notebooks (.ipynb)
-#    	{ name = "*.json", run = "rich-preview"}, 	# for json (.json) files
+	{ name = "*.csv", run = "rich-preview"}, 		# for csv files
+  { name = "*.md", run = "rich-preview" }, 		# for markdown (.md) files
+  { name = "*.ipynb", run = "rich-preview"}, 	# for jupyter notebooks (.ipynb)
+# { name = "*.json", run = "rich-preview"}, 	# for json (.json) files
 #	{ mime = "{image,audio,video}/*", run = "mediainfo"},
 	{ mime = "{image,audio}/*", run = "mediainfo"},
-#    	{ mime = "application/x-subrip", run = "mediainfo"},
+# { mime = "application/x-subrip", run = "mediainfo"},
 ]
 
 [[plugin.prepend_fetchers]]

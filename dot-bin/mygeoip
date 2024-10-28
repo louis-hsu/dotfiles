@@ -42,6 +42,13 @@
 # curl ipinfo.io/$(curl checkip.amazonaws.com) | jq
 # -- Louis 2023-03-22 09:13
 
+# Define color codes
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
 #####################################################################
 # Functions
 #####################################################################
@@ -132,15 +139,15 @@ process_unquoted $asn_number_string && asn_number=${grab_first_word}
 process_quoted $asn_name_string && asn_name=${grab_quoted}
 
 printf "
-  Public IP:              $cip
-  City:                   ${city}
-  Territory:              ${subdivisions}
-  Country:                ${country}
-  Continent:              ${continent}
-  Location (approx):      ${location_lat},${location_lon}
-  Metro Code:             ${location_code}
-  Timezone:               ${location_tz}
-  Postal Code:            ${postal}
-  ASN Number:             ${asn_number}
-  ASN Organization:       ${asn_name}
+  ${BLUE}Public IP:              ${NC}$cip
+  ${BLUE}City:                   ${NC}${city}
+  ${BLUE}Territory:              ${NC}${subdivisions}
+  ${BLUE}Country:                ${NC}${country}
+  ${BLUE}Continent:              ${NC}${continent}
+  ${BLUE}Location (approx):      ${NC}${location_lat},${location_lon}
+  ${BLUE}Metro Code:             ${NC}${location_code}
+  ${BLUE}Timezone:               ${NC}${location_tz}
+  ${BLUE}Postal Code:            ${NC}${postal}
+  ${BLUE}ASN Number:             ${NC}${asn_number}
+  ${BLUE}ASN Organization:       ${NC}${asn_name}
 \n"

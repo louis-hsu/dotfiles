@@ -8,12 +8,16 @@ return {
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.prettier,
         null_ls.builtins.formatting.shfmt,
+        null_ls.builtins.formatting.google_java_format,
+        null_ls.builtins.formatting.pyink,
+        null_ls.builtins.formatting.isort,
+        null_ls.builtins.diagnostics.pylint,
         --        null_ls.builtins.diagnostics.eslint_d,
         --        null_ls.builtins.diagnostics.rubocop, -- For Ruby
         --        null_ls.builtins.formatting.rubocop,
       },
     })
 
-    vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, {})
+    --vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, {})
   end,
 }

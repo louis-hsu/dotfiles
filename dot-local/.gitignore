@@ -2,3 +2,5 @@
 # all apps honor $XDG_DATA_HOME/$XDG_STATE_HOME
 share/*
 state/*
+bin/*
+pipx/*

@@ -1,0 +1,7 @@
+# Refer to https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md
+# -- Louis 2024/1102
+
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"

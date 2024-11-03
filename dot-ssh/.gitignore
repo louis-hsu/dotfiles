@@ -1,3 +1,8 @@
-# Only put `config` in the respository -- Louis 2024/0322
-id*
-known*
+# Ignore everything
+*
+
+# Unignore directories (so Git can access nested files)
+!*/
+
+# Unignore files starting with "config"
+!config*

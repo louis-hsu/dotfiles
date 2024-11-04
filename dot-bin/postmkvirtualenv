@@ -1,0 +1,13 @@
+#!/bin/zsh
+# This hook is sourced after a new virtualenv is activated.
+
+# Init poetry pkg management
+poetry init
+
+# Inject required env variables via 'direnv'
+# Get the site-packages path for the newly created virtual environment
+#SITE_PACKAGES_PATH=$(python -c "import site; print(site.getsitepackages()[0])")
+#echo export PYTHONPATH=$SITE_PACKAGES_PATH >! .envrc
+
+# Allow direnv to read the .envrc file in the environment's directory
+#direnv allow .

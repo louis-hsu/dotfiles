@@ -30,7 +30,7 @@ return {
 				end
 
 				-- Navigation
-				map("n", "]c", function()
+				map("n", "]g", function()
 					if vim.wo.diff then
 						vim.cmd.normal({ "]c", bang = true })
 					else
@@ -38,7 +38,7 @@ return {
 					end
 				end)
 
-				map("n", "[c", function()
+				map("n", "[g", function()
 					if vim.wo.diff then
 						vim.cmd.normal({ "[c", bang = true })
 					else
@@ -67,9 +67,9 @@ return {
 				local function toggle_git_diff()
 					if vim.wo.diff then
 						-- If in diff mode, turn off diff and close the diff window on the left
-						vim.cmd("diffoff") 		-- Turn off the diff mode in all windows
-						vim.cmd("wincmd h") 	-- Move to the left window (diff window)
-						vim.cmd("bd") 				-- Close the diff window
+						vim.cmd("diffoff") -- Turn off the diff mode in all windows
+						vim.cmd("wincmd h") -- Move to the left window (diff window)
+						vim.cmd("bd") -- Close the diff window
 					else
 						-- Otherwise, show the git diff with gitsigns
 						require("gitsigns").diffthis()

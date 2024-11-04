@@ -1,0 +1,28 @@
+#! /usr/bin/env sh
+# Refer to https://github.com/Aloxaf/fzf-tab/wiki/Preview
+# lesspipe.sh don't use eza, bat and chafa, it use ls and exiftool. so we create a lessfilter.
+# -- Louis 2024/1104
+mime=$(file -bL --mime-type "$1")
+category=${mime%%/*}
+kind=${mime##*/}
+if [ -d "$1" ]; then
+	eza -1aF \
+		--group-directories-first -T -L 2 \
+		--no-quotes \
+		--follow-symlinks \
+		--color=always \
+		--ignore-glob=".git|.DS_Store|Icon?" \
+		"$1"
+	#elif [ "$category" = image ]; then
+	#	chafa "$1"
+	#	exiftool "$1"
+	#elif [ "$kind" = vnd.openxmlformats-officedocument.spreadsheetml.sheet ] || \
+	#	[ "$kind" = vnd.ms-excel ]; then
+	#	in2csv "$1" | xsv table | bat -ltsv --color=always
+	exit 0
+elif [ "$category" = text ]; then
+	bat --color=always "$1"
+	exit 0
+else
+	exit 1
+fi

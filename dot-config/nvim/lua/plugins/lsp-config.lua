@@ -20,7 +20,7 @@ return {
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local lspconfig = require("lspconfig")
 			local on_attach = function(client, bufnr)
-				local bufopts = { noremap=true, silent=true, buffer=bufnr }
+				local bufopts = { noremap = true, silent = true, buffer = bufnr }
 				--vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
 				--vim.keymap.set("n", "<leader>ge", vim.diagnostic.open_float, { noremap = true, silent = true })
 				vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, bufopts)
@@ -34,7 +34,9 @@ return {
 				if client.server_capabilities.documentFormattingProvider then
 					vim.api.nvim_create_autocmd("BufWritePre", {
 						buffer = bufnr,
-						callback = function() vim.lsp.buf.format() end,
+						callback = function()
+							vim.lsp.buf.format()
+						end,
 					})
 				end
 			end
@@ -42,22 +44,33 @@ return {
 			lspconfig.lua_ls.setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
-				filetypes = {"lua"},
+				filetypes = { "lua" },
 			})
-			lspconfig.ts_ls.setup({ capabilities = capabilities })
-			lspconfig.bashls.setup({ capabilities = capabilities })
-			lspconfig.jdtls.setup({ capabilities = capabilities })
+			lspconfig.ts_ls.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				filetypes = { "typescript", "javascript" },
+			})
+			lspconfig.bashls.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				filetypes = { "sh" },
+			})
+			lspconfig.jdtls.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				filetypes = { "java" },
+			})
 			lspconfig.ruff.setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
-				filetypes = {"python"},
+				filetypes = { "python" },
 			})
 			lspconfig.pyright.setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
-				filetypes = {"python"},
+				filetypes = { "python" },
 			})
-
 		end,
 	},
 	{

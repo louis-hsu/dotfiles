@@ -4,7 +4,7 @@ return {
 		"rcarriga/nvim-dap-ui",
 		"nvim-neotest/nvim-nio",
 	},
-	--lazy = true,
+	lazy = true,
 	--event = "BufReadPre",
 	config = function()
 		local dap = require("dap")
@@ -52,14 +52,24 @@ return {
 			},
 		}
 
-		vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, {})
-		vim.keymap.set("n", "<leader>dc", dap.continue, {})
+		--vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, {})
+		--vim.keymap.set("n", "<leader>dc", dap.continue, {})
+		--vim.keymap.set("n", "<leader>dq", dapui.close, {})
 	end,
-	--keys = {
-	--	{ "<leader>dc", ":lua require'dap'.continue()<CR>", desc = "DAP Continue" },
-	--{ "<F10>", ":lua require'dap'.step_over()<CR>", desc = "DAP Step Over" },
-	--{ "<F11>", ":lua require'dap'.step_into()<CR>", desc = "DAP Step Into" },
-	--{ "<F12>", ":lua require'dap'.step_out()<CR>", desc = "DAP Step Out" },
-	--	{ "<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>", desc = "DAP Toggle Breakpoint" },
-	--	},
+	keys = {
+		{ "<leader>dc", "<Cmd>DapContinue<CR>", desc = "DAP Continue" },
+		{ "<leader>db", "<Cmd>DapToggleBreakpoint<CR>", desc = "DAP Toggle Breakpoint" },
+		{
+			"<leader>dq",
+			function()
+				require("dap").terminate()
+				require("dapui").close()
+				require("dap").clear_breakpoints()
+			end,
+			desc = "Terminate DAP and close DAP UI",
+		},
+		--{ "<F10>", ":lua require'dap'.step_over()<CR>", desc = "DAP Step Over" },
+		--{ "<F11>", ":lua require'dap'.step_into()<CR>", desc = "DAP Step Into" },
+		--{ "<F12>", ":lua require'dap'.step_out()<CR>", desc = "DAP Step Out" },
+	},
 }

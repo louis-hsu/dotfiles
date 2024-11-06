@@ -28,22 +28,31 @@ return {
 			},
 			default_component_configs = {
 				git_status = {
-          symbols = {
-            -- Change type
-            added     = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
-            modified  = "✱", -- or "", but this is redundant info if you use git_status_colors on the name
-            deleted   = "✖",-- this can only be used in the git_status source
-            renamed   = "󰁕",-- this can only be used in the git_status source
-            -- Status type
-            untracked = "",
-            ignored   = "",
-            unstaged  = "󰄱",
-            staged    = "✔︎",
-            conflict  = "",
-          }
-        },
+					symbols = {
+						-- Change type
+						added = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
+						modified = "✱", -- or "", but this is redundant info if you use git_status_colors on the name
+						deleted = "✖", -- this can only be used in the git_status source
+						renamed = "󰁕", -- this can only be used in the git_status source
+						-- Status type
+						untracked = "",
+						ignored = "",
+						unstaged = "󰄱",
+						staged = "✔︎",
+						conflict = "",
+					},
+				},
 			},
 		})
-		vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal left<CR>")
 	end,
+	keys = {
+		{
+			"<C-n>",
+			"<Cmd>Neotree toggle filesystem reveal left<CR>",
+			mode = "n",
+			noremap = true,
+			silent = true,
+			desc = "Toggle Neo-tree",
+		},
+	},
 }

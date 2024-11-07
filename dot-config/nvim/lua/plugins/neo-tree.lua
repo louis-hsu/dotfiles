@@ -16,10 +16,11 @@ return {
 					hide_gitignored = true,
 					hide_by_name = {
 						".git",
-						"thumbs.db",
 					},
 					never_show = {
 						".DS_Store",
+						"undo",
+						"thumbs.db",
 					},
 					never_show_by_pattern = {
 						"Icon?",

@@ -37,17 +37,17 @@ return {
 				--        null_ls.builtins.diagnostics.rubocop, -- For Ruby
 				--        null_ls.builtins.formatting.rubocop,
 			},
-			on_attach = function(client, bufnr)
-				-- Auto formating before saving
-				if client.supports_method("textDocument/formatting") then
-					vim.api.nvim_create_autocmd("BufWritePre", {
-						buffer = bufnr,
-						callback = function()
-							vim.lsp.buf.format({ bufnr = bufnr })
-						end,
-					})
-				end
-			end,
+			-- on_attach = function(client, bufnr)
+			-- 	-- Auto formating before saving
+			-- 	if client.supports_method("textDocument/formatting") then
+			-- 		vim.api.nvim_create_autocmd("BufWritePre", {
+			-- 			buffer = bufnr,
+			-- 			callback = function()
+			-- 				vim.lsp.buf.format({ bufnr = bufnr })
+			-- 			end,
+			-- 		})
+			-- 	end
+			-- end,
 		})
 
 		--vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, {})

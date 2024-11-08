@@ -28,6 +28,7 @@ return {
 					opts = { vertical = true },
 					desc = "Open the entry in a vertical split",
 				},
+				["<Esc>"] = "actions.close",
 			},
 			win_options = {
 				signcolumn = "auto",
@@ -58,7 +59,7 @@ return {
 				-- optionally override the oil buffers window title with custom function: fun(winid: integer): string
 				get_win_title = nil,
 				-- preview_split: Split direction: "auto", "left", "right", "above", "below".
-				preview_split = "right",
+				preview_split = "auto",
 				-- This is the config that will be passed to nvim_open_win.
 				-- Change values here to customize the layout
 				override = function(conf)

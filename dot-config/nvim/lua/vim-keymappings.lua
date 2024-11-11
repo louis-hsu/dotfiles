@@ -11,7 +11,7 @@ vim.keymap.set("n", "<C-W>\\", "<Cmd>vsplit<CR>", { noremap = true, silent = tru
 vim.keymap.set("n", "<C-W>-", "<Cmd>split<CR>", { noremap = true, silent = true })
 
 -- Remove highlight of current searching targets
-vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>")
+vim.keymap.set("n", "<leader>h", "<Cmd>nohlsearch<CR>")
 
 -- Move 'j','k' through virutal lines, and '5j'/'5k' jumps 5 lines
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, noremap = true })

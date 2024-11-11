@@ -17,8 +17,9 @@ return {
 			require("lualine").setup({
 				options = {
 					theme = l_dracula,
-					ignore_focus = { "neo-tree" },
-					disabled_filetypes = { statusline = { "neo-tree" } },
+					ignore_focus = { "neo-tree", "undotree", "no-neck-pain" },
+					disabled_filetypes = { statusline = { "neo-tree", "undotree", "no-neck-pain" } },
+					globalstatus = true,
 					-- refresh = { statusline = 100 },
 				},
 				sections = {

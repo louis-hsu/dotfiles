@@ -1,9 +1,13 @@
 return {
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.8",
+		tag = "0.1.*",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
+			},
 			-- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 			"nvim-tree/nvim-web-devicons",
 		},
@@ -31,15 +35,15 @@ return {
 					},
 					mappings = {
 						i = {
-							["<esc>"] = "close",
-							["<C-j>"] = "move_selection_next",
-							["<C-k>"] = "move_selection_previous",
-							["<C-q>"] = "send_selected_to_qflist",
+							["<esc>"] = actions.close,
+							["<C-j>"] = actions.move_selection_next,
+							["<C-k>"] = actions.move_selection_previous,
+							["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
 						},
-						n = {
-							["j"] = "move_selection_next",
-							["k"] = "move_selection_previous",
-						},
+						-- n = {
+						-- 	["j"] = "move_selection_next",
+						-- 	["k"] = "move_selection_previous",
+						-- },
 					},
 				},
 			})

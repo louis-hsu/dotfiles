@@ -1,6 +1,25 @@
 return {
 	"lewis6991/gitsigns.nvim",
 	config = function()
+		local function close_diff_and_restore(original_winnr)
+			-- Store current position
+			local cur_pos = vim.fn.getcurpos()
+
+			-- Find and close the diff window
+			local windows = vim.api.nvim_list_wins()
+			for _, winid in ipairs(windows) do
+				if vim.api.nvim_win_get_option(winid, "diff") then
+					vim.api.nvim_win_close(winid, true)
+					break
+				end
+			end
+
+			-- Restore focus to original window
+			vim.api.nvim_set_current_win(original_winnr)
+			-- Restore cursor position
+			vim.fn.setpos(".", cur_pos)
+		end
+
 		local config = require("gitsigns")
 		config.setup({
 			signs = {
@@ -22,6 +41,31 @@ return {
 			numhl = true,
 			on_attach = function(bufnr)
 				local gitsigns = require("gitsigns")
+
+				local function diffthis()
+					local original_winnr = vim.api.nvim_get_current_win()
+
+					-- Check if diff window already exists
+					local diff_exists = false
+					local windows = vim.api.nvim_list_wins()
+					for _, winid in ipairs(windows) do
+						if vim.api.nvim_win_get_option(winid, "diff") then
+							diff_exists = true
+							break
+						end
+					end
+
+					if diff_exists then
+						-- Close diff and restore focus
+						close_diff_and_restore(original_winnr)
+					else
+						-- Call original diffthis function
+						gitsigns.diffthis()
+
+						-- Return focus to original window
+						vim.api.nvim_set_current_win(original_winnr)
+					end
+				end
 
 				local function map(mode, l, r, opts)
 					opts = opts or {}
@@ -64,20 +108,27 @@ return {
 				map("n", "<leader>Gd", gitsigns.toggle_deleted)
 
 				-- Define the toggle function for git diff
-				local function toggle_git_diff()
-					if vim.wo.diff then
-						-- If in diff mode, turn off diff and close the diff window on the left
-						vim.cmd("diffoff") -- Turn off the diff mode in all windows
-						vim.cmd("wincmd h") -- Move to the left window (diff window)
-						vim.cmd("bd") -- Close the diff window
-					else
-						-- Otherwise, show the git diff with gitsigns
-						require("gitsigns").diffthis()
-					end
-				end
+				-- local function toggle_git_diff()
+				-- 	local last_win = vim.fn.win_getid(vim.fn.winnr("#"))
+				--
+				-- 	if vim.wo.diff then
+				-- 		-- If in diff mode, turn off diff and close the diff window on the left
+				-- 		vim.cmd("diffoff") -- Turn off the diff mode in all windows
+				-- 		vim.cmd("wincmd h") -- Move to the left window (diff window)
+				-- 		vim.cmd("bd") -- Close the diff window
+				--
+				-- 		-- Return focus to the last active window if it's still valid
+				-- 		if last_win and vim.api.nvim_win_is_valid(last_win) then
+				-- 			vim.api.nvim_set_current_win(last_win)
+				-- 		end
+				-- 	else
+				-- 		-- Otherwise, show the git diff with gitsigns
+				-- 		require("gitsigns").diffthis()
+				-- 	end
+				-- end
 
 				-- Key mapping for toggling git diff with <leader>gd
-				vim.keymap.set("n", "<leader>gd", toggle_git_diff, { noremap = true, silent = true })
+				vim.keymap.set("n", "<leader>gd", diffthis, { buffer = bufnr, noremap = true, silent = true })
 			end,
 		})
 	end,

@@ -44,13 +44,13 @@ windows:
 #            - cd "<%= @args[0] %>" && ls
 #            - cd "<%= @args[0] %>" # general
             - dry -m
-            - duf -hide-fs nfs4
+            - duf -hide special
             - sudo iptraf
     - working:
         layout: 8136,238x64,0,0{119x64,0,0,0,118x64,120,0,1}
         panes:
             #cd "<%= @args[0] %>" && vim -c ":vsplit"
-            -
+            - neofetch
             -
 #  - server: bundle exec rails s
 #  - logs: tail -f log/development.log

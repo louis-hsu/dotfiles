@@ -1,7 +1,0 @@
-# Ignore files (either .data/.pem or .sqlite3) in 'task_data'
-# 1. Data files always changes
-# 2. Private/public key files (.pem) are not good to be exposed in github.com
-# 3. Remote sync repository (Dropbox) is set
-# -- Louis 2024/0324
-task_data/
-

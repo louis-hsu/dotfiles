@@ -1,0 +1,46 @@
+-- Comment out for now since no test suite is installed configured yet
+-- Louis 2024/1107
+return {
+	-- 	"vim-test/vim-test",
+	-- 	dependencies = {
+	-- 		"preservim/vimux",
+	-- 	},
+	-- 	lazy = true,
+	-- 	config = true,
+	-- 	keys = {
+	-- 		{
+	-- 			"<leader>tn",
+	-- 			"<Cmd>TestNearest<CR>",
+	-- 			mode = "n",
+	-- 			noremap = true,
+	-- 			silent = true,
+	-- 			desc = "Run the nearest test",
+	-- 		},
+	-- 		{
+	-- 			"<leader>tf",
+	-- 			"<Cmd>TestFile<CR>",
+	-- 			mode = "n",
+	-- 			noremap = true,
+	-- 			silent = true,
+	-- 			desc = "Run all tests in current file",
+	-- 		},
+	-- 		{
+	-- 			"<leader>ts",
+	-- 			"<Cmd>TestSuite<CR>",
+	-- 			mode = "n",
+	-- 			noremap = true,
+	-- 			silent = true,
+	-- 			desc = "Run the whole test suite",
+	-- 		},
+	-- 		{ "<leader>tl", "<Cmd>TestLast<CR>", mode = "n", noremap = true, silent = true, desc = "Run the last test" },
+	-- 		{
+	-- 			"<leader>tv",
+	-- 			"<Cmd>TestVisit<CR>",
+	-- 			mode = "n",
+	-- 			noremap = true,
+	-- 			silent = true,
+	-- 			desc = "Visit the test file",
+	-- 		},
+	-- 	},
+	-- 	vim.cmd("let test#strategy = 'vimux'"),
+}

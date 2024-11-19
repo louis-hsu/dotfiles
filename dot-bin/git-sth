@@ -7,7 +7,7 @@
 # 2. 'ctrl-a' to apply the selected item (potential conflict is handled by user later)
 # 3. 'ctrl-d' to drop the selected item
 #
-# The reason of no 'git stash pop' is user might wanna apply same change to different 
+# The reason of no 'git stash pop' is user might wanna apply same change to different
 # branch for testing
 # -- Louis 2024/0430
 
@@ -20,81 +20,80 @@ NC='\033[0m' # No Color
 
 # Define the width of terminal (w/ or w/o Tmux)
 if [ -z "$TMUX" ]; then
-  COLS=$(tput col)
+	COLS=$(tput cols)
 else
-  COLS=$(tmux display-message -p '#{window_width}')
+	COLS=$(tmux display-message -p '#{window_width}')
 fi
 
 # This function reads from standard input
-function gitstashOutput () {
-  local _stashN=""
+function gitstashOutput() {
+	local _stashN=""
 
-  git stash list | while IFS= read -r -a line; do
-    _stashN=$(echo -e "${YELLOW}${line}" | sed "s/: /\\$NC: \\$BLUE/1" | sed "s/: /\\$NC: /2")
-    echo -e "${_stashN}"
-  done
+	git stash list | while IFS= read -r -a line; do
+		_stashN=$(echo -e "${YELLOW}${line}" | sed "s/: /\\$NC: \\$BLUE/1" | sed "s/: /\\$NC: /2")
+		echo -e "${_stashN}"
+	done
 }
 
 # TODO
 # Same issue/workaround as 'git-sa'
 # -- Louis 2024/0506
-if git rev-parse --git-dir > /dev/null 2>&1; then
+if git rev-parse --git-dir >/dev/null 2>&1; then
 
-  # Ensure something stashed
-  if [ $(git stash list | wc -l) == 0 ]; then
-    echo -e "${GREEN}No stashed item found...${NC}"
-    exit 0 
-  fi
-	
-  # TODO
+	# Ensure something stashed
+	if [ $(git stash list | wc -l) == 0 ]; then
+		echo -e "${GREEN}No stashed item found...${NC}"
+		exit 0
+	fi
+
+	# TODO
 	# Find a solution to fix
 	# 1. Wrapping up parameters as a variable to feed 'fzf' doesn't work
 	# 2. 'git show -pretty=format:' setup doesn't work in the f() in fzf preview
-  if [ "${COLS}" -ge 160 ]; then
-    # Popup tmux window and delta side by side
-    gitStash=$(gitstashOutput | \
-      fzf --tmux=center,80%,85% \
-        --ansi --no-sort \
-        --header "Enter to view diff, C-a to apply, C-d to drop" \
-        --no-multi \
-        --cycle \
-        --print0 \
-        --preview-window=down,70% \
-        --preview='f() { local _s=$(echo -e "${@}" | sed "s/: .*//"); git stash show -p "${_s}" | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
-        --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
-        --bind "ctrl-f:page-down,ctrl-b:page-up" \
-        --expect="ctrl-a,ctrl-d")
-  else
-    # No popup window and no delta side by side
-    gitStash=$(gitstashOutput | \
-      fzf \
-        --ansi --no-sort \
-        --header "Enter to view diff, C-a to apply, C-d to drop" \
-        --no-multi \
-        --cycle \
-        --wrap \
-        --print0 \
-        --preview-window=down,70% \
-        --preview='f() { local _s=$(echo -e "${@}" | sed "s/: .*//"); git stash show -p "${_s}" | delta; }; f {}' \
-        --bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
-        --bind "ctrl-f:page-down,ctrl-b:page-up" \
-        --expect="ctrl-a,ctrl-d")
-  fi 
-  #echo "${_gitStash}"
-  
-  tmp=$(echo -e "${gitStash}" | sed 's/: .*//g')
+	if [ "${COLS}" -ge 160 ]; then
+		# Popup tmux window and delta side by side
+		gitStash=$(gitstashOutput |
+			fzf --tmux=center,80%,85% \
+				--ansi --no-sort \
+				--header "Enter to view diff, C-a to apply, C-d to drop" \
+				--no-multi \
+				--cycle \
+				--print0 \
+				--preview-window=down,70% \
+				--preview='f() { local _s=$(echo -e "${@}" | sed "s/: .*//"); git stash show -p "${_s}" | delta --side-by-side -w ${FZF_PREVIEW_COLUMNS:-$COLUMNS}; }; f {}' \
+				--bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
+				--bind "ctrl-f:page-down,ctrl-b:page-up" \
+				--expect="ctrl-a,ctrl-d")
+	else
+		# No popup window and no delta side by side
+		gitStash=$(gitstashOutput |
+			fzf \
+				--ansi --no-sort \
+				--header "Enter to view diff, C-a to apply, C-d to drop" \
+				--no-multi \
+				--cycle \
+				--wrap \
+				--print0 \
+				--preview-window=down,70% \
+				--preview='f() { local _s=$(echo -e "${@}" | sed "s/: .*//"); git stash show -p "${_s}" | delta; }; f {}' \
+				--bind "ctrl-h:preview-page-down,ctrl-l:preview-page-up" \
+				--bind "ctrl-f:page-down,ctrl-b:page-up" \
+				--expect="ctrl-a,ctrl-d")
+	fi
+	#echo "${_gitStash}"
 
-  if [[ $tmp =~ "ctrl-a" ]]; then
-    gitStash=$(echo -e "${tmp}" | sed "s/ctrl-a//")
-    git stash apply $gitStash
-  elif [[ $tmp =~ "ctrl-d" ]]; then
-    gitStash=$(echo -e "${tmp}" | sed "s/ctrl-d//")
-    git stash drop $gitStash
+	tmp=$(echo -e "${gitStash}" | sed 's/: .*//g')
+
+	if [[ $tmp =~ "ctrl-a" ]]; then
+		gitStash=$(echo -e "${tmp}" | sed "s/ctrl-a//")
+		git stash apply $gitStash
+	elif [[ $tmp =~ "ctrl-d" ]]; then
+		gitStash=$(echo -e "${tmp}" | sed "s/ctrl-d//")
+		git stash drop $gitStash
 	else
 		git stash show -p "${tmp}" | delta
-  fi 
+	fi
 
 else
-  echo -e "This is${RED} NOT${NC} a git repository!"
+	echo -e "This is${RED} NOT${NC} a git repository!"
 fi
-

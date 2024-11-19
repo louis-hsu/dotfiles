@@ -48,7 +48,7 @@ function gitstatusOutput() {
 
 # Define the width of terminal (w/ or w/o Tmux)
 if [ -z "$TMUX" ]; then
-	COLS=$(tput col)
+	COLS=$(tput cols)
 else
 	COLS=$(tmux display-message -p '#{window_width}')
 fi
@@ -73,10 +73,10 @@ if git rev-parse --git-dir >/dev/null 2>&1; then
 		exit 0
 	fi
 
-  #	TODO
-  # Find a solution to fix
-  # 1. Wrapping up parameters as a variable to feed 'fzf' doesn't work
-  # 2. 'git show -pretty=format:' setup doesn't work in the f() in fzf preview
+	#	TODO
+	# Find a solution to fix
+	# 1. Wrapping up parameters as a variable to feed 'fzf' doesn't work
+	# 2. 'git show -pretty=format:' setup doesn't work in the f() in fzf preview
 	if [ "${COLS}" -ge 160 ]; then
 		# Popup tmux window and delta side by side
 		gitStatus=$(echo -e "${statusLine}" |

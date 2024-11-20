@@ -20,28 +20,30 @@ nvim-scratch
 # Ignore content in 'yazi/plugins'
 yazi/plugins/*
 
+*.log
+
 # For Ubuntu
+autostart
 dconf
 eog
 evolution
-glib-2.0
+gnome-control-center
 gnome-session
+go
 goa-1.0
 google-chrome
 gtk-3.0
+gtk-4.0
 ibus
-menus
 nautilus
 pulse
+[s/S]urfshark
 systemd
-tiling-assistant
 update-notifier
 .gsd-keyboard.settings-ported
 gnome-initial-setup-done
-GNOME-xdg-terminals.list
 mimeapps.list
-monitors.xml
-ubuntu-xdg-terminals.list
+monitors.*
+rygel.conf
 user-dirs.dirs
 user-dirs.locale
-xdg-terminals.list

@@ -48,7 +48,7 @@ function gitstatusOutput() {
 
 # Define the width of terminal (w/ or w/o Tmux)
 if [ -z "$TMUX" ]; then
-	COLS=$(tput col)
+	COLS=$(tput cols)
 else
 	COLS=$(tmux display-message -p '#{window_width}')
 fi

@@ -42,5 +42,4 @@ web:*.{html,css,js}*
 # 1. Somehow rg doesn't honor rules for dot-prefix folders (.git, e.g.)
 # 2. Doesn't like too many dot-prefix files in home directory
 # -- Louis 2024/0324
---ignore-file
-/Users/nshiu/.config/ripgrep/rgignore
+--ignore-file=/home/nshiu/.config/ripgrep/rgignore

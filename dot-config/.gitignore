@@ -8,11 +8,6 @@ cache/*
 local/share/*
 local/state/*
 
-# Ignore nvim* gits which would be handled separately
-# Add 'nvim-*' as submodules by utilizing .gitmodules to faciltate search in the future
-# Except 'nvim-scrach', which would change/test content often
-nvim-scratch
-
 # Add cache/avd directory from Android Studio
 .android/cache/*
 .android/avd/*
@@ -47,3 +42,7 @@ monitors.*
 rygel.conf
 user-dirs.dirs
 user-dirs.locale
+tiling-assistant
+GNOME-xdg-terminals.list
+ubuntu-xdg-terminals.list
+xdg-terminals.list

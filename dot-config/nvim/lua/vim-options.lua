@@ -4,7 +4,8 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = false
 vim.opt.smarttab = true
 
-vim.wo.number = true              -- Show line number
+vim.opt.number = true             -- Show line number
+vim.opt.relativenumber = true     -- Show relative number
 vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.clipboard = "unnamedplus" -- Use system clipboard for copy/paste
 vim.opt.completeopt = "menu,menuone,noselect"

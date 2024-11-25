@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
+			{ out,                            "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -41,7 +41,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 -- Supress background transparency of pop-up windows
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1E1E1E" }) -- Replace with your desired background color
 vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#1E1E1E" }) -- Set border background
-vim.api.nvim_set_hl(0, "LspHover", { bg = "#1E1E1E" }) -- Set hover window background
+vim.api.nvim_set_hl(0, "LspHover", { bg = "#1E1E1E" })    -- Set hover window background
 
 -- Lua function to delete old undo files
 local function cleanup_undo_files()
@@ -53,4 +53,28 @@ end
 -- Run the cleanup function when exiting Neovim
 vim.api.nvim_create_autocmd("VimLeave", {
 	callback = cleanup_undo_files,
+})
+
+-- Enable 'no-neck-pain' automatically when window width >= 160
+local been_wider = false
+local been_narrower = false
+
+local function check_window_width()
+	local width = vim.api.nvim_win_get_width(0)
+
+	if width >= 160 and not been_wider then
+		vim.cmd("NoNeckPain")
+		been_wider = true
+		been_narrower = false
+	elseif width < 160 and not been_narrower then
+		vim.cmd("NoNeckPain")
+		been_wider = false
+		been_narrower = true
+	end
+end
+
+vim.api.nvim_create_autocmd({ "VimEnter", "VimResized" }, {
+	callback = function()
+		check_window_width()
+	end,
 })

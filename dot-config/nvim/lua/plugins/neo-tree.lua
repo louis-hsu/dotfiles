@@ -7,11 +7,9 @@ return {
 		"MunifTanjim/nui.nvim",
 	},
 	config = function()
-		-- Go back to original buffer after <esc>
+		-- Create custom command to go back to original buffer after <esc>
 		local function custom_esc_commands()
 			local commands = require("neo-tree.sources.filesystem.commands")
-			-- local original_cancel = commands.cancel
-			-- Create our custom cancel command
 			commands.cancel = function(state)
 				-- Store the current window ID before closing Neo-tree
 				local current_win = vim.api.nvim_get_current_win()
@@ -69,6 +67,12 @@ return {
 		custom_esc_commands()
 
 		require("neo-tree").setup({
+			event_handlers = {
+				handler = function()
+					vim.opt_local.signcolumn = "auto:3"
+				end,
+			},
+
 			sources = { "filesystem", "buffers", "git_status" },
 			source_selector = {
 				winbar = true,
@@ -80,10 +84,11 @@ return {
 					-- { source = "document_symbols"},
 				},
 			},
+
 			buffers = {
 				follow_current_file = {
-					enabled = true, -- This will find and focus the file in the active buffer every time
-					--              -- the current file is changed while the tree is open.
+					enabled = true,     -- This will find and focus the file in the active buffer every time
+					-- the current file is changed while the tree is open.
 					leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
 				},
 			},
@@ -106,42 +111,58 @@ return {
 						"Icon?",
 					},
 				},
-				window = {
-					popup = {
-						position = { col = "25%", row = "0" },
-						size = function(state)
-							local root_name = vim.fn.fnamemodify(state.path, ":~")
-							local root_len = string.len(root_name) + 4
-							return {
-								width = math.max(root_len, 50),
-								height = vim.o.lines - 6,
-							}
-						end,
-					},
-					-- mappings = {
-					-- 	["<esc>"] = "cancel",
-					-- },
+				components = {
+					diagnostics = function(config, node, state)
+						local diag = require("neo-tree.sources.common.components").diagnostics(config, node, state)
+						if diag and diag.text then
+							diag.text = diag.text .. " "
+						end
+						return diag
+					end,
 				},
 			},
+
 			default_component_configs = {
+				indent = {
+					padding = 0,
+					indent_size = 2,
+				},
 				git_status = {
+					padding = " ",
 					symbols = {
 						-- Change type
-						added = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
-						modified = "✱", -- or "", but this is redundant info if you use git_status_colors on the name
-						deleted = "✖", -- this can only be used in the git_status source
-						renamed = "󰁕", -- this can only be used in the git_status source
+						added = "✚",
+						modified = "✱",
+						deleted = "✖",
+						renamed = "󰁕",
 						-- Status type
 						untracked = "",
-						ignored = "",
+						ignored = "󱑓",
 						unstaged = "󰄱",
-						staged = "✔︎",
-						conflict = "",
+						staged = "󰱒",
+						-- staged = "✔︎",
+						conflict = "󰞇",
+						-- conflict = "",
 					},
 				},
 			},
+
 			mappings = {
 				["<esc>"] = "cancel",
+			},
+
+			window = {
+				popup = {
+					position = { col = "25%", row = "0" },
+					size = function(state)
+						local root_name = vim.fn.fnamemodify(state.path, ":~")
+						local root_len = string.len(root_name) + 4
+						return {
+							width = math.max(root_len, 50),
+							height = vim.o.lines - 6,
+						}
+					end,
+				},
 			},
 		})
 	end,
@@ -154,6 +175,7 @@ return {
 			silent = true,
 			desc = "Toggle Neo-tree",
 		},
+
 		{
 			"f<C-n>",
 			"<Cmd>Neotree toggle filesystem reveal left<CR>",

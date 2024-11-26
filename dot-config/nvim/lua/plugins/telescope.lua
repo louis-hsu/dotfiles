@@ -1,7 +1,7 @@
 return {
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.*",
+		tag = "0.1.8",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{
@@ -13,16 +13,45 @@ return {
 		},
 		config = function()
 			local builtin = require("telescope.builtin")
-			vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-			vim.keymap.set("n", "<leader>fo", builtin.oldfiles, {})
-			vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-			vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, {})
+			vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files in CWD" })
+			vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "Find recent files" })
+			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Find string in CWD" })
+			vim.keymap.set("n", "<leader>fs", builtin.grep_string, { desc = "Find string under cursor in CWD" })
+			vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find buffer" })
+			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Find LSP diagnostics result" })
 
 			local actions = require("telescope.actions")
 			local telescope = require("telescope")
 			telescope.setup({
 				defaults = {
+					layout_config = {
+						-- For default layout
+						horizontal = {
+							width = 0.7,  -- 80% of total width
+							height = 0.9, -- 90% of total height
+							preview_width = 0.6, -- 60% of width for preview pane
+							results_width = 0.4, -- 40% of width for results pane
+						},
+
+						-- For vertical layout
+						vertical = {
+							width = 0.5,
+							height = 0.9,
+							preview_height = 0.5, -- 50% of height for preview pane
+							results_height = 0.5, -- 50% of height for results pane
+						},
+
+						-- For dropdown layout (when window is small)
+						cursor = {
+							width = 0.5,
+							height = 0.7,
+							preview_cutoff = 40, -- Preview will be hidden if results less than this
+						},
+					},
+
+					-- You can also set a specific layout strategy
+					layout_strategy = "horizontal", -- or 'vertical', 'cursor'
+
 					vimgrep_arguments = {
 						"rg",
 						"--color=never",
@@ -39,6 +68,14 @@ return {
 							["<C-j>"] = actions.move_selection_next,
 							["<C-k>"] = actions.move_selection_previous,
 							["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+							-- Remove default mappings first (optional)
+							["<C-u>"] = false,
+							["<C-d>"] = false,
+							-- For page scrolling
+							-- ["<C-b>"] = actions.preview_scrolling_page_up,
+							-- ["<C-f>"] = actions.preview_scrolling_page_down,
+							["<C-h>"] = actions.preview_scrolling_up,
+							["<C-l>"] = actions.preview_scrolling_down,
 						},
 						-- n = {
 						-- 	["j"] = "move_selection_next",
@@ -47,7 +84,7 @@ return {
 					},
 				},
 			})
-			-- telescope.load_extension("fzf")
+			telescope.load_extension("fzf")
 		end,
 	},
 	{

@@ -17,19 +17,25 @@ return {
 			require("lualine").setup({
 				options = {
 					theme = l_dracula,
-					ignore_focus = { "neo-tree", "undotree", "no-neck-pain" },
-					disabled_filetypes = { statusline = { "neo-tree", "undotree", "no-neck-pain" } },
+					-- ignore_focus = { "neo-tree", "undotree", "no-neck-pain" },
+					disabled_filetypes = {
+						-- statusline = { "neo-tree", "undotree", "no-neck-pain" },
+						winbar = { "neo-tree", "undotree", "no-neck-pain" },
+					},
 					globalstatus = true,
 					-- refresh = { statusline = 100 },
 				},
 				sections = {
+					lualine_b = {},
 					lualine_c = {
 						{
 							"filename",
 							path = 1,
 						},
 					},
-					lualine_x = { "encoding", "fileformat", "filetype", "progress", "location" },
+					lualine_x = { "encoding", "fileformat", "filetype" },
+					-- lualine_x = { "encoding", "fileformat", "filetype", "progress", "location" },
+					-- lualine_x = {},
 					lualine_y = {
 						{
 							require("recorder").displaySlots,
@@ -40,6 +46,18 @@ return {
 							require("recorder").recordingStatus,
 						},
 					},
+				},
+				winbar = {
+					lualine_a = { "mode" },
+					lualine_b = { "branch", "diff", "diagnostics" },
+					lualine_c = { "filename" },
+					-- lualine_x = { "encoding", "fileformat", "filetype", "progress", "location" },
+					lualine_x = { "progress", "location" },
+				},
+				inactive_winbar = {
+					lualine_a = { "mode" },
+					lualine_b = { "filename" },
+					lualine_x = { "location" },
 				},
 			})
 		end,

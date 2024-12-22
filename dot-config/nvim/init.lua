@@ -1,3 +1,10 @@
+-- luajit, which support lua 5.1 only, needs to specify library path
+-- The library installation also needs to specify lua path:
+-- luarocks --lua-version=5.1 --lua-dir=$(brew --prefix luajit) install <library>
+-- Louis 2024/1222
+package.path = package.path .. ";/Users/nshiu/.luarocks/share/lua/5.1/?.lua"
+package.cpath = package.cpath .. ";/Users/nshiu/.luarocks/lib/lua/5.1/?.so"
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -6,7 +13,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out,                            "WarningMsg" },
+			{ out, "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -41,7 +48,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 -- Supress background transparency of pop-up windows
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1E1E1E" }) -- Replace with your desired background color
 vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#1E1E1E" }) -- Set border background
-vim.api.nvim_set_hl(0, "LspHover", { bg = "#1E1E1E" })    -- Set hover window background
+vim.api.nvim_set_hl(0, "LspHover", { bg = "#1E1E1E" }) -- Set hover window background
 
 -- Lua function to delete old undo files
 local function cleanup_undo_files()

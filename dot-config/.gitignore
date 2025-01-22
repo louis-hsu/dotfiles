@@ -19,3 +19,7 @@ nvim-scratch
 
 # Ignore content in 'yazi/plugins'
 yazi/plugins/*
+
+# Ignore GeoIP.conf which would be blocked by Github due to including license
+# key from MaxMind
+GeoIP.conf

@@ -46,6 +46,7 @@ windows:
             - dry -m
             - duf -hide special
             - sudo iptraf
+    - file_mgmt: cd $HOME; yy
     - working:
         layout: 8136,238x64,0,0{119x64,0,0,0,118x64,120,0,1}
         panes:

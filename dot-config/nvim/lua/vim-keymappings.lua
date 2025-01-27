@@ -28,3 +28,27 @@ vim.keymap.set("n", "<leader>q", function()
 		vim.cmd("lclose")
 	end
 end, { desc = "Close quickfix list pane" })
+
+function SmartBufferDelete()
+	-- Get the number of listed (non-hidden) buffers
+	local listed_buffers = 0
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_get_option(buf, "buflisted") then
+			listed_buffers = listed_buffers + 1
+		end
+	end
+
+	-- Get the number of windows
+	local window_count = vim.api.nvim_tabpage_list_wins(0)
+
+	if listed_buffers <= 1 and window_count > 1 then
+		-- If only one buffer left and multiple windows, close all but one window
+		vim.cmd("only")
+	else
+		-- Normal buffer delete
+		vim.cmd("bd")
+	end
+end
+
+-- Map the function to a key or command
+vim.api.nvim_set_keymap("n", "<leader>bd", ":lua SmartBufferDelete()<CR>", { noremap = true, silent = true })

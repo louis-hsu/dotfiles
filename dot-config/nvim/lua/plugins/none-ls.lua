@@ -20,6 +20,7 @@ return {
 				null_ls.builtins.formatting.google_java_format,
 				-- null_ls.builtins.formatting.pyink,
 				null_ls.builtins.formatting.isort,
+				null_ls.builtins.formatting.ktlint,
 				null_ls.builtins.diagnostics.mypy.with({ -- Setup to enable 'mypy' in virtual env
 					extra_args = {
 						"--python-executable",

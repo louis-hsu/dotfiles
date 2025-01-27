@@ -71,6 +71,11 @@ return {
 				on_attach = on_attach,
 				filetypes = { "python" },
 			})
+			lspconfig.kotlin_language_server.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				filetypes = { "kotlin" },
+			})
 		end,
 	},
 	{

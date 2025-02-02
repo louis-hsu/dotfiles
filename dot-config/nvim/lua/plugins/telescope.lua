@@ -30,10 +30,11 @@ return {
 
 				if columns > 120 then
 					layout = "horizontal"
-				elseif columns > 100 then
-					layout = "flex"
+					-- elseif columns > 100 then
+					-- 	layout = "flex"
 				else
 					layout = "vertical"
+					-- layout = "flex"
 				end
 
 				telescope.setup({
@@ -41,15 +42,15 @@ return {
 						layout_config = {
 							-- For default layout
 							horizontal = {
-								width = 0.7, -- 80% of total width
+								width = 0.7, -- 70% of total width
 								height = 0.9, -- 90% of total height
 								preview_width = 0.6, -- 60% of width for preview pane
-								results_width = 0.4, -- 40% of width for results pane
+								-- results_width = 0.4, -- 40% of width for results pane
 								prompt_position = "top",
 							},
 							-- For vertical layout
 							vertical = {
-								width = 0.7,
+								width = 0.8,
 								height = 0.9,
 								preview_height = 0.5, -- 50% of height for preview pane
 								prompt_position = "top",
@@ -61,10 +62,10 @@ return {
 							-- 	height = 0.7,
 							-- 	preview_cutoff = 40, -- Preview will be hidden if results less than this
 							-- },
-							flex = {
-								flip_columns = 100,
-								prompt_position = "top",
-							},
+							-- flex = {
+							-- 	flip_columns = 120,
+							-- 	--prompt_position = "top",
+							-- },
 						},
 						sorting_strategy = "ascending",
 						layout_strategy = layout,

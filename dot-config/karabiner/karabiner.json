@@ -29,6 +29,24 @@
                         ]
                     },
                     {
+                        "description": "Middle Mouse Button to as Look Up & Data Detector (3-finger tap)",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "modifiers": { "optional": ["any"] },
+                                    "pointing_button": "button3"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "d",
+                                        "modifiers": ["left_command", "left_control"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "F4 to CTRL+Space",
                         "manipulators": [
                             {
@@ -98,12 +116,18 @@
             },
             "devices": [
                 {
-                    "disable_built_in_keyboard_if_exists": true,
                     "identifiers": {
-                        "is_keyboard": true,
                         "is_pointing_device": true,
-                        "product_id": 45915,
+                        "product_id": 50479,
                         "vendor_id": 1133
+                    },
+                    "ignore": false
+                },
+                {
+                    "identifiers": {
+                        "is_pointing_device": true,
+                        "product_id": 6519,
+                        "vendor_id": 12951
                     },
                     "ignore": false
                 }

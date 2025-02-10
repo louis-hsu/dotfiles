@@ -141,12 +141,12 @@
       ]
     },
     {
-      "description": "Change left_shift to left_shift if pressed with other keys, to Home if pressed alone.",
+      "description": "Change caps_lock to control if pressed with other keys, to escape if pressed alone.",
       "manipulators": [
         {
           "type": "basic",
           "from": {
-            "key_code": "left_shift",
+            "key_code": "caps_lock",
             "modifiers": {
               "optional": [
                 "any"
@@ -155,40 +155,12 @@
           },
           "to": [
             {
-              "key_code": "left_shift"
+              "key_code": "left_control"
             }
           ],
           "to_if_alone": [
             {
-              "key_code": "home",
-              "hold_down_milliseconds":500
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "description": "Change left_shift to left_shift if pressed with other keys, to End if pressed alone.",
-      "manipulators": [
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "left_shift",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "left_shift"
-            }
-          ],
-          "to_if_alone": [
-            {
-              "key_code": "end",
-              "hold_down_milliseconds":500
+              "key_code": "escape"
             }
           ]
         }
@@ -216,31 +188,6 @@
             {
               "key_code": "caps_lock",
               "hold_down_milliseconds": 500
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "description": "F4 to CTRL+Space",
-      "manipulators": [
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "f4",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "repeat": true,
-              "key_code": "spacebar",
-              "modifiers": [
-                "left_control"
-              ]
             }
           ]
         }

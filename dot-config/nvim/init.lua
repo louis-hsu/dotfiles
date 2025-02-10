@@ -62,26 +62,35 @@ vim.api.nvim_create_autocmd("VimLeave", {
 	callback = cleanup_undo_files,
 })
 
--- Enable 'no-neck-pain' automatically when window width >= 160
-local been_wider = false
-local been_narrower = false
+-- Enable 'no-neck-pain' automatically when window_width > display_width/2
+local launched = false
+-- local been_narrower = false
 
-local function check_window_width()
-	local width = vim.api.nvim_win_get_width(0)
+local function launchNNPorNot()
+	-- local required_width = 140 -- 120 editor width + 10 right/left buffer width
+	local vim_window_width = vim.o.columns -- The width of window vim launched in
+	local terminal_width = 0
 
-	if width >= 160 and not been_wider then
-		vim.cmd("NoNeckPain")
-		been_wider = true
-		been_narrower = false
-	elseif width < 160 and not been_narrower then
-		vim.cmd("NoNeckPain")
-		been_wider = false
-		been_narrower = true
+	-- Calculate the actual width of the terminal
+	if os.getenv("TMUX") then
+		terminal_width = tonumber(vim.fn.system("tmux display-message -p '#{window_width}'"))
+	else
+		terminal_width = tonumber(vim.fn.system("tput cols"))
+	end
+
+	if vim_window_width > math.ceil(terminal_width / 2) and not launched then
+		vim.cmd("NoNeckPain") -- Toggle No-Neck-Pain on
+		launched = true
+		-- been_narrower = false
+	elseif vim_window_width < math.ceil(terminal_width / 2) and launched then
+		vim.cmd("NoNeckPain") -- Toggle No-Neck-Pain off
+		launched = false
+		-- been_narrower = true
 	end
 end
 
 vim.api.nvim_create_autocmd({ "VimEnter", "VimResized" }, {
 	callback = function()
-		check_window_width()
+		launchNNPorNot()
 	end,
 })

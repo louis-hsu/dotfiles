@@ -22,7 +22,7 @@ return {
 						-- statusline = { "neo-tree", "undotree", "no-neck-pain" },
 						winbar = { "neo-tree", "undotree", "no-neck-pain" },
 					},
-					globalstatus = true,
+					globalstatus = false,
 					-- refresh = { statusline = 100 },
 				},
 				sections = {

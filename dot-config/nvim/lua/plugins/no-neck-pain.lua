@@ -41,30 +41,20 @@ return {
 					width = 24,
 					position = "right",
 				},
+
+				NeoTree = {
+					-- position = "left",
+					reopen = true,
+				},
 			},
 		})
 	end,
 
-	vim.keymap.set("n", "<leader>np", "<Cmd>NoNeckPain<CR>"),
-	-- vim.keymap.set("n", "<C-h>", function()
-	-- 	-- Try to move left
-	-- 	vim.cmd("wincmd h")
-	-- 	local win_info = vim.api.nvim_win_get_config(0)
-	--
-	-- 	-- If in a no-neck-pain side buffer, move to tmux instead
-	-- 	if win_info.relative ~= "" then
-	-- 		vim.cmd("!tmux select-pane -L")
-	-- 	end
-	-- end, { noremap = true, silent = true }),
-	--
-	-- vim.keymap.set("n", "<C-l>", function()
-	-- 	-- Try to move right
-	-- 	vim.cmd("wincmd l")
-	-- 	local win_info = vim.api.nvim_win_get_config(0)
-	--
-	-- 	-- If in a no-neck-pain side buffer, move to tmux instead
-	-- 	if win_info.relative ~= "" then
-	-- 		vim.cmd("!tmux select-pane -R")
-	-- 	end
-	-- end, { noremap = true, silent = true }),
+	-- vim.keymap.set("n", "<leader>np", "<Cmd>NoNeckPain<CR>"),
+	-- Change global variable 'vim.g.no_neck_pain_active' to track no-neck-pain
+	-- toggle status
+	vim.keymap.set("n", "<leader>np", function()
+		vim.g.no_neck_pain_active = not vim.g.no_neck_pain_active
+		vim.cmd("NoNeckPain")
+	end, { noremap = true, silent = true }),
 }

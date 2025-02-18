@@ -10,7 +10,7 @@ return {
 		-- Create custom command to go back to original buffer after <esc>
 		local function custom_esc_commands()
 			local commands = require("neo-tree.sources.filesystem.commands")
-			commands.cancel = function(state)
+			commands.cancel = function()
 				-- Store the current window ID before closing Neo-tree
 				local current_win = vim.api.nvim_get_current_win()
 				local last_win = vim.fn.win_getid(vim.fn.winnr("#"))
@@ -88,7 +88,6 @@ return {
 			buffers = {
 				follow_current_file = {
 					enabled = true,     -- This will find and focus the file in the active buffer every time
-					-- the current file is changed while the tree is open.
 					leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
 				},
 			},
@@ -152,16 +151,36 @@ return {
 			},
 
 			window = {
+				position = "left",
+				width = 50,
+				auto_expand_width = false,
+
 				popup = {
-					position = { col = "25%", row = "0" },
-					size = function(state)
-						local root_name = vim.fn.fnamemodify(state.path, ":~")
-						local root_len = string.len(root_name) + 4
-						return {
-							width = math.max(root_len, 50),
-							height = vim.o.lines - 6,
-						}
+					-- Place window at the left side of main window,
+					-- Or align to the left of terminal if NNP buffer is too small
+					position = function()
+						local nt_width = 50
+						local nnp_width = 120            -- NNP
+						local vim_window_width = vim.o.columns -- The width of window vim launched in
+
+						if math.ceil((vim_window_width - nnp_width) / 2) >= nt_width then
+							-- return { col = (vim_window_width - nt_width - nnp_width) }
+							return {
+								col = math.ceil((vim_window_width - nnp_width) / 2 - nt_width),
+								row = 0,
+							}
+						else
+							return {
+								col = 0,
+								row = 0,
+							}
+						end
 					end,
+					-- Change to fix width
+					size = {
+						width = 50,
+						height = vim.o.lines - 2,
+					},
 				},
 			},
 		})
@@ -169,20 +188,25 @@ return {
 	keys = {
 		{
 			"<C-n>",
-			"<Cmd>Neotree toggle float<CR>",
+			function()
+				if vim.g.no_neck_pain_active then
+					vim.cmd("Neotree toggle float")
+				else
+					vim.cmd("Neotree toggle filesystem reveal left")
+				end
+			end,
 			mode = "n",
 			noremap = true,
 			silent = true,
 			desc = "Toggle Neo-tree",
 		},
-
-		{
-			"f<C-n>",
-			"<Cmd>Neotree toggle filesystem reveal left<CR>",
-			mode = "n",
-			noremap = true,
-			silent = true,
-			desc = "Toggle Neo-tree",
-		},
+		-- {
+		-- 	"f<C-n>",
+		-- 	"<Cmd>Neotree toggle filesystem reveal left<CR>",
+		-- 	mode = "n",
+		-- 	noremap = true,
+		-- 	silent = true,
+		-- 	desc = "Toggle Neo-tree",
+		-- },
 	},
 }

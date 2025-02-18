@@ -66,9 +66,12 @@ vim.api.nvim_create_autocmd("VimLeave", {
 local launched = false
 -- local been_narrower = false
 
+-- Tracking status of no_neck_pain status
+vim.g.no_neck_pain_active = false
+
 local function launchNNPorNot()
 	-- local required_width = 140 -- 120 editor width + 10 right/left buffer width
-	local vim_window_width = vim.o.columns -- The width of window vim launched in
+	local vim_window_width = vim.o.columns -- The width of window vim launched
 	local terminal_width = 0
 
 	-- Calculate the actual width of the terminal
@@ -78,13 +81,13 @@ local function launchNNPorNot()
 		terminal_width = tonumber(vim.fn.system("tput cols"))
 	end
 
-	if vim_window_width > math.ceil(terminal_width / 2) and not launched then
+	if vim_window_width > math.ceil(terminal_width / 2) and not vim.g.no_neck_pain_active then
 		vim.cmd("NoNeckPain") -- Toggle No-Neck-Pain on
-		launched = true
+		vim.g.no_neck_pain_active = true
 		-- been_narrower = false
-	elseif vim_window_width < math.ceil(terminal_width / 2) and launched then
+	elseif vim_window_width < math.ceil(terminal_width / 2) and vim.g.no_neck_pain_active then
 		vim.cmd("NoNeckPain") -- Toggle No-Neck-Pain off
-		launched = false
+		vim.g.no_neck_pain_active = false
 		-- been_narrower = true
 	end
 end

@@ -422,7 +422,7 @@
     dark = true
     navigate = true
     #side-by-side = true
-    syntax-theme = Catppuccin-flatwhite
+    syntax-theme = Catppuccin Mocha
 
     # File header
     #file-decoration-style = "#767676" ul

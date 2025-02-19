@@ -21,8 +21,10 @@ function gitstatusOutput() {
 	local _color=""
 
 	git status --short | while IFS= read -r line; do
-		local _status=$(echo "${line}" | awk '{print substr($0, 1, 2)}')              # Extract the status
-		local _file_path=$(echo "${line}" | awk '{$1=""; print $0}' | sed 's/^ *//g') # Extract file path and remove leading spaces
+		local _status=$(echo "${line}" | awk '{print substr($0, 1, 2)}') # Extract the status
+		# local _file_path=$(echo "${line}" | awk '{$1=""; print $0}' | sed 's/^ *//g') # Extract file path and remove leading spaces
+		# Extract file path and remove leading spaces/surrounding quotes
+		local _file_path=$(echo "${line}" | awk '{$1=""; print substr($0, 2)}' | sed -E 's/^"(.*)"$/\1/')
 
 		case "${_status}" in # Apply color based on the status
 		" D")

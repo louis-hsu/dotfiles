@@ -22,12 +22,12 @@ Host guinevere
 Host mordred
   HostKeyAlias mordred
   CheckHostIP no
-  User sshd
+  User sshd						# nshiuatCloud
 
 Host atreides
   HostKeyAlias atreides
   CheckHostIP no
-  User louishsu
+  User louishsu				# nshiu0658atCloud
 
 Host *
   AddKeysToAgent yes

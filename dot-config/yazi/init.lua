@@ -1,4 +1,3 @@
-require("git"):setup()
 require("eza-preview"):setup({
 	-- Determines the directory depth level to tree preview (default: 3)
 	level = 3,
@@ -10,3 +9,24 @@ require("eza-preview"):setup({
 
 -- Or use default settings with empty table
 require("eza-preview"):setup({})
+require("githead"):setup({})
+
+-- git.yazi symbols
+THEME.git = THEME.git or {}
+THEME.git.modified = ui.Style():fg("blue")
+THEME.git.modified_sign = "✱"
+
+THEME.git.deleted = ui.Style():fg("red")
+THEME.git.deleted_sign = "✖"
+
+THEME.git.added = ui.Style():fg("green")
+THEME.git.added_sign = "✚"
+
+THEME.git.untracked = ui.Style():fg("yellow")
+THEME.git.untracked_sign = ""
+
+THEME.git.ignored = ui.Style():fg("#696969"):italic()
+THEME.git.ignored_sign = "I"
+-- THEME.git.updated_sign = "U"
+
+require("git"):setup()

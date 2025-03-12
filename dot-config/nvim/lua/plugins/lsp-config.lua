@@ -45,6 +45,22 @@ return {
 				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = { "lua" },
+				root_dir = function(fname)
+					return vim.fs.root(fname, { ".git", ".luarc.json", "init.lua" }) or vim.fn.getcwd()
+				end,
+				settings = {
+					Lua = {
+						workspace = {
+							checkThirdParty = false,
+							maxPreload = 10000,
+							preloadFileSize = 500,
+						},
+						diagnostics = {
+							enable = true,
+							globals = { "vim" },
+						},
+					},
+				},
 			})
 			lspconfig.ts_ls.setup({
 				capabilities = capabilities,

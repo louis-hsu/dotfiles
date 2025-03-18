@@ -27,6 +27,7 @@ Host mordred
 Host atreides
   HostKeyAlias atreides
   CheckHostIP no
+	Port 13224
   User louishsu				# nshiu0658atCloud
 
 Host *

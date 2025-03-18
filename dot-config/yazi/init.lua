@@ -12,21 +12,21 @@ require("eza-preview"):setup({})
 require("githead"):setup({})
 
 -- git.yazi symbols
-THEME.git = THEME.git or {}
-THEME.git.modified = ui.Style():fg("blue")
-THEME.git.modified_sign = "✱"
+th.git = th.git or {}
+th.git.modified = ui.Style():fg("blue")
+th.git.modified_sign = "✱"
 
-THEME.git.deleted = ui.Style():fg("red")
-THEME.git.deleted_sign = "✖"
+th.git.deleted = ui.Style():fg("red")
+th.git.deleted_sign = "✖"
 
-THEME.git.added = ui.Style():fg("green")
-THEME.git.added_sign = "✚"
+th.git.added = ui.Style():fg("green")
+th.git.added_sign = "✚"
 
-THEME.git.untracked = ui.Style():fg("yellow")
-THEME.git.untracked_sign = ""
+th.git.untracked = ui.Style():fg("yellow")
+th.git.untracked_sign = ""
 
-THEME.git.ignored = ui.Style():fg("#696969"):italic()
-THEME.git.ignored_sign = "I"
--- THEME.git.updated_sign = "U"
+th.git.ignored = ui.Style():fg("#696969"):italic()
+th.git.ignored_sign = "I"
+-- th.git.updated_sign = "U"
 
 require("git"):setup()

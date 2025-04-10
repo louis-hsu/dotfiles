@@ -40,7 +40,7 @@ windows:
         #- cd "<%= @args[0] %>" && ls
         #- cd "<%= @args[0] %>" # general
         #- cd "<%= @args[0] %>"
-        - fastfetch
+        - clear; fastfetch
         - typewriter
         - cht.sh --shell
   - file_mgmt:

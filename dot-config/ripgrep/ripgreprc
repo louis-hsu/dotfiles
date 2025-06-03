@@ -31,9 +31,6 @@ web:*.{html,css,js}*
 # Because who cares about case!?
 --smart-case
 
-# Show line before/after match
--C=2
-
 # Specify the ignore file 
 # According man page and experiement, the precedence of ignroe files are
 # 1. Local > parent

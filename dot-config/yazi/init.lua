@@ -7,8 +7,6 @@ require("eza-preview"):setup({
 	dereference = true,
 })
 
--- Or use default settings with empty table
-require("eza-preview"):setup({})
 require("githead"):setup({})
 
 -- git.yazi symbols

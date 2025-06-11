@@ -6,10 +6,11 @@ Host louis0658
   User nshiu
 
 Host lancelot
-  Hostname modern254-1.kddns.info
+	Hostname guinevere.taila4eee9.ts.net
+#  Hostname modern254-1.kddns.info
   HostKeyAlias lancelot
   CheckHostIP no
-  Port 15236
+#  Port 15236
   User nshiu
 
 Host guinevere

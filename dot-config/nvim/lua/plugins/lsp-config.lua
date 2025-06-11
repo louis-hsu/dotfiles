@@ -9,9 +9,9 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		lazy = false,
-		opts = {
-			automatic_installation = true,
-		},
+		-- opts = {
+		-- 	automatic_installation = true,
+		-- },
 	},
 	{
 		"neovim/nvim-lspconfig",
@@ -42,24 +42,40 @@ return {
 			end
 
 			lspconfig.lua_ls.setup({
+				root_dir = function(fname)
+					local root = vim.fs.root(fname, { ".git", ".luarc.json", "init.lua" })
+					if root then
+						return root
+					end
+					return vim.fn.fnamemodify(fname, ":p:h")
+				end,
+				-- settings = {
+				-- 	Lua = {
+				-- 		diagnostics = { globals = { "vim" } },
+				-- 	},
+				-- },
 				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = { "lua" },
-				root_dir = function(fname)
-					return vim.fs.root(fname, { ".git", ".luarc.json", "init.lua" }) or vim.fn.getcwd()
-				end,
 				settings = {
 					Lua = {
 						workspace = {
 							checkThirdParty = false,
-							maxPreload = 10000,
-							preloadFileSize = 500,
+							maxPreload = 5000,
+							preloadFileSize = 50000,
+							library = {
+								vim.fn.stdpath("config"),
+							},
 						},
 						diagnostics = {
 							enable = true,
 							globals = { "vim" },
 						},
+						telemetry = { enable = false },
 					},
+				},
+				cmd_env = {
+					LUA_LS_LOGLEVEL = "trace",
 				},
 			})
 			lspconfig.ts_ls.setup({

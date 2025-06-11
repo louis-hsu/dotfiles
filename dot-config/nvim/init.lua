@@ -13,7 +13,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
+			{ out,                            "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -48,7 +48,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 -- Supress background transparency of pop-up windows
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1E1E1E" }) -- Replace with your desired background color
 vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#1E1E1E" }) -- Set border background
-vim.api.nvim_set_hl(0, "LspHover", { bg = "#1E1E1E" }) -- Set hover window background
+vim.api.nvim_set_hl(0, "LspHover", { bg = "#1E1E1E" })    -- Set hover window background
 
 -- Lua function to delete old undo files
 local function cleanup_undo_files()
@@ -62,15 +62,10 @@ vim.api.nvim_create_autocmd("VimLeave", {
 	callback = cleanup_undo_files,
 })
 
--- Enable 'no-neck-pain' automatically when window_width > display_width/2
-local launched = false
--- local been_narrower = false
-
 -- Tracking status of no_neck_pain status
 vim.g.no_neck_pain_active = false
 
 local function launchNNPorNot()
-	-- local required_width = 140 -- 120 editor width + 10 right/left buffer width
 	local vim_window_width = vim.o.columns -- The width of window vim launched
 	local terminal_width = 0
 
@@ -84,16 +79,46 @@ local function launchNNPorNot()
 	if vim_window_width > math.ceil(terminal_width / 2) and not vim.g.no_neck_pain_active then
 		vim.cmd("NoNeckPain") -- Toggle No-Neck-Pain on
 		vim.g.no_neck_pain_active = true
-		-- been_narrower = false
 	elseif vim_window_width < math.ceil(terminal_width / 2) and vim.g.no_neck_pain_active then
 		vim.cmd("NoNeckPain") -- Toggle No-Neck-Pain off
 		vim.g.no_neck_pain_active = false
-		-- been_narrower = true
 	end
 end
 
-vim.api.nvim_create_autocmd({ "VimEnter", "VimResized" }, {
+-- Ignore NNP launch if it's Neovide
+if not vim.g.neovide then
+	vim.api.nvim_create_autocmd({ "VimEnter", "VimResized" }, {
+		callback = function()
+			launchNNPorNot()
+		end,
+	})
+end
+
+-- Encode plain-text filetype as UTF-8
+local excluded_types = {
+	"binary",
+	"hex",
+	"exe",
+	"elf",
+	"zip",
+	"tar",
+	"rar",
+	"png",
+	"jpg",
+	"jpeg",
+	"gif",
+	"pdf",
+	"doc",
+	"xls",
+	"ppt",
+}
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*",
 	callback = function()
-		launchNNPorNot()
+		local ft = vim.bo.filetype
+		if not vim.bo.binary and not vim.tbl_contains(excluded_types, ft) then
+			vim.bo.fileencoding = "utf-8"
+		end
 	end,
 })

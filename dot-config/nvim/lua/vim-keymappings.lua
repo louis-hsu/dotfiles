@@ -7,11 +7,15 @@ vim.keymap.set("n", "<C-j>", "<Cmd>wincmd j<CR>")
 vim.keymap.set("n", "<C-h>", "<Cmd>wincmd h<CR>")
 vim.keymap.set("n", "<C-l>", "<Cmd>wincmd l<CR>")
 
-vim.keymap.set("n", "<C-W>\\", "<Cmd>vsplit<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<C-W>-", "<Cmd>split<CR>", { noremap = true, silent = true })
+-- Remove the customized keymapping since original ones are also intuitive:
+-- C-W v -> Vertical split
+-- C-W s -> Horizontal split
+-- Louis 2025/0613
+-- vim.keymap.set("n", "<C-W>\\", "<Cmd>vsplit<CR>", { noremap = true, silent = true })
+-- vim.keymap.set("n", "<C-W>-", "<Cmd>split<CR>", { noremap = true, silent = true })
 
 -- Remove highlight of current searching targets
-vim.keymap.set("n", "<leader>h", "<Cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<Esc>", "<Cmd>nohlsearch<CR>", { desc = "Turn off search highlight" })
 
 -- Move 'j','k' through virutal lines, and '5j'/'5k' jumps 5 lines
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, noremap = true })

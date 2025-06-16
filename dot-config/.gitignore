@@ -9,7 +9,7 @@ local/share/*
 local/state/*
 
 # Ignore nvim-* gits which would be handled separately
-nvim-*
+/nvim-*
 
 # Add cache/avd directory from Android Studio
 .android/cache/*

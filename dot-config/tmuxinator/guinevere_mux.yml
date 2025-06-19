@@ -51,7 +51,7 @@ windows:
         layout: 8136,238x64,0,0{119x64,0,0,0,118x64,120,0,1}
         panes:
             #cd "<%= @args[0] %>" && vim -c ":vsplit"
-            - neofetch
+            - clear; fastfetch
             -
 #  - server: bundle exec rails s
 #  - logs: tail -f log/development.log

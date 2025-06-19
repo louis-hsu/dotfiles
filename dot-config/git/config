@@ -32,7 +32,7 @@
         delta;                                                       \
     fi                                                               \
   }"
-	excludesfile = /Users/nshiu/.dotfiles/dot-config/git/ignore
+	excludesfile = /home/nshiu/.dotfiles/dot-config/git/ignore
 
 # Setup for delta theme and customization -- Louis 2023-03-28 17:51
 [include]

@@ -56,5 +56,5 @@ return {
 	vim.keymap.set("n", "<leader>np", function()
 		vim.g.no_neck_pain_active = not vim.g.no_neck_pain_active
 		vim.cmd("NoNeckPain")
-	end, { noremap = true, silent = true }),
+	end, { desc = "Toggle NoNickPain", noremap = true, silent = true }),
 }

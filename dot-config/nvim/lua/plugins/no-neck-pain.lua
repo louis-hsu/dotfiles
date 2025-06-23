@@ -15,14 +15,21 @@ return {
 			minSideBufferWidth = 10,
 
 			autocmds = {
-				-- Turn to ture or it would block curor moving between tmux pane when
-				-- there is a buffer in between -- Louis 2025/0130
-				skipEnteringNoNeckPainBuffer = false,
+				-- 1. Turning it on would block cursor movement when it is in one of
+				-- tmux panes
+				-- 2. Turning it off would interupt curor movement when it is in one of
+				-- tmux panes, and break the flow from editor to message/notification
+				-- window
+				-- Trun it on for now with less inconvenience -- Louis 2025/0623
+				--
+				-- TODO:
+				-- Check NNP source code to see if it's possible to have different
+				-- behavior while in tmux environment
+				skipEnteringNoNeckPainBuffer = true,
 			},
 			-- Decide to remove buffer/scratchpad function since
 			-- 'skipEnteringNoNeckPainBuffer' doesn't work on one side only, and this
 			-- feature is more important than scrachpad -- Louis 2024/1217
-			--
 			buffers = {
 				right = {
 					enabled = true,
@@ -50,7 +57,6 @@ return {
 		})
 	end,
 
-	-- vim.keymap.set("n", "<leader>np", "<Cmd>NoNeckPain<CR>"),
 	-- Change global variable 'vim.g.no_neck_pain_active' to track no-neck-pain
 	-- toggle status
 	vim.keymap.set("n", "<leader>np", function()

@@ -38,6 +38,8 @@ return {
 		})
 
 		notify.setup({
+			timeout = 3000,
+			-- stages = "static",
 			background_colour = "#000000",
 		})
 	end,

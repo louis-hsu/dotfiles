@@ -9,9 +9,9 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		lazy = false,
-		opts = {
-			automatic_installation = true,
-		},
+		-- opts = {
+		-- 	automatic_installation = true,
+		-- },
 	},
 	{
 		"neovim/nvim-lspconfig",
@@ -20,15 +20,49 @@ return {
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local lspconfig = require("lspconfig")
 			local on_attach = function(client, bufnr)
-				local bufopts = { noremap = true, silent = true, buffer = bufnr }
-				--vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
 				--vim.keymap.set("n", "<leader>ge", vim.diagnostic.open_float, { noremap = true, silent = true })
-				vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, bufopts)
-				vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, bufopts)
-				vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-				vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, bufopts)
-				vim.keymap.set("n", "<leader>ci", vim.lsp.buf.implementation, bufopts)
-				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+				vim.keymap.set(
+					"n",
+					"<leader>ck",
+					vim.lsp.buf.hover,
+					{ desc = "Hover info about the symbol under cursor", noremap = true, silent = true, buffer = bufnr }
+				)
+				vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, {
+					desc = "Show code reference of the symbol under cursor",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				})
+				vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, {
+					desc = "Show code definition of the symbol under cursor",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				})
+				vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {
+					desc = "Show code action of the symbol under cursor",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				})
+				vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, {
+					desc = "Linter the code format",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				})
+				vim.keymap.set("n", "<leader>ci", vim.lsp.buf.implementation, {
+					desc = "Show code implementation of the symbol under cursor",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				})
+				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {
+					desc = "Rename the symbol under cursor",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				})
 
 				-- Auto-formation before saving
 				if client.server_capabilities.documentFormattingProvider then
@@ -42,9 +76,41 @@ return {
 			end
 
 			lspconfig.lua_ls.setup({
+				root_dir = function(fname)
+					local root = vim.fs.root(fname, { ".git", ".luarc.json", "init.lua" })
+					if root then
+						return root
+					end
+					return vim.fn.fnamemodify(fname, ":p:h")
+				end,
+				-- settings = {
+				-- 	Lua = {
+				-- 		diagnostics = { globals = { "vim" } },
+				-- 	},
+				-- },
 				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = { "lua" },
+				settings = {
+					Lua = {
+						workspace = {
+							checkThirdParty = false,
+							maxPreload = 5000,
+							preloadFileSize = 50000,
+							library = {
+								vim.fn.stdpath("config"),
+							},
+						},
+						diagnostics = {
+							enable = true,
+							globals = { "vim" },
+						},
+						telemetry = { enable = false },
+					},
+				},
+				cmd_env = {
+					LUA_LS_LOGLEVEL = "trace",
+				},
 			})
 			lspconfig.ts_ls.setup({
 				capabilities = capabilities,
@@ -70,6 +136,11 @@ return {
 				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = { "python" },
+			})
+			lspconfig.kotlin_language_server.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				filetypes = { "kotlin" },
 			})
 		end,
 	},

@@ -13,6 +13,13 @@ return {
 		end
 
 		null_ls.setup({
+			root_dir = function(fname)
+				local root = vim.fs.root(fname, { ".git", ".luarc.json", "init.lua" })
+				if root then
+					return root
+				end
+				return vim.fn.fnamemodify(fname, ":p:h")
+			end,
 			sources = {
 				null_ls.builtins.formatting.stylua,
 				null_ls.builtins.formatting.prettier,
@@ -20,6 +27,7 @@ return {
 				null_ls.builtins.formatting.google_java_format,
 				-- null_ls.builtins.formatting.pyink,
 				null_ls.builtins.formatting.isort,
+				null_ls.builtins.formatting.ktlint,
 				null_ls.builtins.diagnostics.mypy.with({ -- Setup to enable 'mypy' in virtual env
 					extra_args = {
 						"--python-executable",

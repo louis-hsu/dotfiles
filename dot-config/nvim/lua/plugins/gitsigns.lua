@@ -80,7 +80,7 @@ return {
 					else
 						gitsigns.nav_hunk("next")
 					end
-				end)
+				end, { desc = "Navigate to next hunk", noremap = true, silent = true })
 
 				map("n", "[g", function()
 					if vim.wo.diff then
@@ -88,7 +88,7 @@ return {
 					else
 						gitsigns.nav_hunk("prev")
 					end
-				end)
+				end, { desc = "Navigate to previous hunk", noremap = true, silent = true })
 
 				-- Actions
 				--map('n', '<leader>hs', gitsigns.stage_hunk)
@@ -100,35 +100,34 @@ return {
 				--map('n', '<leader>hR', gitsigns.reset_buffer)
 				--map('n', '<leader>hp', gitsigns.preview_hunk)
 				--map('n', '<leader>hb', function() gitsigns.blame_line{full=true} end)
-				map("n", "<leader>gb", gitsigns.toggle_current_line_blame)
-				--map("n", "<leader>gd", gitsigns.diffthis)
-				map("n", "<leader>gD", function()
+				map(
+					"n",
+					"<leader>gb",
+					gitsigns.toggle_current_line_blame,
+					{ desc = "Toggle showing blame of current line", noremap = true, silent = true }
+				)
+				map("n", "<leader>gp", function()
 					gitsigns.diffthis("~")
-				end)
-				map("n", "<leader>Gd", gitsigns.toggle_deleted)
-
-				-- Define the toggle function for git diff
-				-- local function toggle_git_diff()
-				-- 	local last_win = vim.fn.win_getid(vim.fn.winnr("#"))
-				--
-				-- 	if vim.wo.diff then
-				-- 		-- If in diff mode, turn off diff and close the diff window on the left
-				-- 		vim.cmd("diffoff") -- Turn off the diff mode in all windows
-				-- 		vim.cmd("wincmd h") -- Move to the left window (diff window)
-				-- 		vim.cmd("bd") -- Close the diff window
-				--
-				-- 		-- Return focus to the last active window if it's still valid
-				-- 		if last_win and vim.api.nvim_win_is_valid(last_win) then
-				-- 			vim.api.nvim_set_current_win(last_win)
-				-- 		end
-				-- 	else
-				-- 		-- Otherwise, show the git diff with gitsigns
-				-- 		require("gitsigns").diffthis()
-				-- 	end
-				-- end
-
-				-- Key mapping for toggling git diff with <leader>gd
-				vim.keymap.set("n", "<leader>gd", diffthis, { buffer = bufnr, noremap = true, silent = true })
+				end, { desc = "Toggle showing diff against previous commit", noremap = true, silent = true })
+				map(
+					"n",
+					"<leader>gD",
+					gitsigns.toggle_deleted,
+					{ desc = "Toggle showing deleted snippet", noremap = true, silent = true }
+				)
+				map(
+					"n",
+					"<leader>gd",
+					diffthis,
+					{ desc = "Toggle showing diff against current commit", noremap = true, silent = true }
+				)
+				-- -- Key mapping for toggling git diff with <leader>gd
+				-- vim.keymap.set(
+				-- 	"n",
+				-- 	"<leader>gd",
+				-- 	diffthis,
+				-- 	{ desc = "Toggle git diff", buffer = bufnr, noremap = true, silent = true }
+				-- )
 			end,
 		})
 	end,

@@ -1,3 +1,10 @@
+-- luajit, which support lua 5.1 only, needs to specify library path
+-- The library installation also needs to specify lua path:
+-- luarocks --lua-version=5.1 --lua-dir=$(brew --prefix luajit) install <library>
+-- Louis 2024/1222
+package.path = package.path .. ";/Users/nshiu/.luarocks/share/lua/5.1/?.lua"
+package.cpath = package.cpath .. ";/Users/nshiu/.luarocks/lib/lua/5.1/?.so"
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -53,4 +60,65 @@ end
 -- Run the cleanup function when exiting Neovim
 vim.api.nvim_create_autocmd("VimLeave", {
 	callback = cleanup_undo_files,
+})
+
+-- Tracking status of no_neck_pain status
+vim.g.no_neck_pain_active = false
+
+local function launchNNPorNot()
+	local vim_window_width = vim.o.columns -- The width of window vim launched
+	local terminal_width = 0
+
+	-- Calculate the actual width of the terminal
+	if os.getenv("TMUX") then
+		terminal_width = tonumber(vim.fn.system("tmux display-message -p '#{window_width}'"))
+	else
+		terminal_width = tonumber(vim.fn.system("tput cols"))
+	end
+
+	if vim_window_width > math.ceil(terminal_width / 2) and not vim.g.no_neck_pain_active then
+		vim.cmd("NoNeckPain") -- Toggle No-Neck-Pain on
+		vim.g.no_neck_pain_active = true
+	elseif vim_window_width < math.ceil(terminal_width / 2) and vim.g.no_neck_pain_active then
+		vim.cmd("NoNeckPain") -- Toggle No-Neck-Pain off
+		vim.g.no_neck_pain_active = false
+	end
+end
+
+-- Ignore NNP launch if it's Neovide
+if not vim.g.neovide then
+	vim.api.nvim_create_autocmd({ "VimEnter", "VimResized" }, {
+		callback = function()
+			launchNNPorNot()
+		end,
+	})
+end
+
+-- Encode plain-text filetype as UTF-8
+local excluded_types = {
+	"binary",
+	"hex",
+	"exe",
+	"elf",
+	"zip",
+	"tar",
+	"rar",
+	"png",
+	"jpg",
+	"jpeg",
+	"gif",
+	"pdf",
+	"doc",
+	"xls",
+	"ppt",
+}
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*",
+	callback = function()
+		local ft = vim.bo.filetype
+		if not vim.bo.binary and not vim.tbl_contains(excluded_types, ft) then
+			vim.bo.fileencoding = "utf-8"
+		end
+	end,
 })

@@ -1,26 +1,85 @@
 return {
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.8",
+		branch = "0.1.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{
 				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
+				-- build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
+				build = "make",
 			},
 			-- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 			"nvim-tree/nvim-web-devicons",
 		},
 		config = function()
 			local builtin = require("telescope.builtin")
-			vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-			vim.keymap.set("n", "<leader>fo", builtin.oldfiles, {})
-			vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-			vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, {})
+			vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files in CWD" })
+			vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "Find recent files" })
+			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Find string in CWD" })
+			vim.keymap.set("n", "<leader>fs", builtin.grep_string, { desc = "Find string under cursor in CWD" })
+			vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find buffer" })
+			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Find LSP diagnostics result" })
 
 			local actions = require("telescope.actions")
 			local telescope = require("telescope")
+
+			local function set_telescope_layout()
+				local columns = vim.o.columns
+				local layout
+
+				if columns > 120 then
+					layout = "horizontal"
+					-- elseif columns > 100 then
+					-- 	layout = "flex"
+				else
+					layout = "vertical"
+					-- layout = "flex"
+				end
+
+				telescope.setup({
+					defaults = {
+						layout_config = {
+							-- For default layout
+							horizontal = {
+								width = 0.7, -- 70% of total width
+								height = 0.9, -- 90% of total height
+								preview_width = 0.6, -- 60% of width for preview pane
+								-- results_width = 0.4, -- 40% of width for results pane
+								prompt_position = "top",
+							},
+							-- For vertical layout
+							vertical = {
+								width = 0.8,
+								height = 0.9,
+								preview_height = 0.5, -- 50% of height for preview pane
+								prompt_position = "top",
+								-- results_height = 0.5, -- Comment out since it causes error
+							},
+							-- -- For dropdown layout (when window is small)
+							-- cursor = {
+							-- 	width = 0.5,
+							-- 	height = 0.7,
+							-- 	preview_cutoff = 40, -- Preview will be hidden if results less than this
+							-- },
+							-- flex = {
+							-- 	flip_columns = 120,
+							-- 	--prompt_position = "top",
+							-- },
+						},
+						sorting_strategy = "ascending",
+						layout_strategy = layout,
+					},
+				})
+			end
+
+			-- Create an autocommand to reset layout when window is resized
+			vim.api.nvim_create_autocmd({ "VimResized" }, {
+				callback = set_telescope_layout,
+			})
+			-- Initial setup
+			set_telescope_layout()
+
 			telescope.setup({
 				defaults = {
 					vimgrep_arguments = {
@@ -39,6 +98,14 @@ return {
 							["<C-j>"] = actions.move_selection_next,
 							["<C-k>"] = actions.move_selection_previous,
 							["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+							-- Remove default mappings first (optional)
+							["<C-u>"] = false,
+							["<C-d>"] = false,
+							-- For page scrolling
+							-- ["<C-b>"] = actions.preview_scrolling_page_up,
+							-- ["<C-f>"] = actions.preview_scrolling_page_down,
+							["<C-h>"] = actions.preview_scrolling_up,
+							["<C-l>"] = actions.preview_scrolling_down,
 						},
 						-- n = {
 						-- 	["j"] = "move_selection_next",
@@ -47,7 +114,7 @@ return {
 					},
 				},
 			})
-			-- telescope.load_extension("fzf")
+			telescope.load_extension("fzf")
 		end,
 	},
 	{

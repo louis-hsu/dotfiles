@@ -2,8 +2,8 @@
 -- The library installation also needs to specify lua path:
 -- luarocks --lua-version=5.1 --lua-dir=$(brew --prefix luajit) install <library>
 -- Louis 2024/1222
-package.path = package.path .. ";/Users/nshiu/.luarocks/share/lua/5.1/?.lua"
-package.cpath = package.cpath .. ";/Users/nshiu/.luarocks/lib/lua/5.1/?.so"
+--package.path = package.path .. ";/Users/nshiu/.luarocks/share/lua/5.1/?.lua"
+--package.cpath = package.cpath .. ";/Users/nshiu/.luarocks/lib/lua/5.1/?.so"
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -86,7 +86,7 @@ local function launchNNPorNot()
 end
 
 -- Ignore NNP launch if it's Neovide
-if not vim.g.neovide then
+if not vim.g.neovide and vim.fn.exists(':NoNeckPain') == 2 then
 	vim.api.nvim_create_autocmd({ "VimEnter", "VimResized" }, {
 		callback = function()
 			launchNNPorNot()

@@ -102,9 +102,15 @@ fi
 #####################################################################
 # Execute
 #####################################################################
+if [ ! -f $XDG_CONFIG_HOME/GeoIP.conf ]; then
+	printf "\nLooking up IP info from ipinfo.io..\n"
+	curl ipinfo.io/"$cip" | jq
+	exit 0
+fi
+
 geoipupdate -f ~/.config/GeoIP.conf
 
-printf "\nLooking up IP in the installed GeoIP database..\n"
+printf "\nLooking up IP info in the installed GeoIP database..\n"
 
 # Update the location of mmdb -- Louis 2022/1208
 #file_country="/usr/share/GeoIP/GeoLite2-Country.mmdb"

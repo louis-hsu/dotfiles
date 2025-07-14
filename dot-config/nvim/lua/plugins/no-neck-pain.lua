@@ -17,7 +17,7 @@ return {
 			autocmds = {
 				-- Turn to ture or it would block curor moving between tmux pane when
 				-- there is a buffer in between -- Louis 2025/0130
-				skipEnteringNoNeckPainBuffer = false,
+				skipEnteringNoNeckPainBuffer = true,
 			},
 			-- Decide to remove buffer/scratchpad function since
 			-- 'skipEnteringNoNeckPainBuffer' doesn't work on one side only, and this

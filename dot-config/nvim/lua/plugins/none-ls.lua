@@ -13,13 +13,13 @@ return {
 		end
 
 		null_ls.setup({
-			root_dir = function(fname)
-				local root = vim.fs.root(fname, { ".git", ".luarc.json", "init.lua" })
-				if root then
-					return root
-				end
-				return vim.fn.fnamemodify(fname, ":p:h")
-			end,
+			-- root_dir = function(fname)
+			-- 	local root = vim.fs.root(fname, { ".git", ".luarc.json", "init.lua" })
+			-- 	if root then
+			-- 		return root
+			-- 	end
+			-- 	return vim.fn.fnamemodify(fname, ":p:h")
+			-- end,
 			sources = {
 				null_ls.builtins.formatting.stylua,
 				null_ls.builtins.formatting.prettier,

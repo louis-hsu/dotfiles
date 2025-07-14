@@ -75,22 +75,39 @@ return {
 				end
 			end
 
-			lspconfig.lua_ls.setup({
-				root_dir = function(fname)
-					local root = vim.fs.root(fname, { ".git", ".luarc.json", "init.lua" })
-					if root then
-						return root
+			local function findTheClosestMatch(patterns)
+				return function(fname)
+					local path = vim.fs.dirname(fname)
+					local match = nil
+
+					while path do
+						-- print("Current path: ", path)
+						for _, pattern in ipairs(patterns) do
+							if vim.fn.glob(path .. "/" .. pattern) ~= "" then
+								match = path
+								-- print("Match: ", match)
+								return match
+							end
+						end
+						local parent = vim.fs.dirname(path)
+						if parent == path then
+							break
+						end
+						path = parent
 					end
-					return vim.fn.fnamemodify(fname, ":p:h")
+					-- print("Match: ", match)
+					return match
+				end
+			end
+
+			local root_pattern = require("utilis.root_pattern")
+			require("lspconfig").lua_ls.setup({
+				root_dir = function(fname)
+					local root = root_pattern.closest_root_pattern({ ".luarc.json", "init.lua", ".git" })(fname)
+					-- local root = findTheClosestMatch({ ".luarc.json", "init.lua", ".git" })(fname)
+					-- print("DEBUG: root_dir is", root)
+					return root or vim.fn.fnamemodify(fname, ":p:h")
 				end,
-				-- settings = {
-				-- 	Lua = {
-				-- 		diagnostics = { globals = { "vim" } },
-				-- 	},
-				-- },
-				capabilities = capabilities,
-				on_attach = on_attach,
-				filetypes = { "lua" },
 				settings = {
 					Lua = {
 						workspace = {
@@ -111,6 +128,10 @@ return {
 				cmd_env = {
 					LUA_LS_LOGLEVEL = "trace",
 				},
+
+				-- Add these if you need them:
+				capabilities = capabilities,
+				on_attach = on_attach,
 			})
 			lspconfig.ts_ls.setup({
 				capabilities = capabilities,

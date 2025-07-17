@@ -66,33 +66,25 @@ vim.api.nvim_create_autocmd("VimLeave", {
 vim.g.no_neck_pain_active = false
 
 local function launchNNPorNot()
-	local vim_window_width = 140 -- The width of window launching NNP
-	local terminal_width = 0
+	local nnp_width = 140 -- The width of window launching NNP
+	local vim_window_width = tonumber(vim.o.columns)
+	-- print("DEBUG vim_window_width:", vim_window_width)
 
-	-- Calculate the actual width of the terminal/pane in tmux
-	if os.getenv("TMUX") then
-		terminal_width = tonumber(vim.fn.system("tmux display-message -p '#{pane_width}'"))
-	else
-		terminal_width = tonumber(vim.fn.system("tput cols"))
-	end
-	-- print("DEBUG: vim_window_width: ", vim_window_width)
-	-- print("DEBUG: terminal_width: ", terminal_width)
-
-	if vim_window_width > terminal_width and vim.g.no_neck_pain_active then
+	if nnp_width > vim_window_width and vim.g.no_neck_pain_active then
 		vim.cmd("NoNeckPain") -- Toggle No-Neck-Pain off
 		vim.g.no_neck_pain_active = false
 	else
-		if vim_window_width > math.ceil(terminal_width / 2) and vim.g.no_neck_pain_active then
+		if nnp_width > math.ceil(vim_window_width / 2) and vim.g.no_neck_pain_active then
 			vim.cmd("NoNeckPain") -- Toggle No-Neck-Pain off
 			vim.g.no_neck_pain_active = false
-		elseif vim_window_width <= math.ceil(terminal_width / 2) and not vim.g.no_neck_pain_active then
+		elseif nnp_width <= math.ceil(vim_window_width / 2) and not vim.g.no_neck_pain_active then
 			vim.cmd("NoNeckPain") -- Toggle No-Neck-Pain on
 			vim.g.no_neck_pain_active = true
 		end
 	end
 end
 
--- Ignore NNP launch if it's Neovide or not loaded
+-- Ignore NNP launch if it's Neovide
 if not vim.g.neovide and vim.fn.exists(":NoNeckPain") == 2 then
 	vim.api.nvim_create_autocmd({ "VimEnter", "VimResized" }, {
 		callback = function()

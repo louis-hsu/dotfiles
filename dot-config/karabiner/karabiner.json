@@ -4,6 +4,168 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "C - Creative Apps",
+                        "enabled": false,
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "c",
+                                    "modifiers": { "mandatory": ["shift", "command", "control", "option"] }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "layer",
+                                            "value": "creative"
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "karabiner",
+                                            "text": "Creative Apps\n\nA - Audacity\nB - Affinity Publisher 2\nD - Davinci Resolve\nI - Affinity Des(I)gner\nP - Affinity (P)hotos"
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "layer",
+                                        "type": "variable_if",
+                                        "value": "creative"
+                                    }
+                                ],
+                                "description": "Audacity",
+                                "from": { "key_code": "a" },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "layer",
+                                            "value": "ready"
+                                        }
+                                    },
+                                    { "software_function": { "open_application": { "bundle_identifier": "org.audacityteam.audacity" } } },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "karabiner",
+                                            "text": ""
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "layer",
+                                        "type": "variable_if",
+                                        "value": "creative"
+                                    }
+                                ],
+                                "description": "Affinity Publisher 2",
+                                "from": { "key_code": "b" },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "layer",
+                                            "value": "ready"
+                                        }
+                                    },
+                                    { "software_function": { "open_application": { "bundle_identifier": "com.seriflabs.affinitypublisher2" } } },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "karabiner",
+                                            "text": ""
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "layer",
+                                        "type": "variable_if",
+                                        "value": "creative"
+                                    }
+                                ],
+                                "description": "Affinity Des(I)gner",
+                                "from": { "key_code": "i" },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "layer",
+                                            "value": "ready"
+                                        }
+                                    },
+                                    { "software_function": { "open_application": { "bundle_identifier": "com.seriflabs.affinitydesigner2" } } },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "karabiner",
+                                            "text": ""
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "layer",
+                                        "type": "variable_if",
+                                        "value": "creative"
+                                    }
+                                ],
+                                "description": "Affinity (P)hotos",
+                                "from": { "key_code": "p" },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "layer",
+                                            "value": "ready"
+                                        }
+                                    },
+                                    { "software_function": { "open_application": { "bundle_identifier": "com.seriflabs.affinityphoto2" } } },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "karabiner",
+                                            "text": ""
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "layer",
+                                        "type": "variable_if",
+                                        "value": "creative"
+                                    }
+                                ],
+                                "description": "Davinci Resolve",
+                                "from": { "key_code": "d" },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "layer",
+                                            "value": "ready"
+                                        }
+                                    },
+                                    { "software_function": { "open_application": { "bundle_identifier": "com.blackmagic-design.DaVinciResolve" } } },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "karabiner",
+                                            "text": ""
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Change caps_lock to control if pressed with other keys, to escape if pressed alone.",
                         "enabled": false,
                         "manipulators": [
@@ -19,7 +181,7 @@
                         ]
                     },
                     {
-                        "description": "Change R to CMD if pressed with other keys. (homerow).",
+                        "description": "Change 'F' to 'CMD' if pressed with other keys.",
                         "enabled": false,
                         "manipulators": [
                             {

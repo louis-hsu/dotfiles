@@ -1,6 +1,6 @@
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "b886025"
+rev = "de53d90"
 hash = "63b6c222bf2103b3023389dde5e2ecfe"
 
 [[plugin.deps]]
@@ -10,18 +10,18 @@ hash = "b4040931f0d2f9670ddb4923e55cd881"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "cc12f3f"
-hash = "b92e44ad5004f1b45e5c3d717a60ed24"
+rev = "0e2ae47"
+hash = "6656f2869ae2274a0e1860876f15186f"
 
 [[plugin.deps]]
 use = "llanosrocas/githead"
-rev = "230dc7f"
-hash = "d8c2bf67a4da2a2af89f981ce2f7ba22"
+rev = "76fe4b8"
+hash = "10c3bc6cd6f3223e18f2483320a9e24a"
 
 [[plugin.deps]]
 use = "ahkohd/eza-preview"
-rev = "b114b01"
-hash = "7676d7da18953f4351048004ab45f0f4"
+rev = "43913fa"
+hash = "931a7f3452f74c1f1f499357002a1cae"
 
 [flavor]
 deps = []

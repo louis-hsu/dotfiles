@@ -5,7 +5,9 @@ require("eza-preview"):setup({
 	follow_symlinks = true,
 	-- Whether to show target file info instead of symlink info (default: false)
 	dereference = true,
-	ignore_glob = { ".DS_Store", "Icon?" },
+	ignore_glob = { ".DS_Store", "Icon?", ".git", "cache" },
+	git_ignore = false,
+	-- git_status = true,
 })
 
 require("githead"):setup({})
@@ -29,6 +31,7 @@ th.git.ignored_sign = "I"
 -- th.git.updated_sign = "U"
 
 require("git"):setup()
+
 --
 -- Status:children_add(function(self)
 -- 	local h = self._current.hovered

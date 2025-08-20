@@ -30,6 +30,25 @@ vim.keymap.set("n", "<leader>q", function()
 	end
 end, { desc = "Close quickfix list pane" })
 
+-- Helper that writes the buffer only when appropriate, then runs a command
+local function save_if_needed_then(cmd)
+	local bo = vim.bo
+	if bo.modifiable and not bo.readonly and bo.modified then
+		-- Protect against errors like "No file name" or write failures
+		pcall(vim.cmd.write)
+	end
+	vim.cmd(cmd) -- e.g. "bnext" or "bprevious"
+end
+
+-- Next buffer on <Tab>
+vim.keymap.set("n", "<Tab>", function()
+	save_if_needed_then("bnext")
+end, { silent = true, desc = "Save-if-needed, then :bnext" })
+
+-- Previous buffer on <S-Tab>
+vim.keymap.set("n", "<S-Tab>", function()
+	save_if_needed_then("bprevious")
+end, { silent = true, desc = "Save-if-needed, then :bprevious" })
 -- function SmartBufferDelete()
 -- 	-- Get the number of listed (non-hidden) buffers
 -- 	local listed_buffers = 0

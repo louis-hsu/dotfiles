@@ -139,29 +139,39 @@ return {
 			})
 		end,
 	},
-	{
-		vim.diagnostic.config({
-			virtual_text = false,
-			-- virtual_text = {
-			--		source = 'if_many',
-			-- },
-			-- severity_sort = 'true',
-			float = {
-				focusable = false,
-				close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-				border = "rounded",
-				source = "if_many",
-				prefix = "■ ",
-				scope = "cursor",
-			},
-			-- signs = {
-			--		text = {
-			--			[vim.diagnostic.severity.ERROR] = "󰅚 ",
-			--			[vim.diagnostic.severity.WARN] = "󰀪 ",
-			--			[vim.diagnostic.severity.INFO] = " ",
-			--			[vim.diagnostic.severity.HINT] = "󰌶 ",
-			--		}
-			-- }
-		}),
-	},
+	-- Defined in 'after/plugin/diagnostic_soft.lua'
+	-- {
+	-- vim.diagnostic.config({
+	-- 	virtual_text = {
+	-- 		spacing = 4, -- number of spaces between diagnostic and code
+	-- 		prefix = "●", -- optional symbol before message
+	-- 	},
+	-- 	signs = true,
+	-- 	underline = true,
+	-- 	update_in_insert = false,
+	-- }),
+	-- vim.diagnostic.config({
+	-- 	virtual_text = true,
+	-- 	-- virtual_text = {
+	-- 	--		source = 'if_many',
+	-- 	-- },
+	-- 	-- severity_sort = 'true',
+	-- 	-- float = {
+	-- 	-- 	focusable = false,
+	-- 	-- 	close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+	-- 	-- 	border = "rounded",
+	-- 	-- 	source = "if_many",
+	-- 	-- 	prefix = "■ ",
+	-- 	-- 	scope = "cursor",
+	-- 	-- },
+	-- 	-- signs = {
+	-- 	--		text = {
+	-- 	--			[vim.diagnostic.severity.ERROR] = "󰅚 ",
+	-- 	--			[vim.diagnostic.severity.WARN] = "󰀪 ",
+	-- 	--			[vim.diagnostic.severity.INFO] = " ",
+	-- 	--			[vim.diagnostic.severity.HINT] = "󰌶 ",
+	-- 	--		}
+	-- 	-- }
+	-- }),
+	-- },
 }

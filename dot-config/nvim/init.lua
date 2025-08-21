@@ -28,22 +28,22 @@ require("lazy").setup("plugins")
 
 -- Shows diagnostic float window automatically
 -- note: this setting is global and should be set only once
-vim.o.updatetime = 250 -- Reduce updatetime which affects CursorHold
-vim.api.nvim_create_autocmd("CursorHold", {
-	--  buffer = bufnr,
-	callback = function()
-		local opts = {
-			--      focusable = false,
-			--      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-			--      border = 'rounded',
-			--      source = 'if_many',
-			--      prefix = '■ ',
-			--      scope = 'cursor',
-			--			severity_sort = 'true',
-		}
-		vim.diagnostic.open_float(nil, opts)
-	end,
-})
+-- vim.o.updatetime = 250 -- Reduce updatetime which affects CursorHold
+-- vim.api.nvim_create_autocmd("CursorHold", {
+-- 	--  buffer = bufnr,
+-- 	callback = function()
+-- 		local opts = {
+-- 			--      focusable = false,
+-- 			--      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+-- 			--      border = 'rounded',
+-- 			--      source = 'if_many',
+-- 			--      prefix = '■ ',
+-- 			--      scope = 'cursor',
+-- 			--			severity_sort = 'true',
+-- 		}
+-- 		vim.diagnostic.open_float(nil, opts)
+-- 	end,
+-- })
 
 -- Supress background transparency of pop-up windows
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1E1E1E" }) -- Replace with your desired background color

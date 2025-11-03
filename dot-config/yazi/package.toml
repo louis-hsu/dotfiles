@@ -1,17 +1,17 @@
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "e95c7b3"
+rev = "8f1d971"
 hash = "63b6c222bf2103b3023389dde5e2ecfe"
 
 [[plugin.deps]]
 use = "AnirudhG07/rich-preview"
-rev = "843c3fa"
-hash = "b4040931f0d2f9670ddb4923e55cd881"
+rev = "831234e"
+hash = "ed3363e256e210593f0f8e4cec3e36a9"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "0e2ae47"
-hash = "6656f2869ae2274a0e1860876f15186f"
+rev = "2093ab7"
+hash = "16a10359fc2a3cd8cc8bcfbe00f744d3"
 
 [[plugin.deps]]
 use = "llanosrocas/githead"

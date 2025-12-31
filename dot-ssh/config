@@ -1,16 +1,15 @@
 Host louis0658
   Hostname louis0658.synology.me
+	#Hostname modern254-1.kddns.info
   HostKeyAlias louis0658
   CheckHostIP no
   Port 15236
   User nshiu
 
+# Host DNS defined by 'tailscale'
 Host lancelot
-	Hostname guinevere.taila4eee9.ts.net
-#  Hostname modern254-1.kddns.info
-  HostKeyAlias lancelot
+  HostKeyAlias guinevere-tailscale
   CheckHostIP no
-#  Port 15236
   User nshiu
   RequestTTY yes
 
@@ -19,7 +18,7 @@ Host guinevere
   CheckHostIP no
   User nshiu
   RequestTTY yes
-#  RemoteCommand tmuxinator guinevere_mux
+	#RemoteCommand tmuxinator guinevere_mux
 
 Host mordred
   HostKeyAlias mordred

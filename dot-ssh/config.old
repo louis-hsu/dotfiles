@@ -12,6 +12,7 @@ Host lancelot
   CheckHostIP no
 #  Port 15236
   User nshiu
+  RequestTTY yes
 
 Host guinevere
   HostKeyAlias guinevere

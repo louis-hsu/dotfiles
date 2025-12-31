@@ -1,39 +1,54 @@
 #! /bin/bash +x
-# 1. Create flock to handle multi-tabs scenario 
+# 1. Create flock to handle multi-tabs scenario
 # 2. The session gaining lock moves focus to the 1st tab and tmux
 #    (done via Applescript)
 # 3. Also handle tab launched late by comparing launch time
 # -- Louis 2024/0603
 
-################ Helper
-function tmuxSessionsCount () {
-  local _sessionsCount=$(tmux ls -F "#{session_name}: #{session_attached}" | command grep -w ${1} | sed -n 's/'${1}': \([0-9]\)/\1/p')
+set -euo pipefail
 
-  if [[ -n "${_sessionsCount}" ]]; then
-    # Either 0 (not attached) or integer (sessions attached)
-    echo $_sessionsCount
-  else 
-    # Not created
-    echo -1
-  fi
+################ Configurations
+readonly LOCKFILE="/tmp/_tmuxiTermStarts.lock"
+
+# Colors for output
+readonly GREEN='\033[1;32m'
+readonly YELLOW='\033[1;33m'
+readonly RED='\033[1;31m'
+readonly NC='\033[0m'
+
+################ Helper
+# Debug logging
+debug() {
+	echo -e "${YELLOW}[DEBUG]${NC} $*" >&2
 }
 
-function randomSleep () {
-  local _interval=$(( RANDOM % 50 ))
+error() {
+	echo -e "${RED}[ERROR]${NC} $*" >&2
+}
 
-  # Convert the interval to seconds (250ms * interval)
-  local _sleep_time=$(echo "${_interval} * 0.05" | bc)
+success() {
+	echo -e "${GREEN}[SUCCESS]${NC} $*"
+}
 
-  # Sleep for the calculated random time
-  #echo "Slept for ${_sleep_time} seconds"
-  echo $_sleep_time
+function tmuxSessionsCount() {
+	local _session_name=$1
+
+	if ! tmux has-session -t "${_session_name}" 2>/dev/null; then
+		echo "-1"
+	else
+		local _attached_count
+		_attached_count=$(tmux list-sessions -F "#{session_name}:#{session_attached}" 2>/dev/null |
+			awk -F: -v name="${_session_name}" '$1 == name {print $2; exit}')
+
+		echo "${_attached_count:-0}"
+	fi
 }
 
 # Move focus the 1st tab and run command
-function tmuxAtFirstTab () {
-  local _command=$1
+function tmuxAtFirstTab() {
+	local _command=$1
 
-  osascript <<EOF
+	osascript <<EOF
 tell application "iTerm"
   tell current window
     tell tab 1
@@ -48,88 +63,100 @@ end tell
 EOF
 }
 
-# If in the 1st tab
-function isFirstTab () {
-local _result=$(osascript <<EOF
-tell application "iTerm"
-  tell current window
-    tell tab 1
-      set fID to id of first session
-    end tell
-    set cID to id of current session 
-    if fID is equal to cID then
-      return 0
-    else
-      return 1
-    end if
-  end tell
-end tell
-EOF
-)
+function ifSessionLateLaunch() {
+	local _launchTime
+	_launchTime=$(ps -axo lstart,command | command grep -e "iTerm2$" | head -n 1 | awk '{print $1, $2, $3, $4, $5}')
 
-  echo $_result
+	local _iTermLaunchUT
+	_iTermLaunchUT=$(date -d "${_launchTime}" +"%s")
+
+	local _sessionCreationUT
+	_sessionCreationUT=$(date +"%s")
+
+	# Debug
+	debug "iTerm launching UT:	${_iTermLaunchUT}"
+	debug "Session creating UT:	${_sessionCreationUT}"
+
+	if [[ $(echo "${_sessionCreationUT} - ${_iTermLaunchUT}" | bc) -lt 5 ]]; then
+		return 0
+	else
+		return 1
+	fi
 }
 
-function ifSessionLateLaunch () {
-  local _launchTime=$(ps -axo lstart,command | command grep -e "iTerm2$" | head -n 1 | awk '{print $1, $2, $3, $4, $5}')
-  
-  local _iTermLaunchUT=$(date -d "${_launchTime}" +"%s")
-  local _sessionCreationUT=$(date +"%s")
-  local _differenceUT=$(echo "${_sessionCreationUT} - ${_iTermLaunchUT}" | bc)
+# function randomSleep() {
+# 	local _interval=$((RANDOM % 50))
+#
+# 	# Convert the interval to seconds (250ms * interval)
+# 	local _sleep_time=$(echo "${_interval} * 0.05" | bc)
+#
+# 	# Sleep for the calculated random time
+# 	#echo "Slept for ${_sleep_time} seconds"
+# 	echo $_sleep_time
+# }
 
-  if [[ ${_differenceUT} -lt 5 ]]; then
-    echo 0 
-  else 
-    echo 1 
-  fi
-}
+# # If in the 1st tab
+# function isFirstTab() {
+# 	local _result=$(
+# 		osascript <<EOF
+# tell application "iTerm"
+#   tell current window
+#     tell tab 1
+#       set fID to id of first session
+#     end tell
+#     set cID to id of current session
+#     if fID is equal to cID then
+#       return 0
+#     else
+#       return 1
+#     end if
+#   end tell
+# end tell
+# EOF
+# 	)
+#
+# 	echo $_result
+# }
 
 ################ Main process
-clear
-
-_lockFile="/tmp/_tmuxiTermStarts.lock"
-
-GREEN='\033[1;32m'
-NC='\033[0m'
-
 _profile=$1
-if [[ ! -f $XDG_CONFIG_HOME/tmuxinator/${_profile}.yml ]]; then 
-  echo -e "Need to provide an existing tmuxinator profile"
-  exit 1
+
+if [[ ! -f $XDG_CONFIG_HOME/tmuxinator/${_profile}.yml ]]; then
+	echo -e "Need to provide an existing tmuxinator profile"
+	exit 1
 fi
 
-# Utilize flock to solve multi-tabs scenario
-if (set -o noclobber; echo "$$" > "${_lockFile}") 2> /dev/null; then
-    trap 'rm -f "${_lockFile}"; exit $?' INT TERM EXIT
+# Utilize 'set -o noclobber' to ensure only one tab can run the script
+# and 'trap' to ensure $LOCKFILE would be deleted in any case
+if (
+	set -o noclobber
+	echo "$$" >"${LOCKFILE}"
+) 2>/dev/null; then
+	trap 'rm -f "${LOCKFILE}"; exit $?' INT TERM EXIT
 
-    #echo -e "Get the right"
-    #sleep 0.1
-    _sessionName=$(yq e '.name' "$XDG_CONFIG_HOME/tmuxinator/${_profile}.yml")
-    _sessionsCount=$(tmuxSessionsCount ${_sessionName})
+	_sessionName=$(yq e '.name' "$XDG_CONFIG_HOME/tmuxinator/${_profile}.yml")
+	_sessionsCount=$(tmuxSessionsCount "${_sessionName}")
 
-    _differenceUT=$(ifSessionLateLaunch)
-    #echo -e "Launch Difference: ${_differenceUT}"
+	if [[ ${_sessionsCount} -eq -1 ]]; then
+		if ifSessionLateLaunch; then
+			tmuxAtFirstTab "tmuxinator ${_profile}"
+		else
+			tmuxinator "${_profile}" >&2
 
-    if [[ ${_sessionsCount} -eq -1 ]]; then
-      if [[ ${_differenceUT} -eq 0 ]]; then
-        tmuxAtFirstTab "tmuxinator ${_profile}"
-      else 
-        tmuxinator ${_profile}
+		fi
 
-      fi 
+	elif [[ ${_sessionsCount} -eq 0 ]]; then
+		if ifSessionLateLaunch; then
+			tmuxAtFirstTab "tmux -u attach-session -t ${_sessionName}"
+		else
+			tmux -u attach-session -t "${_sessionName}" >&2
 
-    elif [[  ${_sessionsCount} -eq 0 ]]; then
-      if [[ ${_differenceUT} -eq 0 ]]; then
-        tmuxAtFirstTab "tmux -u attach-session -t ${_sessionName}"
-      else 
-        tmux -u attach-session -t ${_sessionName}
+		fi
+	fi
 
-      fi
-    fi
-
-    rm -f "${_lockFile}"
-    trap - INT TERM EXIT
+	rm -f "${LOCKFILE}"
+	trap - INT TERM EXIT
 else
-    #echo -e "Lose the preemptive right. Exiting."
-    exit 0
+	#echo -e "Lose the preemptive right. Exiting."
+	exit 0
 fi

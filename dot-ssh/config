@@ -1,38 +1,48 @@
 Host louis0658
-  Hostname louis0658.synology.me
+	Hostname louis0658.synology.me
 	#Hostname modern254-1.kddns.info
-  HostKeyAlias louis0658
-  CheckHostIP no
-  Port 15236
-  User nshiu
+	HostKeyAlias louis0658
+	CheckHostIP no
+	Port 15236
+	User nshiu
 
-# Host DNS defined by 'tailscale'
+# Alias of 'guinevere' while connecting via 'tailscale'
 Host lancelot
-  HostKeyAlias guinevere-tailscale
-  CheckHostIP no
-  User nshiu
-  RequestTTY yes
+	HostKeyAlias guinevere-tailscale
+	CheckHostIP no
+	User nshiu
+	RequestTTY yes
 
 Host guinevere
-  HostKeyAlias guinevere
-  CheckHostIP no
-  User nshiu
-  RequestTTY yes
+	HostKeyAlias guinevere
+	CheckHostIP no
+	User nshiu
+	RequestTTY yes
 	#RemoteCommand tmuxinator guinevere_mux
 
 Host mordred
-  HostKeyAlias mordred
-  CheckHostIP no
-  User sshd						# nshiuatCloud
+	HostKeyAlias mordred
+	CheckHostIP no
+	User sshd						# nshiuatCloud
+
+# Alias of 'atreides' while connecting via 'tailscale'
+Host dune
+	HostKeyAlias atreides-tailscale
+	CheckHostIP no
+	Port 13224
+	User louishsu				# nshiu0658atCloud
+	SetEnv TERM=screen-256color
+
 
 Host atreides
-  HostKeyAlias atreides
-  CheckHostIP no
+	HostKeyAlias atreides
+	CheckHostIP no
 	Port 13224
-  User louishsu				# nshiu0658atCloud
+	User louishsu				# nshiu0658atCloud
+	SetEnv TERM=screen-256color
 
 Host *
-  AddKeysToAgent yes
-  UseKeychain yes
-  IdentityFile ~/.ssh/id_ed25519
-  IdentitiesOnly yes
+	AddKeysToAgent yes
+	UseKeychain yes
+	IdentityFile ~/.ssh/id_ed25519
+	IdentitiesOnly yes

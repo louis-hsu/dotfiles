@@ -21,3 +21,7 @@ yazi/plugins/*
 # Ignore GeoIP.conf which would be blocked by Github due to including license
 # key from MaxMind
 GeoIP.conf
+
+# Ignore state file/directory created/utilized by gemini-cli
+tool_state
+configstore

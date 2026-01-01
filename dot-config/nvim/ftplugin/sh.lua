@@ -4,6 +4,7 @@ if first_line == "" then
 	vim.fn.setline(1, {
 		"#!/usr/bin/env bash ",
 		"set -euo pipefail		# Exit on error, undefined vars, pipe fails",
+		"IFS=$'\\n\\t'					# Set IFS splits on newline/tab only",
 		"",
 		"# Script description",
 		"# Usage: script_name.sh [options] <arguments>",

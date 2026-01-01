@@ -76,7 +76,8 @@ return {
 			end
 
 			local root_pattern = require("utilis.root_pattern")
-			require("lspconfig").lua_ls.setup({
+			-- require("lspconfig").lua_ls.setup({
+			vim.lsp.config("lua_ls", {
 				root_dir = function(fname)
 					local root = root_pattern.closest_root_pattern({ ".luarc.json", "init.lua", ".git" })(fname)
 					-- print("DEBUG: root_dir is", root)
@@ -107,32 +108,38 @@ return {
 				capabilities = capabilities,
 				on_attach = on_attach,
 			})
-			lspconfig.ts_ls.setup({
+			-- lspconfig.ts_ls.setup({
+			vim.lsp.config("ts_ls", {
 				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = { "typescript", "javascript" },
 			})
-			lspconfig.bashls.setup({
+			-- lspconfig.bashls.setup({
+			vim.lsp.config("bashls", {
 				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = { "sh" },
 			})
-			lspconfig.jdtls.setup({
+			-- lspconfig.jdtls.setup({
+			vim.lsp.config("jdtls", {
 				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = { "java" },
 			})
-			lspconfig.ruff.setup({
+			-- lspconfig.ruff.setup({
+			vim.lsp.config("ruff", {
 				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = { "python" },
 			})
-			lspconfig.pyright.setup({
+			-- lspconfig.pyright.setup({
+			vim.lsp.config("pyright", {
 				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = { "python" },
 			})
-			lspconfig.kotlin_language_server.setup({
+			-- lspconfig.kotlin_language_server.setup({
+			vim.lsp.config("kotlin_language_server", {
 				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = { "kotlin" },

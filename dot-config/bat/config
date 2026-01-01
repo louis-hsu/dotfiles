@@ -30,6 +30,7 @@
 --map-syntax "*rc:Bourne Again Shell (bash)"
 --map-syntax "*ignore:Git Ignore"
 --map-syntax "**/git/config:Git Config"
+--map-syntax "**/dot-ssh/config:SSH Config"
 #--map-syntax "~/.dotfiles/dot-config/git/config:Git Config"
 
 --style="full"

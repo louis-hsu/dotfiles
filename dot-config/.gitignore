@@ -25,3 +25,6 @@ GeoIP.conf
 # Ignore state file/directory created/utilized by gemini-cli
 tool_state
 configstore
+
+# Ignore state file created by mole
+mole/clean-list.txt

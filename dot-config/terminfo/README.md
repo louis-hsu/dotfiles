@@ -12,14 +12,8 @@ screen-256color-italic|tmux with 256 colors and italic,
 2. Use ’tic’ to recompile the new terminfo file, save to specific place and install to system terminfo database
 
 ```
-tic -o $XDG_CONFIG_HOME/terminfo ~/screen-256color-italic.terminfo
+tic -x -o ~/.terminfo ~/screen-256color-italic.terminfo
 ```
 
-3. Update .zprofile with $TERMINFO_DIRS as:
-
-```
-export TERMINFO_DIRS="$XDG_CONFIG_HOME/terminfo:/opt/homebrew/Cellar/ncurses/6.5/share/terminfo:/usr/share/terminfo"
-```
-
-4. Run ‘infocmp $TERM’ to ensure new terminfo is set
+3. Run ‘infocmp -v2 $TERM’ to ensure new terminfo is set
 

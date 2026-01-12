@@ -44,7 +44,8 @@ windows:
         panes:
 #            - cd "<%= @args[0] %>" && ls
 #            - cd "<%= @args[0] %>" # general
-            - dry -m
+            # - dry -m
+            - lazydocker
             - duf -hide special
             - sudo iptraf
     - file_mgmt: cd $HOME; yy

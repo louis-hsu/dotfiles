@@ -4,7 +4,7 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Home Row Mods (A/S/D/F and J/K/L/M) - (No Key Repeat + Apple Keyboard Only)",
+                        "description": "Home Row Mods (A/S/D/F and J/K/L/;) - (No Key Repeat + Apple Keyboard Only)",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -207,16 +207,16 @@
                                         "type": "device_if"
                                     }
                                 ],
-                                "description": "M -> Right Shift (No Repeat on Tap)",
+                                "description": "; -> Right Shift (No Repeat on Tap)",
                                 "from": {
-                                    "key_code": "m",
+                                    "key_code": "semicolon",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": { "basic.to_if_held_down_threshold_milliseconds": 200 },
                                 "to": [{ "key_code": "right_shift" }],
                                 "to_if_alone": [
                                     {
-                                        "key_code": "m",
+                                        "key_code": "semicolon",
                                         "repeat": false
                                     }
                                 ],
@@ -263,6 +263,7 @@
                     },
                     {
                         "description": "Change spacebar key to command+control+option+shift if pressed with other keys",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "conditions": [

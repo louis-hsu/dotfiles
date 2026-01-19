@@ -27,7 +27,8 @@ return {
 			local lspkind = require("lspkind")
 
 			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-			local ts_utils = require("nvim-treesitter.ts_utils")
+			-- local ts_utils = require("nvim-treesitter.ts_utils")
+			local ts_utils = require("nvim-treesitter.util")
 
 			require("luasnip.loaders.from_vscode").lazy_load()
 

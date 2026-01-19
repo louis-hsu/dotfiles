@@ -5,6 +5,12 @@ git:
   pagers:
     - colorArg: always
       pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+  commit:
+    autoWrapCommitMessage: false
+    autoWrapWidth: 72
+os:
+  editPreset: "nvim"
+  editor: "nvim"
 gui:
   # Use the mocha catppuccin theme
   theme:
@@ -29,3 +35,9 @@ gui:
       - '#cdd6f4'
     searchingActiveBorderColor:
       - '#f9e2af'
+customCommands:
+  - key: "C"
+    context: "files"
+    command: "git commit"
+    description: "Commit with external editor (git commit)"
+    output: terminal

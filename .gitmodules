@@ -1,4 +1,4 @@
 [submodule "dot-config/zsh/.zprezto"]
-	path = dot-config/zsh/.zprezto
+	path = dot-config/zsh/zprezto
 	url = git@github.com:louis-hsu/prezto.git
 	branch = myprezto

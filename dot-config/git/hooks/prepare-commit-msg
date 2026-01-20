@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+MSG_FILE="${1:-}"
+[[ -n "$MSG_FILE" && -f "$MSG_FILE" ]] || exit 0
+
+# Only proceed if there is at least one staged submodule pointer (gitlink: mode
+# 160000)
+has_staged_gitlink=false
+while IFS= read -r p; do
+  [[ -n "$p" ]] || continue
+	mode="$(git ls-files -s -- "$p" 2>/dev/null | awk 'NR==1{print $1}')"
+	if [[ "$mode" == "160000" ]]; then
+		has_staged_gitlink=true
+	  break
+  fi
+done < <(git diff --cached --name-only)
+
+$has_staged_gitlink || exit 0
+
+tmp="$(mktemp -t prepmsg.XXXXXX)"
+trap 'rm -f "$tmp"' EXIT
+
+awk '
+  BEGIN { in_block=0; found=0 }
+
+  # Start marker (commented)
+  /^# Submodule changes to be committed:[[:space:]]*$/ {
+  	in_block=1
+	  found=1
+	  sub(/^# ?/, "", $0)   # uncomment header
+	  print
+	  next
+	}
+
+  # While inside the target block, stop when we hit the next section header.
+  # Git’s status headers in commit message comments are like: "# Untracked files:"
+  in_block && /^# [A-Z].*:[[:space:]]*$/ {
+  	in_block=0
+	 	print         # keep the next header commented
+	  next
+  }
+
+  # In-block: uncomment lines (including blank comment lines "#")
+  in_block {
+    sub(/^# ?/, "", $0)
+	  print
+	  next
+  }
+
+	# Default: print unchanged
+  { print }
+' "$MSG_FILE" > "$tmp"
+
+# Only overwrite if we actually found and uncommented the block
+if grep -q '^Submodule changes to be committed:' "$tmp"; then
+  cat "$tmp" > "$MSG_FILE"
+fi

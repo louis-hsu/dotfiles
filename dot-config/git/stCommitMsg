@@ -11,6 +11,8 @@
 
 
 # --- COMMIT END ---
+# To abort the commit, type: 'cq' to quit with error 
+#
 # Type can be
 #    feat     (new feature)
 #    fix      (bug fix)

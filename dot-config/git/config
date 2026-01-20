@@ -77,7 +77,8 @@
   default = current
 
 [alias]
-	lg = log --pretty=format:'%C(bold)Commit:%C(reset) %C(green)%H%C(red)%d%n%C(bold)Author:%C(reset) %C(cyan)%an <%ae>%n%C(bold)Date:%C(reset)   %C(blue)%ai (%ar)%C(reset)%n%+B'
+	# lg = log --pretty=format:'%C(bold)Commit:%C(reset) %C(green)%H%C(red)%d%n%C(bold)Author:%C(reset) %C(cyan)%an <%ae>%n%C(bold)Date:%C(reset)   %C(blue)%ai (%ar)%C(reset)%n%+B'
+	lg = log --pretty=format:'%C(bold yellow)Commit:%C(reset) %C(green)%H%C(red)%d%n%C(bold magenta)Author:%C(reset) %C(cyan)%an <%ae>%n%C(bold blue)Date:%C(reset)   %C(blue)%ai (%ar)%C(reset)%n%+B'
   summary = !/opt/homebrew/bin/onefetch
 	#sdiff = -c delta.side-by-side=true diff
 

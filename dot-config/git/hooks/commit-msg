@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+MSG_FILE="${1:-}"
+[[ -n "$MSG_FILE" && -f "$MSG_FILE" ]] || exit 0
+
+tmp="$(mktemp -t commitmsg.XXXXXX)"
+trap 'rm -f "$tmp"' EXIT
+
+awk '
+  BEGIN { blank = 0 }
+
+  # If the line is blank (or whitespace-only), compress consecutive blanks
+  /^[[:space:]]*$/ {
+    if (blank == 0) {
+      print ""
+      blank = 1
+    }
+    next
+  }
+
+  # Non-blank line: print as-is
+  {
+    print
+    blank = 0
+  }
+' "$MSG_FILE" > "$tmp"
+
+# Remove trailing blank lines at EOF (keep a final newline)
+awk '
+  { lines[NR] = $0 }
+  END {
+    i = NR
+    while (i > 0 && lines[i] ~ /^[[:space:]]*$/) i--
+    for (j = 1; j <= i; j++) print lines[j]
+  }
+' "$tmp" > "$MSG_FILE"

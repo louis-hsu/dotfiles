@@ -4,15 +4,14 @@ set -euo pipefail
 MSG_FILE="${1:-}"
 [[ -n "$MSG_FILE" && -f "$MSG_FILE" ]] || exit 0
 
-# Only proceed if there is at least one staged submodule pointer (gitlink: mode
-# 160000)
+# Only proceed if there is at least one staged submodule pointer (gitlink: mode 160000)
 has_staged_gitlink=false
-while IFS= read -r p; do
-  [[ -n "$p" ]] || continue
-	mode="$(git ls-files -s -- "$p" 2>/dev/null | awk 'NR==1{print $1}')"
-	if [[ "$mode" == "160000" ]]; then
-		has_staged_gitlink=true
-	  break
+while IFS= read -r path; do
+  [[ -n "$path" ]] || continue
+  mode="$(git ls-files -s -- "$path" 2>/dev/null | awk 'NR==1{print $1}')"
+  if [[ "$mode" == "160000" ]]; then
+    has_staged_gitlink=true
+    break
   fi
 done < <(git diff --cached --name-only)
 
@@ -22,37 +21,58 @@ tmp="$(mktemp -t prepmsg.XXXXXX)"
 trap 'rm -f "$tmp"' EXIT
 
 awk '
-  BEGIN { in_block=0; found=0 }
+  BEGIN {
+    in_block = 0
+    prev_blank = 0
+    saw_header = 0
+  }
 
   # Start marker (commented)
   /^# Submodule changes to be committed:[[:space:]]*$/ {
-  	in_block=1
-	  found=1
-	  sub(/^# ?/, "", $0)   # uncomment header
-	  print
-	  next
-	}
+    in_block = 1
+    saw_header = 1
+    prev_blank = 0
 
-  # While inside the target block, stop when we hit the next section header.
-  # Git’s status headers in commit message comments are like: "# Untracked files:"
+    # Replace header text and uncomment it
+    print "Submodule(s) changes also committed:"
+    next
+  }
+
+  # End block when next section header begins
   in_block && /^# [A-Z].*:[[:space:]]*$/ {
-  	in_block=0
-	 	print         # keep the next header commented
-	  next
+    in_block = 0
+    prev_blank = 0
+    print     # keep the next header commented
+    next
   }
 
-  # In-block: uncomment lines (including blank comment lines "#")
+  # In-block lines: uncomment + remove unnecessary blank lines
   in_block {
+    # Uncomment "# ..." -> "..."
     sub(/^# ?/, "", $0)
-	  print
-	  next
+
+    # Normalize whitespace-only lines to empty
+    if ($0 ~ /^[[:space:]]*$/) {
+      # Skip leading blank lines right after header
+      if (prev_blank == 0) {
+        # We allow a single blank line only if we already printed some content
+        # Since we want to remove unnecessary blanks, we just collapse them.
+      }
+      if (prev_blank == 1) next
+      prev_blank = 1
+      next  # drop blank lines inside the block
+    }
+
+    prev_blank = 0
+    print
+    next
   }
 
-	# Default: print unchanged
+  # Default: print unchanged
   { print }
 ' "$MSG_FILE" > "$tmp"
 
-# Only overwrite if we actually found and uncommented the block
-if grep -q '^Submodule changes to be committed:' "$tmp"; then
+# Only overwrite if we actually processed the block
+if grep -q '^Submodule(s) changes also committed:' "$tmp"; then
   cat "$tmp" > "$MSG_FILE"
 fi

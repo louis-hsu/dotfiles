@@ -17,6 +17,7 @@ local/state/*
 
 # Ignore content in 'yazi/plugins'
 yazi/plugins/*
+yazi/flavors/*
 
 # Ignore GeoIP.conf which would be blocked by Github due to including license
 # key from MaxMind

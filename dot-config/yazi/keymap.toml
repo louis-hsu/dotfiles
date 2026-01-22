@@ -1,9 +1,13 @@
 [mgr]
-prepend_keymap = [
-	{ on = [ "E" ], run = "plugin eza-preview",  desc = "Toggle tree/list dir preview" },
-]
+	prepend_keymap = [
+		# 'eza-preview' keymap
+  	{ on = [ "E" ], run = "plugin eza-preview",  desc = "Toggle tree/list dir preview" },
 
-[[input.prepend_keymap]]
-on   = "<Esc>"
-run  = "close"
-desc = "Cancel input"
+		# shell keymap
+		{ on = "!", for = "unix", run = 'shell "$SHELL" --block', desc = "Open $SHELL here" },
+	]
+
+[input]
+	prepend_keymap = [
+		{ on = "<Esc>", run = "close", desc = "Cancel input", }
+	]

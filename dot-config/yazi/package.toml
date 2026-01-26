@@ -19,11 +19,6 @@ rev = "573b275"
 hash = "c3e2871c9ef244fd181f203791f9b0d2"
 
 [[plugin.deps]]
-use = "louis-hsu/yazi_plugins:git"
-rev = "83ea0fb"
-hash = "599ff536bb984b0b43e21e14b80e8a79"
-
-[[plugin.deps]]
 use = "llanosrocas/githead"
 rev = "71dabe4"
 hash = "73d2758775276ae7d824b43e53d0b350"
@@ -32,6 +27,11 @@ hash = "73d2758775276ae7d824b43e53d0b350"
 use = "ahkohd/eza-preview"
 rev = "7a2d60f"
 hash = "eed8e19469f3dca38fd977eb938dd34e"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "e07bf41"
+hash = "270915fa8282a19908449530ff66f7e2"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"

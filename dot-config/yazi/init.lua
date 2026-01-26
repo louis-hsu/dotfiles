@@ -57,7 +57,8 @@ th.git.untracked_sign = ""
 
 th.git.ignored = ui.Style():fg("#696969"):italic()
 th.git.ignored_sign = "I"
--- th.git.updated_sign = "U"
+
+th.git.clean_sign = " "
 
 require("git"):setup()
 

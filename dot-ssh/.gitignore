@@ -5,4 +5,4 @@
 !*/
 
 # Unignore files starting with "config"
-!config*
+!config

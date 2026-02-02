@@ -46,3 +46,7 @@ Host *
 	UseKeychain yes
 	IdentityFile ~/.ssh/id_ed25519
 	IdentitiesOnly yes
+
+# Local override w/o tracking
+Include ~/.ssh/config.d/*.conf
+Include ~/.ssh/config.local

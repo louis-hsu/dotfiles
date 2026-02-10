@@ -1,27 +1,39 @@
 [[plugin.deps]]
-use = "yazi-rs/plugins:git"
-rev = "19dc890"
-hash = "27ca02f49fd236b5cc7bf03c243859fe"
-
-[[plugin.deps]]
-use = "AnirudhG07/rich-preview"
-rev = "831234e"
-hash = "ed3363e256e210593f0f8e4cec3e36a9"
+use = "yazi-rs/plugins:full-border"
+rev = "88990a6"
+hash = "3996fc74044bc44144b323686f887e1"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "af8bdf4"
-hash = "43fa632820cc91919c4e713652140b48"
+rev = "dc61636"
+hash = "2fa34959353b6f1a1c33659f50e098fd"
+
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "594b8a2"
+hash = "c9e628fc0312d198db22ae2fa74883b"
+
+[[plugin.deps]]
+use = "AnirudhG07/rich-preview"
+rev = "573b275"
+hash = "c3e2871c9ef244fd181f203791f9b0d2"
 
 [[plugin.deps]]
 use = "llanosrocas/githead"
-rev = "76fe4b8"
-hash = "10c3bc6cd6f3223e18f2483320a9e24a"
+rev = "317d09f"
+hash = "41dc37a724b2afd21da4f1ea6c1182d8"
 
 [[plugin.deps]]
 use = "ahkohd/eza-preview"
-rev = "7b00863"
-hash = "c538f3766b4b3bafbae3f0b7c3c3d763"
+rev = "7a2d60f"
+hash = "eed8e19469f3dca38fd977eb938dd34e"
 
-[flavor]
-deps = []
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "88990a6"
+hash = "270915fa8282a19908449530ff66f7e2"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "4c57537"
+hash = "8eabb4e88096f10905a6df62cfaadbf4"

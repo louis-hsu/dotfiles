@@ -7,7 +7,22 @@ vim.opt.smarttab = true
 vim.opt.number = true -- Show line number
 vim.opt.relativenumber = true -- Show relative number
 vim.opt.backspace = { "indent", "eol", "start" }
-vim.opt.clipboard = "unnamedplus" -- Use system clipboard for copy/paste
+
+if vim.fn.exists('$SSH_CONNECTION') == 1 then
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    },
+    paste = {
+      ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+    },
+  }
+end
+vim.opt.clipboard = "unnamedplus"
+
 vim.opt.completeopt = "menu,menuone,noselect"
 vim.opt.scrolloff = 4 -- At least 4 lines visible at top or bottom
 vim.opt.sidescrolloff = 8 -- At least 8 columns visible at right or left

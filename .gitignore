@@ -1,5 +1,0 @@
-# Since $ANDROID_USER_HOME doesn't work
-# 1. Create softlink ~/.config/dot-android -> ~/.android
-# 2. But keep it aways from git repo since it changes always
-# -- Louis 2024/0920
-dot-android/*

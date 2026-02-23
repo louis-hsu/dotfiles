@@ -1,31 +1,6 @@
-# Ignore what inside directory  
-# 1. $XDG_DATA_HOME
-# 2. $XDG_STATE_HOME
-# 3. $XDG_CACHE_HOME
-# since these files are temp and change all the time
-# -- Louis 2024/0323
-cache/*
-local/share/*
-local/state/*
-
 # Ignore nvim-* gits which would be handled separately
 /nvim-*
-
-# Add cache/avd directory from Android Studio
-.android/cache/*
-.android/avd/*
-
-# Ignore content in 'yazi/plugins'
-yazi/plugins/*
-yazi/flavors/*
 
 # Ignore GeoIP.conf which would be blocked by Github due to including license
 # key from MaxMind
 GeoIP.conf
-
-# Ignore state file/directory created/utilized by gemini-cli
-tool_state
-configstore
-
-# Ignore state file created by mole
-mole/clean-list.txt

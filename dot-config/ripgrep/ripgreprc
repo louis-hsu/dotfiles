@@ -40,4 +40,4 @@ web:*.{html,css,js}*
 # 2. Doesn't like too many dot-prefix files in home directory
 # -- Louis 2024/0324
 --ignore-file
-/Users/nshiu/.config/ripgrep/rgignore
+/Users/nshiu/.dotfiles/dot-config/ripgrep/rgignore

@@ -11,7 +11,7 @@
 # Use the command 'task show' to see all defaults and overrides
 
 # Files
-data.location=~/.config/task/task_data
+data.location=~/.dotfiles/dot-config/task/task_data
 
 # Sync configuration
 # Since the man page 'task-sync' is not clear about how to setup/configure 
@@ -38,12 +38,12 @@ sync.local.server_dir=~/Dropbox/task_data
 #include /usr/local/Cellar/task/2.5.3/share/doc/task/rc/solarized-dark-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/solarized-light-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/no-color.theme
-include ~/.config/task/nshiu-dark-256.theme
+include ~/.dotfiles/dot-config/task/nshiu-dark-256.theme
 
 regex=yes
 
 # calendar setup
-include ~/.config/task/holidays.en-TW.rc
+include ~/.dotfiles/dot-config/task/holidays.en-TW.rc
 calendar.holidays=sparse
 calendar.details=full
 

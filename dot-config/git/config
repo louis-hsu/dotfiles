@@ -33,11 +33,11 @@
     fi                                                               \
   }"
 	excludesfile = /Users/nshiu/.dotfiles/dot-config/git/ignore
-	hooksPath = /Users/nshiu/.config/git/hooks
+	hooksPath = /Users/nshiu/.dotfiles/dot-config/git/hooks
 
 # Setup for delta theme and customization -- Louis 2023-03-28 17:51
 [include]
-  path = ~/.config/delta/themes.gitconfig 
+  path = ~/.dotfiles/dot-config/delta/themes.gitconfig 
 
 # Specify to theme 'nshiu_nordbase' for better configuration -- Louis 2023-05-12 16:55
 [delta]
@@ -65,7 +65,7 @@
 	trustExitCode = true
 
 [commit]
-	template = ~/.config/git/stCommitMsg
+	template = /Users/nshiu/.dotfiles/dot-config/git/stCommitMsg
 
 [color]
   ui = auto

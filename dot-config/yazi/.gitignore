@@ -1,3 +1,4 @@
 # Ignore contents which are changed consistently
 plugins
 flavors
+package.toml

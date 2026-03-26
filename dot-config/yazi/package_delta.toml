@@ -1,0 +1,23 @@
+[[plugin.deps]]
+use = "boydaihungst/mediainfo"
+
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+
+[[plugin.deps]]
+use = "AnirudhG07/rich-preview"
+
+[[plugin.deps]]
+use = "llanosrocas/githead"
+
+[[plugin.deps]]
+use = "ahkohd/eza-preview"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-mocha"

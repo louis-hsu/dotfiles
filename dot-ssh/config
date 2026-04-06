@@ -5,25 +5,31 @@ Host louis0658
 	CheckHostIP no
 	Port 15236
 	User nshiu
+	TCPKeepAlive yes
 
 # Alias of 'guinevere' while connecting via 'tailscale'
 Host lancelot
 	HostKeyAlias guinevere-tailscale
+	Port 49752
 	CheckHostIP no
 	User nshiu
 	RequestTTY yes
+	TCPKeepAlive yes
 
 Host guinevere
 	HostKeyAlias guinevere
+	Port 49752
 	CheckHostIP no
 	User nshiu
 	RequestTTY yes
+	TCPKeepAlive yes
 	#RemoteCommand tmuxinator guinevere_mux
 
 Host mordred
 	HostKeyAlias mordred
 	CheckHostIP no
 	User sshd						# nshiuatCloud
+	TCPKeepAlive yes
 
 # Alias of 'atreides' while connecting via 'tailscale'
 Host dune
@@ -32,7 +38,7 @@ Host dune
 	Port 13224
 	User louishsu				# nshiu0658atCloud
 	SetEnv TERM=screen-256color
-
+	TCPKeepAlive yes
 
 Host atreides
 	HostKeyAlias atreides
@@ -40,12 +46,14 @@ Host atreides
 	Port 13224
 	User louishsu				# nshiu0658atCloud
 	SetEnv TERM=screen-256color
+	TCPKeepAlive yes
 
 Host *
 	AddKeysToAgent yes
 	UseKeychain yes
 	IdentityFile ~/.ssh/id_ed25519
 	IdentitiesOnly yes
+	TCPKeepAlive yes
 
 # Local override w/o tracking
 Include ~/.ssh/config.d/*.conf

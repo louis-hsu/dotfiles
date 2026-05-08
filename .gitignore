@@ -1,0 +1,2 @@
+# Ignore AI skill sets which would be taken care separately
+/agent-skills/*skills

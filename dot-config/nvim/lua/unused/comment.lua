@@ -5,6 +5,12 @@ return {
 
 		comment.setup({
 			extra = { above = "gca", below = "gcb", eol = "gce" },
+		  pre_hook = function(ctx)
+    		print("filetype: " .. vim.inspect(vim.bo.filetype))
+    		print("commentstring: " .. vim.inspect(vim.bo.commentstring))
+    		print("ctx: " .. vim.inspect(ctx))
+    		-- return nothing, let Comment.nvim use its default logic
+  		end,
 		})
 
 		-- https://github.com/numToStr/Comment.nvim/issues/483

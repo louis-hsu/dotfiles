@@ -280,11 +280,11 @@
 				{
 						"type": "colors",
             "key": "│  {icon}  Colors    │{$3}│{$2}",
-						"block": {"range": [0, 7]},
-				},
-				{
-						"type": "colors",
-            "key": "│               │{$3}│{$2}",
+				// 		"block": {"range": [0, 7]},
+				// },
+				// {
+				// 		"type": "colors",
+    //         "key": "│               │{$3}│{$2}",
 						"block": {"range": [8, 15]},
 				},
         {

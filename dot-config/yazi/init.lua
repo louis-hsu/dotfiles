@@ -60,7 +60,9 @@ th.git.ignored_sign = "I"
 
 th.git.clean_sign = " "
 
-require("git"):setup()
+require("git"):setup(
+	{ order = 1500, }
+)
 
 require("githead"):setup({
 	order = {

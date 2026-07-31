@@ -32,7 +32,7 @@ Host mordred
 	TCPKeepAlive yes
 
 # Alias of 'atreides' while connecting via 'tailscale'
-Host dune
+Host caladan 
 	HostKeyAlias atreides-tailscale
 	CheckHostIP no
 	Port 13224

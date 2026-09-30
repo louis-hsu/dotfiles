@@ -2,11 +2,11 @@
 # -- Louis 2024/1102
 
 git:
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: delta --dark --paging=never --line-numbers --side-by-side --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+      command: delta --dark --paging=never --line-numbers --side-by-side --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
     - colorArg: always
-      pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+      command: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
   commit:
     autoWrapCommitMessage: false
     autoWrapWidth: 72

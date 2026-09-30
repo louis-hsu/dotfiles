@@ -1,6 +1,9 @@
 # Ignore nvim-* gits which would be handled separately
 /nvim-*
 
+# Ignore app 'jellium-desktop'
+/jellium-desktop
+
 # Ignore GeoIP.conf which would be blocked by Github due to including license
 # key from MaxMind
 GeoIP.conf

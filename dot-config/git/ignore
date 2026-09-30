@@ -96,6 +96,8 @@ Temporary Items
 # Others
 ######################
 *.tmp
+*.lock
+*.sock
 
 # Folder for obsolete data
 *obsolete

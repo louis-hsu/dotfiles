@@ -2,59 +2,50 @@ Host louis0658
 	Hostname louis0658.synology.me
 	#Hostname modern254-1.kddns.info
 	HostKeyAlias louis0658
-	CheckHostIP no
 	Port 15236
 	User nshiu
-	TCPKeepAlive yes
+  ServerAliveInterval 30
 
-# Alias of 'guinevere' while connecting via 'tailscale'
+# Through Tailscale (works anywhere)
 Host lancelot
-	HostKeyAlias guinevere-tailscale
-	Port 49752
-	CheckHostIP no
-	User nshiu
-	RequestTTY yes
-	TCPKeepAlive yes
+  HostName guinevere-ts
 
-Host guinevere
-	HostKeyAlias guinevere
-	Port 49752
-	CheckHostIP no
-	User nshiu
-	RequestTTY yes
-	TCPKeepAlive yes
-	#RemoteCommand tmuxinator guinevere_mux
+# Shared settings. "guinevere" is resolved in /etc/hosts
+Host lancelot guinevere
+  HostKeyAlias guinevere-ts
+  Port 49752
+  User nshiu
+  RequestTTY yes
+  ServerAliveInterval 30
+	# RemoteCommand tmuxinator guinevere_mux
 
 Host mordred
 	HostKeyAlias mordred
-	CheckHostIP no
 	User sshd						# nshiuatCloud
-	TCPKeepAlive yes
+  ServerAliveInterval 30
 
-# Alias of 'atreides' while connecting via 'tailscale'
+# Through Tailscale (works anywhere)
 Host caladan 
-	HostKeyAlias atreides-tailscale
-	CheckHostIP no
-	Port 13224
-	User louishsu				# nshiu0658atCloud
-	SetEnv TERM=screen-256color
-	TCPKeepAlive yes
+	HostName atreides-ts
 
-Host atreides
-	HostKeyAlias atreides
-	CheckHostIP no
+# Shared settings. "atreides" is resolved in /etc/hosts
+Host caladan atreides
+	HostKeyAlias atreides-ts
 	Port 13224
 	User louishsu				# nshiu0658atCloud
 	SetEnv TERM=screen-256color
-	TCPKeepAlive yes
+  RequestTTY yes
+  ServerAliveInterval 30
 
 Host *
 	AddKeysToAgent yes
 	UseKeychain yes
 	IdentityFile ~/.ssh/id_ed25519
 	IdentitiesOnly yes
-	TCPKeepAlive yes
+  ServerAliveInterval 30
+
+# Other SSH hosts
+Include ~/.ssh/config.d/*.conf
 
 # Local override w/o tracking
-Include ~/.ssh/config.d/*.conf
 Include ~/.ssh/config.local

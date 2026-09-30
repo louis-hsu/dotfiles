@@ -1,8 +1,6 @@
-# Ignore everything
-*
+# Ignore everything at the top level
+/*
 
-# Unignore directories (so Git can access nested files)
-!*/
-
-# Unignore files starting with "config"
-!config
+# Except these
+!/config
+!/config.d/

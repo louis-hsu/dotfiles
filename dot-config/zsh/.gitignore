@@ -7,3 +7,4 @@
 \.z*
 !.zfunc
 !.zprezto/
+!.zsh_aliases

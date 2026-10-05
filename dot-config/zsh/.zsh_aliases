@@ -23,6 +23,7 @@ alias diff='diff -ur --color=always'
 alias vim='nvim'                              # Move to nvim from vim
 alias nvs='_nvims'
 alias extract="unarchive"                     # Alias to prezto module 'archive'
+alias wmux='workmux'
 
 # Networking
 alias ssh='ssh -Y'

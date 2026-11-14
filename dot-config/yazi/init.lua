@@ -14,7 +14,7 @@ end
 
 -- Customize border type
 require("full-border"):setup{
-	type = ui.Border.ROUNDED,
+	set = "rounded",
 }
 
 -- Show user/group of files in status bar
@@ -39,26 +39,6 @@ Header:children_add(function()
 	end
 	return ui.Span(ya.user_name() .. "@" .. ya.host_name() .. ":"):fg("blue")
 end, 500, Header.LEFT)
-
--- Setup for plugin 'git'
--- git.yazi symbols
-th.git = th.git or {}
-th.git.modified = ui.Style():fg("blue")
-th.git.modified_sign = "✱"
-
-th.git.deleted = ui.Style():fg("red")
-th.git.deleted_sign = "✖"
-
-th.git.added = ui.Style():fg("green")
-th.git.added_sign = "✚"
-
-th.git.untracked = ui.Style():fg("yellow")
-th.git.untracked_sign = ""
-
-th.git.ignored = ui.Style():fg("#696969"):italic()
-th.git.ignored_sign = "I"
-
-th.git.clean_sign = " "
 
 require("git"):setup(
 	{ order = 1500, }
@@ -108,6 +88,7 @@ require("githead"):setup({
 
   unstaged_color = "#e0af68",
   unstaged_symbol = "✗",
+	-- unstaged_symbol = "✱",
 
   untracked_color = "#f7768e",
   untracked_symbol = "?",

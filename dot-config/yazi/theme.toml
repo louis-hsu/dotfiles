@@ -1,2 +1,26 @@
 [flavor]
 dark = "catppuccin-mocha"
+
+[git]
+unstaged = { fg = "blue" }
+unstaged_sign = "✱"
+
+staged = { fg = "green" }
+# staged_sign = "✱"
+staged_sign = "●"
+
+deleted = { fg = "red" }
+deleted_sign = "✖"
+
+added = { fg = "green" }
+added_sign = "✚"
+
+untracked = { fg = "yellow" }
+# untracked_sign = ""
+untracked_sign = "?"
+
+ignored = { fg = "#696969", italic = true }
+ignored_sign = "I"
+
+clean_sign = " "
+

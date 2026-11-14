@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Handler: pretty-print / syntax-highlight YAML with yq (mikefarah, v4).
+#
+# Matched by extension (LESSPIPE_FEXT=yaml or yml); YAML reports text/plain.
+# Name this handler `yaml` and symlink `yml` to it:
+#   ln -s yaml yml
+#
+# Requires: yq  (https://github.com/mikefarah/yq)
+
+command -v yq >/dev/null 2>&1 || exit 1   # not handled; fall through
+
+# Force color only when less will render it; yq strips color into a pipe.
+[[ "$LESSPIPE_COLOR" == always ]] && yqcolor=-C || yqcolor=-M
+yq "$yqcolor" '.' "$1"
+exit 0

@@ -1,4 +1,5 @@
 {
+    "global": { "notification_window_show_icon": false },
     "profiles": [
         {
             "complex_modifications": {

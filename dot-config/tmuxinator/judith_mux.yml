@@ -22,7 +22,8 @@ root: ~/<%= @args[0] %>
 # startup_window: editor
 
 # Specitifes (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
-startup_pane: 1
+startup_window: environment
+startup_pane: 2
 
 # Controls whether the tmux session should be attached to automatically. Defaults to true.
 # attach: false
@@ -42,7 +43,7 @@ windows:
         #- cd "<%= @args[0] %>" # general
         #- cd "<%= @args[0] %>"
         - clear; fastfetch; typewriter
-        - cht.sh --shell
+        -
   - file_mgmt:
       - cd $HOME; yy
   - task_mgmt:
